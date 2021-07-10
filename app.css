@@ -1,0 +1,445 @@
+body {
+  background-color: white;
+  font-family: "Nirmala UI";
+  cursor: default;
+}
+
+textarea,
+#dynamic,
+select,
+#sa_0,
+#sa_1 {
+  font-family: "Calibri", "Nirmala UI", "LipiFont1", "LipiFont2", "Segoe UI Historic", "LipiFont3", "LipiFont4", "LipiFont5";
+}
+
+option {
+  background-color: lightcyan;
+  color: orangered;
+  font-weight: bolder;
+  font-size: 1.3em;
+}
+
+.langsw {
+  color: yellow;
+  background-color: brown;
+  font-weight: bold;
+}
+
+#main_section {
+  display: none;
+}
+
+#main_lang {
+  margin-left: 30%;
+  margin-top: 7px;
+}
+
+#collection {
+  display: none;
+}
+
+.btn {
+  margin: 5px;
+  border: 3px solid purple;
+}
+
+#about_button {
+  margin-right: 20px;
+}
+
+#up_usage {
+  margin-right: 20px;
+}
+
+#prayog {
+  top: 0px;
+  left: 0px;
+  display: none;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 500px;
+  margin-left: 8px;
+  margin-bottom: 4px;
+  border: 2px solid black;
+  background-color: #e0e0cc;
+}
+
+#no_prvrtn {
+  font-size: 1.15em;
+  color: purple;
+  font-weight: bold;
+}
+
+#table_btn {
+  font-size: 1.25em;
+  color: blue;
+  border: 2px solid brown;
+  margin: 3px;
+  margin-top: 10px;
+  font-weight: bold;
+  cursor: help;
+  background-color: white;
+}
+
+#bhaashhaah1 {
+  margin-top: 16px;
+}
+
+#parivartak {
+  font-weight: bold;
+  color: red;
+  font-size: 1.48em;
+  margin-left: 2.5px;
+  margin-right: 24px;
+  border: 0.5px solid blue;
+  background-color: white;
+}
+
+#convert_img {
+  background-color: #6c6cbba6;
+}
+
+.back {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  z-index: 30;
+}
+
+#warning1 {
+  font-size: 1.15em;
+  color: red;
+  font-weight: bolder;
+  position: fixed;
+  bottom: 2px;
+  text-align: start;
+  left: 2px;
+  border: 1px solid black;
+  z-index: 10;
+  background-color: snow;
+}
+
+#lic {
+  color: greenyellow;
+  font-size: 1.2em;
+  background-color: black;
+  font-weight: bolder;
+}
+
+.normal {
+  background-color: #ecffe8;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 3px solid #200b0b;
+  word-wrap: break-word;
+  width: 92vw;
+  height: 41vh;
+  resize: none;
+  overflow: scroll;
+}
+
+#lang2 {
+  font-size: 1.17em;
+}
+
+#dynamic {
+  font-size: 1.2rem;
+  border: 3px solid black;
+  word-wrap: break-word;
+  width: 91vw;
+  height: 69vh;
+  background-color: #e8fffb;
+  overflow: scroll;
+}
+
+p#about_text {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: blue;
+}
+
+#paricaya {
+  color: green;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+p {
+  margin: 0;
+}
+
+.only_web {
+  background-color: white;
+  z-index: 20;
+  border: 2px solid black;
+  margin-left: 40px;
+  margin-top: 7px;
+  padding-left: 5px;
+  padding-right: 6px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  position: absolute;
+}
+
+.lang {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: white;
+  border: 0.5px solid blue;
+  background-color: brown;
+}
+
+#app_lang {
+  font-size: 1.15em;
+  font-weight: bold;
+  color: yellow;
+  border: 1px solid greenyellow;
+  background-color: black;
+}
+
+#sa_0,
+#sa_1 {
+  font-size: 1em;
+  font-weight: bold;
+  color: greenyellow;
+  border: 0.5px solid red;
+  background-color: black;
+}
+
+#sa_text {
+  font-size: 1.1em;
+  color: brown;
+  font-weight: bold;
+}
+
+.lang_lbl {
+  color: red;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.cpy_btn {
+  border: 2px solid blueviolet;
+  background-color: white;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 2px;
+  padding-bottom: 0;
+}
+
+.set_text {
+  font-size: 1.1em;
+  color: red;
+  font-weight: bold;
+  background-color: #d1fb7c;
+}
+
+#avAharaNam {
+  display: none;
+}
+
+.av {
+  background-color: white;
+  margin: 1.4px;
+  border: 2px solid brown;
+}
+
+.err_msg {
+  color: red;
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+#lekhan_sahayika {
+  color: #8a2be2;
+  font-weight: bolder;
+  font-size: 1.25em;
+}
+
+#shoonyam {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: black;
+  margin-left: 7px;
+}
+
+#close1_img {
+  margin-left: 180px;
+  position: absolute;
+}
+
+.bhAShAnyAH {
+  font-size: 1.47em;
+  color: blueviolet;
+  text-decoration: none;
+  font-weight: bolder;
+  margin-bottom: 7px;
+  margin-top: 7px;
+}
+
+.bhAShAnyAH_name {
+  color: brown;
+  font-size: 13.8px;
+}
+
+.ekam {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.ekam-right {
+  margin-right: 8px;
+}
+
+.ekam-left {
+  margin-left: 8px;
+}
+
+.dvayam-left {
+  margin-left: 16px;
+}
+
+.dvayam-right {
+  margin-right: 16px;
+}
+
+.dvayam-right-anya-bhAShA {
+  margin-right: 15px;
+}
+
+.dvayam {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.dvayam-main {
+  margin-left: 16px;
+  margin-right: 50px;
+}
+
+#main_switch {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 0px;
+  z-index: 100;
+}
+
+.note-resizebar {
+  display: none;
+}
+
+#licence {
+  display: none;
+}
+
+.only_web1 {
+  left: 40px;
+  margin-left: 30px;
+  top: 1px;
+}
+
+.mail {
+  text-decoration: none;
+  color: green;
+}
+
+@media (min-width: 490px) {
+  .only_web {
+    left: 270px;
+    margin-left: 0;
+    top: 6px;
+    margin-top: 0;
+  }
+
+  #about_button {
+    margin-right: 140px;
+  }
+
+  .back {
+    left: 15px;
+  }
+
+  .note-resizebar {
+    display: block;
+  }
+
+  #dynamic {
+    height: 65vh;
+    width: 93vw;
+  }
+
+  #warning1 {
+    font-size: 1.25em;
+    left: 10%;
+  }
+}
+
+#cp1 {
+  margin-left: 48px;
+  margin-top: 9px;
+  position: absolute;
+}
+
+.line-break::after {
+  content: '\a';
+  white-space: pre;
+}
+
+.block {
+  display: block;
+}
+
+.note-editor {
+  margin-top: 10px;
+}
+
+@media (max-width: 365px) {
+  #about_button {
+    margin-right: 8px;
+  }
+
+  #up_usage {
+    margin-right: 8px;
+  }
+
+  #parivartak {
+    margin-right: 9px;
+  }
+
+  .only_web {
+    margin-left: 13px;
+    margin-top: 7px;
+  }
+
+  #warning1 {
+    font-size: 1.1em;
+  }
+
+  .only_web1 {
+    margin-left: 9px;
+  }
+
+  .dvayam-right-anya-bhAShA {
+    margin-right: 8px;
+  }
+}
+
+.break {
+  display: block;
+}
+
+#image {
+  margin-left: 6px;
+  margin-top: 8px;
+}
+
+#xcv {
+  margin-top: 6px;
+  margin-left: 5px;
+}
+
+.imgs {
+  background-repeat: no-repeat;
+  display: inline-block;
+}
