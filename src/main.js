@@ -1,7 +1,9 @@
 class लिपिलेखिकासहायक {
     constructor() {
-        this.akSharAH = {};
-        this.loaded_scripts = [];
+        this.akSharAH = {
+            "Normal": {}
+        };
+        this.loaded_scripts = ["Normal"];
         this.antar_load = false;
         let mode = "local";
         this.sanchit = {
@@ -217,6 +219,8 @@ class लिपिलेखिकापरिवर्तक {
     };
     mukhya(elmt, e) {
         if (!this.karya)
+            return;
+        if (LIPI.includes(elmt.attr("class"), "Lipi-LekhikA-Off"))
             return;
         e = e.data;
         if (e == null || e == undefined) {
@@ -518,7 +522,7 @@ class लिपिलेखिकापरिवर्तक {
             LIPI.includes(["R", "LR", "LRR", "RR"], key) &&
             varna_sthiti == 1
         )
-            varna_sthiti = 2
+            varna_sthiti = 2;
         if (sa == 1) {
             if (varna_sthiti == 1)
                 this.varna[1] += this.halant;
@@ -624,6 +628,7 @@ class लिपिलेखिकापरिवर्तक {
                     this.madhye = true;
                     changing_part += this.zero_joiner;
                 }
+                // console.log([pre_part, changing_part, post_part], val, this.capital)
                 let r = pre_part + changing_part + post_part;
                 elm.html(r);
                 caret.setPos(recorder + val[0].length - val[1] - a);
@@ -876,6 +881,21 @@ jQuery.fn.lipi_lekhika_add = function (attri = false) {
         this.attr("onkeydown", "LIPI.clear(event);");
     }
 };
+jQuery.lipi_lekhika = (time = null) => {
+    let elm = $(".Lipi-LekhikA");
+    for (let x of elm) {
+        if (!LIPI.includes(["span", "div", "textarea", "input"], x.tagName.toLowerCase()))
+            continue;
+        x.oninput = () => {
+            LipiLekhikA.mukhya($(x), event);
+        };
+        x.onkeydown = () => {
+            LIPI.clear(event);
+        };
+    };
+    if (time != null)
+        setTimeout(() => $.lipi_lekhika(time), time * 1000);
+};
 class लिपिलेखिकालेखनसहायिका {
     constructor() {
         this.c = 0;
@@ -896,6 +916,7 @@ class लिपिलेखिकालेखनसहायिका {
             "display": "none",
             "z-index": "1000000",
             "cursor": "default",
+            "background-color": "white",
             "font-family": '"Calibri","Nirmala UI","LipiFont1","LipiFont2","LipiFont3","LipiFont4","LipiFont5"'
         });
         let row1 = "",
@@ -908,7 +929,7 @@ class लिपिलेखिकालेखनसहायिका {
             row1 += `<td></td>`;
             row2 += `<td></td>`;
         };
-        let table = `<table><tr>${row2}</tr><tr>${row1}</tr></table><div style="font-size: 10.5px;color: purple;"></div>`;
+        let table = `<table><tbody><tr>${row2}</tr><tr>${row1}</tr></tbody></table><div style="font-size: 10.5px;color: purple;"></div>`;
         this.elm.html(table);
         this.bhaNDAra_index = ["sahayika", "pashchAta", "akShara", "key1", "key2"];
         this.bhaNDAra = {

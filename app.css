@@ -147,7 +147,7 @@ option {
   font-size: 1.2rem;
   border: 3px solid black;
   word-wrap: break-word;
-  width: 91vw;
+  width: 93.5%;
   height: 69vh;
   background-color: #e8fffb;
   overflow: scroll;
@@ -331,6 +331,16 @@ p {
 
 #licence {
   display: none;
+  overflow-y: scroll;
+  height: 420px;
+  position: absolute;
+  margin-right: 9px;
+  margin-left: 1px;
+  margin-bottom: 10px;
+  margin-top: 9px;
+  padding: 9px;
+  border: 2px solid purple;
+  font-size: 15px;
 }
 
 .only_web1 {

@@ -17,6 +17,7 @@ class अनुप्रयोगः {
         this.loaded_display_lng = [];
         this.pages = ["inter", "about"];
         this.antar_loaded = false;
+        this.br = '<span class="line-break"></span>';
         this.lipyaH = {
             'Hindi': 'हिन्दी',
             'Bengali': 'বাংলা',
@@ -58,7 +59,7 @@ class अनुप्रयोगः {
             add("<span>", {
                 id: "main_section"
             }).appendTo(val);
-        }
+        };
 
         function main_section() {
             let val = "#main_section"
@@ -68,7 +69,7 @@ class अनुप्रयोगः {
             add("<span>", {
                 id: "prayog"
             }).appendTo(val);
-        }
+        };
 
         function main1() {
             let val = "#main1",
@@ -145,13 +146,19 @@ class अनुप्रयोगः {
             $("#backbutton").click(() => {
                 app.change_page("main");
             });
-            $(`<span class="line-break"></span><p id="about_text"></p><p id="paricaya"></p></span><span class="line-break"></span><button id="lic"></button>`).appendTo(val);
+            $(`${app.br}<p id="about_text"></p><p id="paricaya"></p></span>${app.br}<button id="lic"></button>`).appendTo(val);
             $(val).append("<span class='web_only dvayam-left' class='dvayam-left'><a href='https://api.lipilekhika.com/source' target='_blank'><span id='git' class='imgs'></span></a></span>");
-            $(val).append(`<span class="line-break"></span><iframe src="${app.pratyaya_sanchit}/LICENCE.txt" id="licence"></iframe>`);
+            $(val).append(`${app.br}<div id="licence"></div>`);
             val = "#main";
             $("#lic").click(() => {
-                $("#licence").show();
-                $("#lic").hide();
+                $.ajax({
+                    url: app.pratyaya_sanchit + `/LICENCE.txt`,
+                    success: (result) => {
+                        $("#licence").html(LIPI.replace_all(result, "\n", app.br));
+                        $("#licence").show();
+                        $("#lic").hide();
+                    }
+                });
             });
             $('<span id="sa_mode" class="dvayam-right"></span>').appendTo(val);
             val = "#sa_mode";
@@ -162,7 +169,7 @@ class अनुप्रयोगः {
             t.click(() => {
                 app.set_onoff_img(1);
             });
-            t = $('<span id="lekhan_sahayika"></span><span class="line-break"></span>').appendTo(val);
+            t = $(`<span id="lekhan_sahayika"></span>${app.br}`).appendTo(val);
             t.click(function () {
                 this.style.color = 'black';
                 app.set_onoff_img(1);
@@ -187,12 +194,12 @@ class अनुप्रयोगः {
             $("#dynamic").remove();
             $(".note-editable")[0].id = "dynamic";
             let elm = $("#dynamic");
-            elm.lipi_lekhika_add();
             elm.attr({
                 spellcheck: "false",
                 autocapitalize: "none",
                 autocomplete: "off",
-                autocorrect: "off"
+                autocorrect: "off",
+                class: "Lipi-LekhikA"
             });
             elm.css({
                 "margin": "0",
@@ -294,13 +301,13 @@ class अनुप्रयोगः {
             $("#cp2").click(() => {
                 app.copy_text('first');
             });
-            $('<span class="line-break"></span><textarea id="first" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>').appendTo(val);
+            $(`${app.br}<textarea id="first" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>`).appendTo(val);
             $("#first").on("input", function () {
                 app.edited();
                 if (app.auto)
                     $('#second').val(LipiLekhikA.antarparivartan(this.value, $('#lang1').val(), $('#lang2').val()));
             });
-            $('<span class="line-break"></span><select class="lang" id="lang2"></select>').appendTo(val);
+            $(`${app.br}<select class="lang" id="lang2"></select>`).appendTo(val);
             $("#lang2").on("change", () => {
                 if (app.auto) {
                     function jk() {
@@ -322,7 +329,7 @@ class अनुप्रयोगः {
             $(val).append('<span id="up_arrow"><span class="ekam-right"></span><span id="up_arrow_img" class="imgs"></span></span>');
             $(val).append('<span id="down_arrow"><span class="ekam-right"></span><span id="down_arrow_img" class="imgs"></span></span>');
             $(val).append('<span class="ekam-left"></span><span id="auto_img" class="imgs"></span>');
-            $('<span class="line-break"></span><textarea id="second" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>').appendTo(val);
+            $(`${app.br}<textarea id="second" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>`).appendTo(val);
             $("#second").on("input", function () {
                 app.edited();
                 if (app.auto)
@@ -330,7 +337,7 @@ class अनुप्रयोगः {
             });
             $(val).append("<div><span id='no_prvrtn'></span></div>");
             val = "#prayog";
-            $(val).append('<select class="lang" id="xcv"></select><span id="close1_img" class="imgs"></span><span class="line-break"></span><img id="image"><div id="shoonyam"></div>');
+            $(val).append(`<select class="lang" id="xcv"></select><span id="close1_img" class="imgs"></span>${app.br}<img id="image"><div id="shoonyam"></div>`);
             $("#close1_img").click(() => {
                 $('#prayog').hide();
                 $('#main1').show();
@@ -342,7 +349,7 @@ class अनुप्रयोगः {
             $("#hide_warning").click(() => {
                 $("#warning1").hide();
             });
-        }
+        };
         body();
         main_section();
         main1();
@@ -373,7 +380,7 @@ class अनुप्रयोगः {
             i.attr("dir", "rtl");
         } else
             i.attr("dir", "ltr");
-    }
+    };
     font_add(lang) {
         LipiLekhikA.add_font(lang, this.pratyaya_sanchit + "/fonts");
     };
@@ -467,22 +474,22 @@ class अनुप्रयोगः {
     set_lang_text() {
         let val = LIPI.get_value("app_lang");
         let data = this.lang_texts[val];
-        let g = (df) => LIPI.replace_all(df, "\n", '<span class="line-break"></span>');
+        let g = (df) => LIPI.replace_all(df, "\n", this.br);
         $("title").html(data["t"]);
         for (let x in data["values"]) {
             let nm = g(data["values"][x]);
             if (x == "about_text")
                 nm = LIPI.replace_all(LIPI.replace_all(nm, "{1}", "</a>"), "{0}", "<a href='https://rebrand.ly/lekhika' target='_blank'>");
             LIPI.set_html(x, nm);
-        }
+        };
         for (let x in data["scripts"]) {
             LIPI.set_html("1" + x, data["scripts"][x]);
             LIPI.set_html("2" + x, data["scripts"][x]);
             LIPI.set_html("3" + x, data["scripts"][x]);
             LIPI.set_html("o_" + x, LIPI.substring(data["scripts"][x], 0, -4));
             LIPI.set_html(x, data["scripts"][x]);
-        }
-        LipiLekhikA.sahayika.set_lang(this.anulipyaH[val]);
+        };
+        LipiLekhikA.set_interface_lang(this.anulipyaH[val]);
         for (let x in data["title"]) {
             let val = data["title"][x];
             $(x).attr({
@@ -492,7 +499,7 @@ class अनुप्रयोगः {
         }
         for (let x in this.lipyaH) {
             let val = LIPI.substring(data["scripts"][x], 0, -4);
-            $(x).attr({
+            $("#i_" + x).attr({
                 "title": val,
                 "alt": val
             });
@@ -617,7 +624,7 @@ class अनुप्रयोगः {
             LIPI.set_html(vbn[x], j);
         }
         LIPI.get_element("xcv").innerHTML += "<option id='Vedic' value='Vedic'>Vedic Additions</option>"
-        LIPI.set_html("paricaya", "भारते रचितः<span class='line-break'></span>E-mail : <a href='mailto:shubhamanandgupta@outlook.com' class='mail'>shubhamanandgupta@outlook.com</a>");
+        LIPI.set_html("paricaya", "भारते रचितः<span class='line-break'></span>E-mail : <a href='mailto:lipilekhika@gmail.com' class='mail'>lipilekhika@gmail.com</a>");
         $("#main_section").css("display", "block");
     };
     getUrlVars() {
@@ -627,7 +634,7 @@ class अनुप्रयोगः {
         });
         return vars;
     };
-}
+};
 let display_lang_list = [{
     "en-in": "English",
     "hi-in": "हिन्दी",
@@ -637,7 +644,6 @@ let display_lang_list = [{
     "bn-in": "বাংলা",
     "sa": "संस्कृतम्",
 }, {}];
-
 
 display_lang_list[1] = LIPI.dict_rev(display_lang_list[0]);
 let lang_list = ["Devanagari", 'Hindi', 'Bengali', 'Telugu', 'Tamil', 'Marathi', 'Gujarati', 'Malayalam', 'Kannada', 'Oriya', 'Konkani', 'Assamese', 'Sanskrit', 'Tamil-Extended', 'Nepali', 'Punjabi', "Sinhala", 'Urdu', 'Kashmiri', 'Sharada', 'Modi', 'Siddham', 'Granth', 'Brahmi', "Romanized", "Normal"];
@@ -689,10 +695,9 @@ let lang_sizes = {
 };
 let app = new अनुप्रयोगः(config[0]);
 let storage = window.localStorage;
-LipiLekhikA.set_interface_lang();
 app.init_html();
 window.history.pushState(null, "", window.location.href);
-window.onpopstate = function () {
+window.onpopstate = () => {
     let t = LIPI.time();
     let back = false;
     if (!back)
@@ -803,3 +808,4 @@ app.add_direction($("#dynamic"), akl);
 app.add_direction($("#first"), LIPI.get_value("lang1"));
 app.add_direction($("#second"), LIPI.get_value("lang2"));
 app.set_font_size();
+$.lipi_lekhika();
