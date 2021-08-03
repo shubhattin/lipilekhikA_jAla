@@ -43,10 +43,6 @@ option {
   border: 3px solid purple;
 }
 
-#about_button {
-  margin-right: 20px;
-}
-
 #up_usage {
   margin-right: 20px;
 }
@@ -90,8 +86,9 @@ option {
   font-weight: bold;
   color: red;
   font-size: 1.48em;
-  margin-left: 2.5px;
-  margin-right: 24px;
+  margin-left: 8.5px;
+  margin-bottom: 5px;
+  margin-right: 28px;
   border: 0.5px solid blue;
   background-color: white;
 }
@@ -101,10 +98,7 @@ option {
 }
 
 .back {
-  position: absolute;
-  top: 8px;
-  left: 6px;
-  z-index: 30;
+  margin-left: 15px;
 }
 
 #warning1 {
@@ -149,6 +143,7 @@ option {
   word-wrap: break-word;
   width: 93.5%;
   height: 69vh;
+  z-index: 10;
   background-color: #e8fffb;
   overflow: scroll;
 }
@@ -169,19 +164,6 @@ p {
   margin: 0;
 }
 
-.only_web {
-  background-color: white;
-  z-index: 20;
-  border: 2px solid black;
-  margin-left: 40px;
-  margin-top: 7px;
-  padding-left: 5px;
-  padding-right: 6px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  position: absolute;
-}
-
 .lang {
   font-size: 1.4em;
   font-weight: bold;
@@ -191,11 +173,12 @@ p {
 }
 
 #app_lang {
-  font-size: 1.15em;
+  font-size: 0.8em;
   font-weight: bold;
   color: yellow;
   border: 1px solid greenyellow;
   background-color: black;
+  margin-left: 3px;
 }
 
 #sa_0,
@@ -255,6 +238,11 @@ p {
   color: #8a2be2;
   font-weight: bolder;
   font-size: 1.25em;
+}
+
+#sahayika_switch {
+  margin-right: 3px;
+  margin-top: 4.5px;
 }
 
 #shoonyam {
@@ -325,6 +313,12 @@ p {
   z-index: 100;
 }
 
+#lang_change_container {
+  margin-top: 15px;
+  margin-left: 43px;
+  margin-bottom: 10px;
+}
+
 .note-resizebar {
   display: none;
 }
@@ -355,28 +349,12 @@ p {
 }
 
 @media (min-width: 490px) {
-  .only_web {
-    left: 270px;
-    margin-left: 0;
-    top: 6px;
-    margin-top: 0;
-  }
-
-  #about_button {
+  /* #about_button {
     margin-right: 140px;
-  }
-
-  .back {
-    left: 15px;
-  }
+  } */
 
   .note-resizebar {
     display: block;
-  }
-
-  #dynamic {
-    height: 65vh;
-    width: 93vw;
   }
 
   #warning1 {
@@ -405,29 +383,8 @@ p {
 }
 
 @media (max-width: 365px) {
-  #about_button {
-    margin-right: 8px;
-  }
-
-  #up_usage {
-    margin-right: 8px;
-  }
-
-  #parivartak {
-    margin-right: 9px;
-  }
-
-  .only_web {
-    margin-left: 13px;
-    margin-top: 7px;
-  }
-
   #warning1 {
     font-size: 1.1em;
-  }
-
-  .only_web1 {
-    margin-left: 9px;
   }
 
   .dvayam-right-anya-bhAShA {
@@ -452,4 +409,76 @@ p {
 .imgs {
   background-repeat: no-repeat;
   display: inline-block;
+}
+
+#menu_container {
+  display: none;
+  position: fixed;
+  top: 0;
+  z-index: 3000;
+  left: 0;
+  height: 100%;
+  width: 0;
+}
+
+#menu_bhaNDAr {
+  font-weight: bold;
+  border: 1.5px solid black;
+  background-color: rgb(252, 253, 160);
+  overflow-y: scroll;
+  height: 100%;
+  display: inline-block;
+  overflow-x: scroll;
+  z-index: 3001;
+}
+
+#menu_bhaNDAr::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+
+#menu_body {
+  display: none;
+}
+
+.menu_msg {
+  color: purple;
+  font-size: 0.72em;
+  margin-left: 5px;
+}
+
+.no_under {
+  text-decoration: none;
+}
+
+#info_links {
+  margin-top: 19px;
+  background-color: white;
+  border: 1px solid blue;
+  padding-left: 6px;
+  padding-right: 10px;
+  margin-right: 5px;
+  position: fixed;
+  margin-left: 8px;
+  max-width: 200px;
+}
+
+#info_links div {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#info_links .menu_msg {
+  color: purple;
+  font-size: 0.6em;
+  margin-left: 5px;
+}
+
+#menu_blocker {
+  opacity: 0.4;
+  z-index: 2010;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
 }
