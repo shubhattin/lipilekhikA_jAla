@@ -204,23 +204,7 @@ class लिपिलेखिकापरिवर्तक {
         this.sahayika = new लिपिलेखिकालेखनसहायिका();
         this.set_interface_lang = (lang = "English") => this.sahayika.load_lang(lang, LIPI.sanchit);
         this.hide = () => this.sahayika.elm.hide();
-        $("body").click((event) => {
-            let obj = LipiLekhikA;
-            let o = obj.sahayika;
-            if (o.elm[0].style.display == "none")
-                return;
-            event = event.target;
-            let sah = event == o.ins_button[0][0] || event == o.ins_button[1][0];
-            if (!sah)
-                obj.clear_all_val(true);
-        });
-        $("body").dblclick((e) => {
-            let obj = LipiLekhikA;
-            let o = obj.sahayika;
-            if (o.elm[0].style.display == "none")
-                return;
-            obj.clear_all_val(true);
-        });
+        this.from_click = false;
     };
     set_lang_and_state(lang, call = console.log, ks = null) {
         let exec = () => {
@@ -557,6 +541,12 @@ class लिपिलेखिकापरिवर्तक {
             if (is_input) {
                 let dyn = elm.val();
                 let current_cursor_pos = elm[0].selectionStart + 1;
+                let ex = 0;
+                if (this.from_click) {
+                    this.from_click = false;
+                    current_cursor_pos++;
+                    ex = 1;
+                };
                 let a = 0;
                 if (this.madhye) {
                     this.madhye = false;
@@ -568,7 +558,7 @@ class लिपिलेखिकापरिवर्तक {
                 if (dyn.length + 1 == current_cursor_pos)
                     post_part = dyn.substring(current_cursor_pos + 1);
                 else if (dyn.length + 1 != current_cursor_pos) {
-                    post_part = dyn.substring(current_cursor_pos - 1);
+                    post_part = dyn.substring(current_cursor_pos - 1 - ex);
                     if (varna_sthiti == 1 && this.sa_lang == 1) {
                         this.madhye = true;
                         changing_part += this.zero_joiner;
@@ -583,6 +573,8 @@ class लिपिलेखिकापरिवर्तक {
                 let dyn = elm.html();
                 let caret = new VanillaCaret(elm[0]);
                 let current_cursor_pos = caret.getPos() + 1;
+                if (this.from_click)
+                    current_cursor_pos = this.sahayika.abhisthAnam;
                 let st = false;
                 let rs = [],
                     x1 = 0;
@@ -614,6 +606,8 @@ class लिपिलेखिकापरिवर्तक {
                     }
                     if (x1 == current_cursor_pos - 2 && !st) {
                         rs.push("梵");
+                        if (this.from_click)
+                            rs.push(v);
                         record = false;
                     } else
                         rs.push(v);
@@ -623,7 +617,8 @@ class लिपिलेखिकापरिवर्तक {
                         t_rec++;
                     }
                     prv = v;
-                }
+                };
+                // console.log(rs)
                 rs = rs.join("");
                 rs = LIPI.replace_all(rs, "<费费费费>", "&nbsp;");
                 rs = LIPI.replace_all(rs, "<费费费>", "&amp;");
@@ -644,10 +639,12 @@ class लिपिलेखिकापरिवर्तक {
                     this.madhye = true;
                     changing_part += this.zero_joiner;
                 }
-                // console.log([pre_part, changing_part, post_part], val, this.capital)
+                // console.log([pre_part, changing_part, post_part], val)
                 let r = pre_part + changing_part + post_part;
                 elm.html(r);
-                caret.setPos(recorder + val[0].length - val[1] - a);
+                if (this.from_click)
+                    this.from_click = false;
+                caret.setPos(recorder + changing_part.length - val[1] - a);
             }
         }
         if (this.capital[0] == 3)
@@ -954,13 +951,16 @@ class लिपिलेखिकालेखनसहायिका {
             "key1": 0,
             "key2": 0,
             "pashchAta": 0,
-            "akShara": 0
+            "akShara": 0,
+            "tbody": [0, 0]
         };
         let tbody = $(this.elm.children()[0]).children()[0];
         tbody = $(tbody).children();
+        this.adhar = 0;
+        this.bhaNDAra.tbody = [tbody[0], tbody[1]];
         let tr1 = $(tbody[0]).children();
         let tr2 = $(tbody[1]).children();
-        this.bhaNDAra.pashchAta = tr1
+        this.bhaNDAra.pashchAta = tr1;
         this.bhaNDAra.akShara = tr2;
         this.bhaNDAra.key1 = tr1[1];
         this.bhaNDAra.key2 = tr2[1];
@@ -972,8 +972,7 @@ class लिपिलेखिकालेखनसहायिका {
             "width": "26px",
             "position": "absolute",
             "top": "29px",
-            "left": "1px",
-            "background-size": "26px 26px"
+            "left": "1px"
         });
         $(img[0]).css({
             "cursor": "pointer",
@@ -983,9 +982,8 @@ class लिपिलेखिकालेखनसहायिका {
             "position": "absolute",
             "top": "29px",
             "left": "1px",
-            "background-size": "26px 26px"
         });
-        this.ins_button = [$($(tr2[0]).children()[1]), $($(tr2[0]).children()[0])];
+        this.ins_button = [$(img[1]), $(img[0]), 0, 0];
         this.ins_sthiti = 1;
         this.ins_button[this.ins_sthiti].show();
         this.ins_button[0].click(() => this.change_ins(0));
@@ -995,12 +993,14 @@ class लिपिलेखिकालेखनसहायिका {
         $(tbody[1]).css({
             "color": "green",
             "font-size": "18px",
-            "text-align": "center"
+            "text-align": "center",
+            "cursor": "grab"
         });
         $(tbody[0]).css({
             "color": "black",
             "font-size": "18px",
-            "text-align": "center"
+            "text-align": "center",
+            "cursor": "grab"
         });
         $(tr1).css("padding", "0.5px");
         $(tr2).css("padding", "0.5px");
@@ -1009,7 +1009,8 @@ class लिपिलेखिकालेखनसहायिका {
             "font-size": "19.5px",
             "text-align": "center",
             "padding-left": "21.2px",
-            "padding-right": "5.6px"
+            "padding-right": "5.6px",
+            "cursor": "default"
         });
         $(this.bhaNDAra.key2).css({
             "color": "red",
@@ -1017,7 +1018,8 @@ class लिपिलेखिकालेखनसहायिका {
             "text-align": "center",
             "padding-left": "21.2px",
             "padding-right": "5.6px",
-            "margin-bottom": "2.5px"
+            "margin-bottom": "2.5px",
+            "cursor": "default"
         });
         this.display = {};
         for (let x = 0; x < 60; x++) {
@@ -1036,11 +1038,12 @@ class लिपिलेखिकालेखनसहायिका {
         $.ajax({
             url: `${LIPI.sanchit}/img.txt`,
             success: (result) => {
-                let r = result.split("\n"),
-                    l = "background-image",
-                    s = "url(data:image/svg+xml;base64,";
-                $(img[1]).css(l, `${s}${r[1]})`);
-                $(img[0]).css(l, `${s}${r[0]})`);
+                let r = result.split("\n");
+                img[1].innerHTML = `${r[1]}`;
+                img[0].innerHTML = `${r[0]}`;
+                let y = $(".निच्चैरुच्चैः");
+                this.ins_button[2] = y[0];
+                this.ins_button[3] = y[1];
             }
         });
         this.lang_loaded = false;
@@ -1058,6 +1061,42 @@ class लिपिलेखिकालेखनसहायिका {
                 this.set_lang(lng);
         };
         this.load_lang("English");
+        this.abhisthAnam = 0;
+        $("body").click((event) => {
+            let obj = LipiLekhikA;
+            let o = this;
+            let bh = o.bhaNDAra;
+            if (o.elm[0].style.display == "none")
+                return;
+            event = event.target;
+            let p = $(event).parent()[0];
+            let sah = false;
+            let ins = o.ins_button;
+            if (LIPI.includes([ins[0][0], ins[2]], p) || LIPI.includes([ins[1][0], ins[3]], p))
+                sah = true;
+            else if (LIPI.includes(bh.tbody, p) && !LIPI.includes([bh.key1, bh.key2], event)) {
+                sah = true;
+                let el = o.adhar;
+                let st = (b) => p.style.cursor = b;
+                st("grabbing");
+                setTimeout(() => st("grab"), 150);
+                for (let x of event.value) {
+                    // if (LIPI.includes(["input", "textarea"], el[0].tagName.toLowerCase())) {
+                    obj.from_click = true;
+                    obj.prakriyA(x, 1, obj.script, obj.sa_lang, el);
+                    // }
+                };
+            }
+            if (!sah)
+                obj.clear_all_val(true);
+        });
+        $("body").dblclick(() => {
+            let obj = LipiLekhikA;
+            let o = this;
+            if (o.elm[0].style.display == "none")
+                return;
+            obj.clear_all_val(true);
+        });
     }
     hide_other(s = false) {
         let elm = LipiLekhikA.sahayika;
@@ -1130,10 +1169,17 @@ class लिपिलेखिकालेखनसहायिका {
                 ],
                 extra_cap[1][0]
             ];
-        let cordinate = v["elm"].caret("offset");
-        let top = cordinate["top"],
-            hieght = cordinate["height"],
-            left = cordinate["left"];
+        this.adhar = v.elm;
+        let cordinate = v.elm.caret("offset");
+        let top = cordinate.top,
+            hieght = cordinate.height,
+            left = cordinate.left;
+        if (LIPI.includes(["input", "textarea"], v.elm[0].tagName.toLowerCase())) {
+            this.abhisthAnam = v.elm.selectionStart + 1;
+        } else {
+            let caret = new VanillaCaret(v.elm[0]);
+            this.abhisthAnam = caret.getPos() + 2;
+        }
         this.elm[0].style.top = `${top+hieght}px`;
         this.elm[0].style.left = `${left+8}px`;
         let halant = ["", false];
@@ -1252,9 +1298,18 @@ class लिपिलेखिकालेखनसहायिका {
         this.bhaNDAra[["pashchAta", "akShara"][type - 1]][x + 2].style.removeProperty('display');
     }
     set_labels(type, txt, index = -1) {
-        if (index != -1 && (type == 3 || type == 2))
-            this.bhaNDAra[this.bhaNDAra_index[type - 1]][index + 2].innerHTML = txt;
-        else
+        if (index != -1 && (type == 3 || type == 2)) {
+            index += 2;
+            type--;
+            this.bhaNDAra[this.bhaNDAra_index[type]][index].innerHTML = txt;
+            if (type == 2) {
+                this.bhaNDAra.akShara[index].title = txt;
+                this.bhaNDAra.pashchAta[index].title = txt;
+            } else if (type == 1) {
+                this.bhaNDAra.akShara[index].value = txt;
+                this.bhaNDAra.pashchAta[index].value = txt;
+            }
+        } else
             this.bhaNDAra[this.bhaNDAra_index[type - 1]].innerHTML = txt;
     };
     set_lang(l) {

@@ -12,6 +12,10 @@ select,
   font-family: "Calibri", "Nirmala UI", "LipiFont1", "LipiFont2", "Segoe UI Historic", "LipiFont3", "LipiFont4", "LipiFont5";
 }
 
+select {
+  border-radius: 5px;
+}
+
 option {
   background-color: lightcyan;
   color: orangered;
@@ -89,8 +93,16 @@ option {
   margin-left: 8.5px;
   margin-bottom: 5px;
   margin-right: 28px;
-  border: 0.5px solid blue;
+  padding-top: 3.3px;
+  border: 2px solid blue;
   background-color: white;
+  border-radius: 5px;
+}
+
+#parivartak:hover {
+  background-color: black;
+  color: yellow;
+  border-color: brown;
 }
 
 #convert_img {
@@ -112,6 +124,8 @@ option {
   border: 1px solid black;
   z-index: 10;
   background-color: snow;
+  border-radius: 3px;
+  padding: 3.4px;
 }
 
 #lic {
@@ -130,7 +144,10 @@ option {
   width: 92vw;
   height: 41vh;
   resize: none;
+  border-radius: 7px;
+  margin-top: 6px;
   overflow: scroll;
+  margin-bottom: 4px;
 }
 
 #lang2 {
@@ -146,6 +163,21 @@ option {
   z-index: 10;
   background-color: #e8fffb;
   overflow: scroll;
+  border-radius: 7px;
+}
+
+.cpy_btn:hover {
+  border: 2px solid blue;
+}
+
+#dynamic:focus {
+  border-color: blue;
+  border-width: 4px;
+}
+
+.normal:focus {
+  border-color: blue;
+  border-width: 4px;
 }
 
 p#about_text {
@@ -165,20 +197,38 @@ p {
 }
 
 .lang {
-  font-size: 1.4em;
+  font-size: 1.44em;
   font-weight: bold;
   color: white;
-  border: 0.5px solid blue;
+  border: 1px solid blue;
   background-color: brown;
+  padding-left: 1px;
+  padding-bottom: 1px;
+}
+
+.lang:hover {
+  background-color: black;
+  border-color: blue;
 }
 
 #app_lang {
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: bold;
   color: yellow;
-  border: 1px solid greenyellow;
+  border: 2px solid red;
   background-color: black;
   margin-left: 3px;
+}
+
+option {
+  text-align: center;
+}
+
+#app_lang:hover {
+  background-color: white;
+  color: red;
+  border-color: blue;
+  font-weight: bolder;
 }
 
 #sa_0,
@@ -186,8 +236,24 @@ p {
   font-size: 1em;
   font-weight: bold;
   color: greenyellow;
-  border: 0.5px solid red;
+  border: 0.8px solid red;
   background-color: black;
+  border-radius: 3px;
+  padding-left: 3.3px;
+  padding-right: 3.3px;
+  padding-bottom: 1px;
+  padding-top: 1px;
+}
+
+#sa_0:hover,
+#sa_1:hover {
+  color: blue;
+  background-color: yellow;
+}
+
+#lekhan_sahayika:hover {
+  color: blue;
+  font-weight: bolder;
 }
 
 #sa_text {
@@ -209,6 +275,7 @@ p {
   padding-right: 2px;
   padding-top: 2px;
   padding-bottom: 0;
+  border-radius: 3.5px;
 }
 
 .set_text {
@@ -216,6 +283,10 @@ p {
   color: red;
   font-weight: bold;
   background-color: #d1fb7c;
+}
+
+button {
+  border-radius: 5px;
 }
 
 #avAharaNam {
@@ -349,10 +420,6 @@ p {
 }
 
 @media (min-width: 490px) {
-  /* #about_button {
-    margin-right: 140px;
-  } */
-
   .note-resizebar {
     display: block;
   }
@@ -454,13 +521,18 @@ p {
 #info_links {
   margin-top: 19px;
   background-color: white;
-  border: 1px solid blue;
+  border: 2px solid blue;
   padding-left: 6px;
   padding-right: 10px;
   margin-right: 5px;
   position: fixed;
-  margin-left: 8px;
+  margin-left: 4px;
+  border-radius: 6px;
   max-width: 200px;
+}
+
+#info_links:hover {
+  border-color: green;
 }
 
 #info_links div {
@@ -472,6 +544,14 @@ p {
   color: purple;
   font-size: 0.6em;
   margin-left: 5px;
+}
+
+#info_links .menu_msg:hover {
+  color: blue;
+}
+
+.menu_msg:hover {
+  color: blue;
 }
 
 #menu_blocker {

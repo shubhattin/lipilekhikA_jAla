@@ -134,16 +134,16 @@ class अनुप्रयोगः {
                     } else exec();
                 });
                 val = "#menu_body";
-                t = yuj(val, `<div class="ekam-left"><span id="about_button" class="imgs"></span><span id="about_msg" class="menu_msg"></span></div>`);
+                t = yuj(val, `<span class="ekam-left menu_borders"><span id="about_button" class="imgs"></span><span id="about_msg" class="menu_msg"></span></span>`);
                 t.click(() => {
                     app.change_page('about');
                     $("#menu_blocker").trigger("click");
                 });
-                yuj(val, `<div id="info_links" class="web_only"></div>`);
+                yuj(val, `${app.br}<div id="info_links" class="web_only"></div>`);
                 val = "#info_links";
-                yuj(val, '<div><a target="_blank" href="https://rebrand.ly/lekhika" class="no_under"><span class="imgs home_img"></span><span id="home_msg" class="menu_msg"></span></a></div>');
-                yuj(val, '<div><a target="_blank" href="https://rebrand.ly/lekhikadownload" class="no_under"><span class="imgs download_img"></span><span id="download_msg" class="menu_msg"></span></a></div>');
-                yuj(val, '<div><a target="_blank" href="https://api.lipilekhika.com/source" class="no_under"><span class="imgs git"></span><span id="source_msg" class="menu_msg"></span></a></div>');
+                yuj(val, '<div><a target="_blank" class="menu_borders no_under" href="https://rebrand.ly/lekhika"><span class="imgs home_img"></span><span id="home_msg" class="menu_msg"></span></a></div>');
+                yuj(val, '<div><a target="_blank" class="menu_borders no_under" href="https://rebrand.ly/lekhikadownload"><span class="imgs download_img"></span><span id="download_msg" class="menu_msg"></span></a></div>');
+                yuj(val, '<div><a target="_blank" class="menu_borders no_under" href="https://api.lipilekhika.com/source"><span class="imgs git"></span><span id="source_msg" class="menu_msg"></span></a></div>');
             };
             menu();
             yuj(val, '<button id="parivartak" class="mode_selector"><span id="convert_img" class="imgs"></span><span id="lbl3"></span></button>');
@@ -189,8 +189,8 @@ class अनुप्रयोगः {
                 let val = "#main";
                 yuj(val, '<span id="sa_mode" class="dvayam-right"></span>');
                 val = "#sa_mode";
-                yuj(val, '<input type="radio" name="sanskrit" id="sa_04"></input><label for="sa_04" id="sa_0"></label>');
-                yuj(val, '<input type="radio" name="sanskrit" id="sa_14"></input><label for="sa_14" id="sa_1"></label>');
+                yuj(val, '<input type="radio" name="sanskrit" id="sa_04"></input><label for="sa_04" id="sa_0" class="black-yeloow"></label>');
+                yuj(val, '<input type="radio" name="sanskrit" id="sa_14"></input><label for="sa_14" id="sa_1" class="black-yellow"></label>');
                 val = "#main";
                 let t = yuj(val, '<span id="sahayika_switch" class="imgs"></span>');
                 t.click(() => {
@@ -200,9 +200,7 @@ class अनुप्रयोगः {
                 t.click(function () {
                     this.style.color = 'black';
                     app.set_onoff_img(1);
-                    setTimeout(function () {
-                        LIPI.get_element('lekhan_sahayika').style.color = '#8a2be2';
-                    }, 250);
+                    setTimeout(() => $('#lekhan_sahayika').css("color", ""), 250);
                 });
                 $("#sa_04").click(() => {
                     LipiLekhikA.sa_lang = 0;
@@ -229,8 +227,8 @@ class अनुप्रयोगः {
                     class: "Lipi-LekhikA"
                 });
                 elm.css({
-                    "margin": "0",
-                    "padding": "4px"
+                    margin: "0",
+                    padding: "4px"
                 });
                 $(".note-toolbar").css("background-color", "white");
                 $(".note-btn").css("border", "1px solid black");
@@ -293,10 +291,6 @@ class अनुप्रयोगः {
 
             function inter() {
                 let val = "#inter";
-                // yuj(val, '<span class="back imgs" id="back_button"></span>');
-                // $("#back_button").click(() => {
-                //     app.change_page('main');
-                // });
                 let t = yuj(val, '<select class="lang" id="lang1"></select>');
                 t.on("change", () => {
                     if (app.auto) {
@@ -309,7 +303,7 @@ class अनुप्रयोगः {
                     app.add_direction($("#first"), LIPI.get_value("lang1"));
                     app.font_add(LIPI.get_value('lang1'));
                 });
-                yuj(val, '<span class="ekam-left"></span><button id="set_text2" class="set_text"></button><span class="ekam-right"></span><button id="cp2" class="cpy_btn"></button>');
+                yuj(val, '<span class="ekam-left"></span><button id="set_text2" class="set_text"></button><button id="cp2" class="cpy_btn ekam"></button>');
                 $("#set_text2").click(() => {
                     app.set_inter_values(1);
                 });
@@ -334,16 +328,16 @@ class अनुप्रयोगः {
                     app.add_direction($("#second"), LIPI.get_value("lang2"));
                     app.font_add(LIPI.get_value('lang2'));
                 });
-                yuj(val, '<span class="ekam-left"></span><button id="set_text1" class="set_text"></button><span class="ekam-right"></span><button id="cp3" class="cpy_btn"></button>');
+                yuj(val, '<button id="set_text1" class="set_text ekam-left"></button><button id="cp3" class="cpy_btn ekam"></button>');
                 $("#cp3").click(() => {
                     app.copy_text('second');
                 });
                 $("#set_text1").click(() => {
                     app.set_inter_values(2);
                 });
-                yuj(val, '<span id="up_arrow"><span class="ekam-right"></span><span id="up_arrow_img" class="imgs"></span></span>');
-                yuj(val, '<span id="down_arrow"><span class="ekam-right"></span><span id="down_arrow_img" class="imgs"></span></span>');
-                yuj(val, '<span class="ekam-left"></span><span id="auto_img" class="imgs"></span>');
+                yuj(val, '<span id="up_arrow_img" class="imgs ekam-right"></span>');
+                yuj(val, '<span id="down_arrow_img" class="imgs ekam-right"></span>');
+                yuj(val, '<span id="auto_img" class="imgs ekam-left"></span>');
                 yuj(val, `${app.br}<textarea id="second" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>`);
                 $("#second").on("input", function () {
                     app.edited();
@@ -368,11 +362,11 @@ class अनुप्रयोगः {
                     app.auto = !app.auto;
                     LIPI.get_element("auto_img").style.backgroundColor = `${app.auto?"#ff6464":"lightgreen"}`;
                     if (!app.auto) {
-                        $("#up_arrow").show();
-                        $("#down_arrow").show();
+                        $("#up_arrow_img").show();
+                        $("#down_arrow_img").show();
                     } else {
-                        $("#up_arrow").hide();
-                        $("#down_arrow").hide();
+                        $("#up_arrow_img").hide();
+                        $("#down_arrow_img").hide();
                     }
                 });
                 $("#auto_img").trigger("click");
