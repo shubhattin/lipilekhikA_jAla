@@ -167,7 +167,8 @@ option {
 }
 
 .cpy_btn:hover {
-  border: 2px solid blue;
+  border: 2px solid black;
+
 }
 
 #dynamic:focus {
@@ -386,7 +387,7 @@ button {
 
 #lang_change_container {
   margin-top: 15px;
-  margin-left: 43px;
+  margin-left: 38px;
   margin-bottom: 10px;
 }
 
@@ -479,7 +480,6 @@ button {
 }
 
 #menu_container {
-  display: none;
   position: fixed;
   top: 0;
   z-index: 3000;
@@ -488,24 +488,26 @@ button {
   width: 0;
 }
 
-#menu_bhaNDAr {
+#menu_body {
   font-weight: bold;
-  border: 1.5px solid black;
-  background-color: rgb(252, 253, 160);
+  border: 2.5px solid black;
+  background-color: #fcfda0;
   overflow-y: scroll;
   height: 100%;
   display: inline-block;
   overflow-x: scroll;
   z-index: 3001;
+  border-top-right-radius: 5px;
+  position: fixed;
 }
 
-#menu_bhaNDAr::-webkit-scrollbar {
-  display: none;
-  width: 0;
+#menu_body:hover {
+  background-color: #fbfd85;
 }
 
-#menu_body {
+#menu_body::-webkit-scrollbar {
   display: none;
+  width: 0px;
 }
 
 .menu_msg {
@@ -525,10 +527,10 @@ button {
   padding-left: 6px;
   padding-right: 10px;
   margin-right: 5px;
-  position: fixed;
   margin-left: 4px;
   border-radius: 6px;
-  max-width: 200px;
+  max-width: 215px;
+  padding-top: 5px;
 }
 
 #info_links:hover {
@@ -555,7 +557,6 @@ button {
 }
 
 #menu_blocker {
-  opacity: 0.4;
   z-index: 2010;
   height: 100%;
   width: 100%;

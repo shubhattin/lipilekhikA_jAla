@@ -881,7 +881,7 @@ class लिपिलेखिकापरिवर्तक {
         this.added_fonts.push(lang);
     };
 };
-jQuery.fn.lipi_lekhika_add = function (attri = false) {
+jQuery.fn.lipi_lekhika_add = (attri = false) => {
     if (!attri) {
         this.on("input", () => {
             LipiLekhikA.mukhya($(this), event);
@@ -1035,17 +1035,14 @@ class लिपिलेखिकालेखनसहायिका {
             "background-image": `url(${LIPI.sanchit}/icon.png)`,
             "background-size": "20px 20px"
         });
-        $.ajax({
-            url: `${LIPI.sanchit}/img.txt`,
-            success: (result) => {
-                let r = result.split("\n");
-                img[1].innerHTML = `${r[1]}`;
-                img[0].innerHTML = `${r[0]}`;
-                let y = $(".निच्चैरुच्चैः");
-                this.ins_button[2] = y[0];
-                this.ins_button[3] = y[1];
-            }
-        });
+        let r = ['<svg height="26px" class="निच्चैरुच्चैः" style="enable-background:new 0 0 26 26;" version="1.1" viewBox="0 0 512 512" width="26px" xml:space="preserve"><polygon points="396.6,',
+            '160 416,180.7 256,352 96,180.7 115.3,160 256,310.5', '352 416,331.3 256,160 96,331.3 115.3,352 256,201.5', '"/></svg>'
+        ];
+        img[1].innerHTML = `${r[0]+r[2]+r[3]}`;
+        img[0].innerHTML = `${r[0]+r[1]+r[3]}`;
+        let y = $(".निच्चैरुच्चैः");
+        this.ins_button[2] = y[0];
+        this.ins_button[3] = y[1];
         this.lang_loaded = false;
         this.load_lang = (lng) => {
             if (!this.lang_loaded)
