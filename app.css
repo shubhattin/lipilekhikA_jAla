@@ -80,6 +80,17 @@ option {
   font-weight: bold;
   cursor: help;
   background-color: white;
+  padding-top: 3px;
+}
+
+#table_btn:hover {
+  background-color: #ffff8c;
+  color: black;
+  border-color: blue;
+}
+
+.set_text:hover {
+  background-color: brown;
 }
 
 #bhaashhaah1 {
@@ -99,14 +110,54 @@ option {
   border-radius: 5px;
 }
 
+
+@keyframes parivartak {
+  from {
+    background-color: whitesmoke;
+    color: brown;
+    border-color: blue;
+  }
+
+  to {
+    background-color: black;
+    color: yellow;
+    border-color: brown;
+  }
+}
+
 #parivartak:hover {
+  animation-name: parivartak;
+  animation-duration: 775ms;
   background-color: black;
   color: yellow;
   border-color: brown;
 }
 
+#lang_img {
+  margin-bottom: 4px;
+}
+
+@keyframes convert_img {
+  from {
+    background-color: black;
+  }
+
+  to {
+    background-color: blue;
+  }
+}
+
+.convert_anim {
+  animation-name: convert_img;
+  animation-duration: 620ms;
+}
+
+.btn_img {
+  margin-bottom: 2px;
+}
+
 #convert_img {
-  background-color: #6c6cbba6;
+  background-color: black;
 }
 
 .back {
@@ -124,7 +175,7 @@ option {
   border: 1px solid black;
   z-index: 10;
   background-color: snow;
-  border-radius: 3px;
+  border-radius: 7px;
   padding: 3.4px;
 }
 
@@ -158,27 +209,24 @@ option {
   font-size: 1.2rem;
   border: 3px solid black;
   word-wrap: break-word;
-  width: 93.5%;
+  width: 95%;
   height: 69vh;
-  z-index: 10;
+  z-index: 40;
   background-color: #e8fffb;
   overflow: scroll;
   border-radius: 7px;
 }
 
 .cpy_btn:hover {
-  border: 2px solid black;
-
+  border-color: purple;
 }
 
 #dynamic:focus {
   border-color: blue;
-  border-width: 4px;
 }
 
 .normal:focus {
   border-color: blue;
-  border-width: 4px;
 }
 
 p#about_text {
@@ -219,6 +267,7 @@ p {
   border: 2px solid red;
   background-color: black;
   margin-left: 3px;
+  padding: 2px;
 }
 
 option {
@@ -253,8 +302,9 @@ option {
 }
 
 #lekhan_sahayika:hover {
-  color: blue;
+  color: yellow;
   font-weight: bolder;
+  background-color: black;
 }
 
 #sa_text {
@@ -280,10 +330,8 @@ option {
 }
 
 .set_text {
-  font-size: 1.1em;
-  color: red;
-  font-weight: bold;
-  background-color: #d1fb7c;
+  background-color: white;
+  display: none;
 }
 
 button {
@@ -309,12 +357,13 @@ button {
 #lekhan_sahayika {
   color: #8a2be2;
   font-weight: bolder;
+  padding: 2.4px;
+  border-radius: 3px;
   font-size: 1.25em;
 }
 
 #sahayika_switch {
   margin-right: 3px;
-  margin-top: 4.5px;
 }
 
 #shoonyam {
@@ -336,6 +385,10 @@ button {
   font-weight: bolder;
   margin-bottom: 7px;
   margin-top: 7px;
+}
+
+.bhAShAnyAH:hover {
+  color: black;
 }
 
 .bhAShAnyAH_name {
@@ -387,8 +440,12 @@ button {
 
 #lang_change_container {
   margin-top: 15px;
-  margin-left: 38px;
   margin-bottom: 10px;
+  margin-right: 15px;
+}
+
+.menu_about {
+  margin-right: 15px;
 }
 
 .note-resizebar {
@@ -413,6 +470,22 @@ button {
   left: 40px;
   margin-left: 30px;
   top: 1px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.vr-flex {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.in-flex {
+  display: inline-flex;
+  align-items: center;
 }
 
 .mail {
@@ -491,29 +564,36 @@ button {
 #menu_body {
   font-weight: bold;
   border: 2.5px solid black;
-  background-color: #fcfda0;
+  background-color: #ffffe3;
   overflow-y: scroll;
   height: 100%;
   display: inline-block;
   overflow-x: scroll;
   z-index: 3001;
-  border-top-right-radius: 5px;
+  border-top-right-radius: 6.5px;
   position: fixed;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.menu_borders {
+  padding: 4px;
+  padding-bottom: 2px;
+  border-radius: 4px;
+}
+
+.menu_borders:hover {
+  background-color: #cbfacb;
 }
 
 #menu_body:hover {
-  background-color: #fbfd85;
+  background-color: #f1f1f1;
 }
 
 #menu_body::-webkit-scrollbar {
   display: none;
   width: 0px;
-}
-
-.menu_msg {
-  color: purple;
-  font-size: 0.72em;
-  margin-left: 5px;
 }
 
 .no_under {
@@ -523,18 +603,19 @@ button {
 #info_links {
   margin-top: 19px;
   background-color: white;
-  border: 2px solid blue;
-  padding-left: 6px;
-  padding-right: 10px;
+  border: 2px solid brown;
   margin-right: 5px;
-  margin-left: 4px;
-  border-radius: 6px;
+  margin-left: 5px;
+  border-radius: 7px;
   max-width: 215px;
   padding-top: 5px;
+  padding-bottom: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 #info_links:hover {
-  border-color: green;
+  border-color: red;
 }
 
 #info_links div {
@@ -542,18 +623,35 @@ button {
   margin-bottom: 5px;
 }
 
+.menu_msg {
+  color: purple;
+  font-size: 0.72em;
+  margin-left: 5px;
+  padding: 2px;
+  text-align: center;
+  padding-bottom: 1px;
+}
+
 #info_links .menu_msg {
   color: purple;
   font-size: 0.6em;
   margin-left: 5px;
+  padding: 2px;
+  margin-top: 2px;
+  padding-bottom: 1px;
+  text-align: center;
 }
 
-#info_links .menu_msg:hover {
-  color: blue;
+#info_links .menu_msg_hover {
+  color: yellow;
+  background-color: black;
+  border-radius: 3px;
 }
 
-.menu_msg:hover {
-  color: blue;
+.menu_msg_hover {
+  color: yellow;
+  background-color: black;
+  border-radius: 3px;
 }
 
 #menu_blocker {
@@ -562,4 +660,16 @@ button {
   width: 100%;
   position: fixed;
   top: 0;
+}
+
+.sa_radio {
+  margin-bottom: 3.25px;
+}
+
+#menu_btn {
+  margin-bottom: 5px;
+}
+
+.प्रति {
+  fill: #424242;
 }

@@ -47,6 +47,7 @@ class अनुप्रयोगः {
             'Granth': 'கிரந்த (தமிழ்)',
             'Brahmi': 'ब्राह्मी'
         };
+        this.up_lipyaH = ["Siddham", "Brahmi", "Sharada", "Modi", "Granth"];
         this.anulipyaH = LIPI.dict_rev(this.lipyaH);
         this.anulipyaH["English"] = "English";
         this.once_editded = false;
@@ -56,7 +57,8 @@ class अनुप्रयोगः {
         this.args = this.getUrlVars();
     };
     init_html() {
-        let yuj = (x, y) => jQuery(y).appendTo(x);
+        let yuj = (x, y) => jQuery(y).appendTo(x),
+            yunj = (x, y) => x.append(y);
 
         function body() {
             yuj("body", `<span id="main_section"></span>`);
@@ -66,19 +68,30 @@ class अनुप्रयोगः {
         function mukhya() {
             let val = "#main1",
                 t = null;
-            yuj(val, `<span id="menu_btn" class="imgs"></span>`);
-            t = yuj(val, '<span class="back imgs" id="back_btn"></span>');
-            t.click(() => {
+            t = yuj(val, '<div class="in-flex"></div>');
+            yunj(t, `<span id="menu_btn" class="imgs"></span>`);
+            yunj(t, '<span class="back imgs" id="back_btn"></span>');
+            let el = $("#back_btn").click(() => {
                 app.change_page("main");
                 $("#back_btn").hide();
             });
-            t.css("display", "none");
+            el.css("display", "none");
+            yunj(t, '<button id="parivartak" class="in-flex"><span id="convert_img" class="imgs btn_img"></span><span id="lbl3"></span></button>');
+            $("#parivartak").click(() => {
+                app.change_page("inter");
+            });
+            yunj(t, "<span class='usage_btnm imgs' id='up_usage'></span>");
+            $("#up_usage").click(() => {
+                app.set_image(LipiLekhikA.script);
+                LIPI.get_element('prayog').style.display = 'block';
+                LIPI.get_element('main1').style.display = 'none';
+            });
 
             function menu() {
                 let left = 230,
-                    time = 285,
+                    time = 170,
                     mode = "linear";
-                yuj("body", `<div id="menu_container" style="display:none;"><div id="menu_body"></div><div id="menu_blocker"></div></div>`);
+                yuj("body", `<div id="menu_container" style="display:none;"><div id="menu_body"></div><div id="menu_blocker" style="display:none;"></div></div>`);
                 let val = "#menu_body";
                 $("#menu_body").css("left", `-${left}px`)
                 $("#menu_btn").click(() => {
@@ -86,37 +99,41 @@ class अनुप्रयोगः {
                         "overflow": "hidden",
                         "height": "100%"
                     });
-                    $("#menu_blocker").hide();
                     $("#menu_container").show();
                     $("#menu_body").animate({
                         "left": "0px"
                     }, time, mode, () => $("#menu_blocker").show());
                     $("#main_section").animate({
                         "opacity": "0.43"
-                    }, time - 5, mode);
+                    }, time - 120, mode);
                     app.menu_sthiti = true;
                 });
                 $("#menu_blocker").click(() => {
                     $("html, body").attr("style", "");
                     app.menu_sthiti = false;
-                    $("#menu_blocker").hide()
+                    $("#menu_blocker").hide();
                     $("#menu_body").animate({
                         "left": `-${left}px`
-                    }, time - 30, mode, () => $("#menu_container").hide());
+                    }, time + 10, mode, () => $("#menu_container").hide());
                     $("#main_section").animate({
                         "opacity": "1"
-                    }, time - 35, mode);
+                    }, time - 120, mode);
                 });
-                yuj(val, `<div id="lang_change_container"></div>`);
+                yuj(val, `<div id="lang_change_container" class="flex"></div>`);
                 val = "#lang_change_container";
                 yuj(val, `<span id="lang_img" class="imgs"></span>`);
                 t = yuj(val, `<select id="app_lang"></select>`);
+                for (let p in display_lang_list[0]) {
+                    let v = display_lang_list[0][p];
+                    yunj(t, `<option id="${p}" value="${v}" class="langsw">${v}</option>`)
+                };
                 t.on("change", function () {
                     let v = LIPI.get_value('app_lang');
                     let exec = () => {
-                        app.set_cookie('app_lang', LIPI.get_value('app_lang'));
+                        app.store_values('app_lang', LIPI.get_value('app_lang'));
                         app.set_lang_text();
                         app.set_font_size();
+                        app.add_convert_msg();
                     };
                     if (!LIPI.includes(app.loaded_display_lng, v)) {
                         app.loaded_display_lng.push(v);
@@ -130,33 +147,18 @@ class अनुप्रयोगः {
                     } else exec();
                 });
                 val = "#menu_body";
-                t = yuj(val, `<span class="ekam-left menu_borders"><span id="about_button" class="imgs"></span><span id="about_msg" class="menu_msg"></span></span>`);
+                t = yuj(val, `<div class="menu_items ekam-left flex menu_borders menu_about"><span id="about_button" class="imgs"></span><span id="about_msg" class="menu_msg"></span></div>`);
                 t.click(() => {
                     app.change_page('about');
                     $("#menu_blocker").trigger("click");
                 });
-                yuj(val, `${app.br}<div id="info_links" class="web_only"></div>`);
+                yuj(val, `<div id="info_links" class="web_only vr-flex"></div>`);
                 val = "#info_links";
-                yuj(val, `<a target="_blank" class="menu_borders no_under" href="https://rebrand.ly/lekhika"><span class="imgs home_img"></span><span id="home_msg" class="menu_msg"></span></a>`);
-                yuj(val, `${app.br}<a target="_blank" class="menu_borders no_under" href="https://rebrand.ly/lekhikadownload"><span class="imgs download_img"></span><span id="download_msg" class="menu_msg"></span></a>`);
-                yuj(val, `${app.br}<a target="_blank" class="menu_borders no_under" href="https://api.lipilekhika.com/source"><span class="imgs git"></span><span id="source_msg" class="menu_msg"></span></a>`);
+                yuj(val, `<a target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://rebrand.ly/lekhika"><span class="imgs home_img"></span><span id="home_msg" class="menu_msg"></span></a>`);
+                yuj(val, `<a target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://rebrand.ly/lekhikadownload"><span class="imgs download_img"></span><span id="download_msg" class="menu_msg"></span></a>`);
+                yuj(val, `<a target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://api.lipilekhika.com/source"><span class="imgs git"></span><span id="source_msg" class="menu_msg"></span></a>`);
             };
             menu();
-            yuj(val, '<button id="parivartak" class="mode_selector"><span id="convert_img" class="imgs"></span><span id="lbl3"></span></button>');
-            $("#parivartak").click(() => {
-                app.change_page("inter");
-            });
-            yuj(val, "<span class='usage_btnm imgs' id='up_usage'></span>");
-            $("#up_usage").click(() => {
-                app.set_image(LipiLekhikA.script);
-                LIPI.get_element('prayog').style.display = 'block';
-                LIPI.get_element('main1').style.display = 'none';
-            });
-            val = "#app_lang";
-            for (let p in display_lang_list[0]) {
-                let v = display_lang_list[0][p];
-                yuj(val, `<option id="${p}" value="${v}" class="langsw">${v}</option>`)
-            };
             val = "#main1";
             yuj(val, '<div id="bdy"></div>');
             val = "#bdy";
@@ -183,18 +185,19 @@ class अनुप्रयोगः {
 
             function main() {
                 let val = "#main";
-                yuj(val, '<span id="sa_mode" class="dvayam-right"></span>');
+                let t = yuj(val, '<div class="flex"></div>');
+                yunj(t, '<span id="sa_mode" class="dvayam-right in-flex"></span>');
                 val = "#sa_mode";
-                yuj(val, '<input type="radio" name="sanskrit" id="sa_04"></input><label for="sa_04" id="sa_0" class="black-yeloow"></label>');
-                yuj(val, '<input type="radio" name="sanskrit" id="sa_14"></input><label for="sa_14" id="sa_1" class="black-yellow"></label>');
+                yuj(val, '<input type="radio" class="sa_radio" name="sanskrit" id="sa_04"></input><label for="sa_04" id="sa_0" class="black-yeloow"></label>');
+                yuj(val, '<input type="radio" class="sa_radio" name="sanskrit" id="sa_14"></input><label for="sa_14" id="sa_1" class="black-yellow"></label>');
                 val = "#main";
-                let t = yuj(val, '<span id="sahayika_switch" class="imgs"></span>');
-                t.click(() => {
+                t = yunj(t, '<span id="sahayika_switch" class="imgs"></span>');
+                $("#sahayika_switch").click(() => {
                     app.set_onoff_img(1);
                 });
-                t = yuj(val, `<span id="lekhan_sahayika"></span>${app.br}`);
-                t.click(function () {
-                    this.style.color = 'black';
+                t = yunj(t, `<span id="lekhan_sahayika"></span>`);
+                $("#lekhan_sahayika").click(function () {
+                    this.style.color = 'white';
                     app.set_onoff_img(1);
                     setTimeout(() => $('#lekhan_sahayika').css("color", ""), 250);
                 });
@@ -228,7 +231,7 @@ class अनुप्रयोगः {
                 });
                 $(".note-toolbar").css("background-color", "white");
                 $(".note-btn").css("border", "1px solid black");
-                yuj(val, '<button id="table_btn"><span class="usage_btnm imgs"></span><span id="table"></span></button>');
+                yuj(val, '<button id="table_btn" class="in-flex"><span class="usage_btnm imgs btn_img"></span><span id="table"></span></button>');
                 $("#table_btn").click(() => {
                     app.set_image(LipiLekhikA.script);
                     LIPI.get_element('prayog').style.display = 'block';
@@ -239,7 +242,7 @@ class अनुप्रयोगः {
                     let jkl = () => {
                         let ak = LIPI.get_value('main_lang');
                         LipiLekhikA.script = ak;
-                        app.set_cookie('script', ak);
+                        app.store_values('script', ak);
                         app.set_image(LipiLekhikA.script);
                         if (LIPI.includes(["Urdu", "Romanized", "Kashmiri"], ak))
                             $("#sa_mode").hide();
@@ -287,8 +290,9 @@ class अनुप्रयोगः {
 
             function inter() {
                 let val = "#inter";
-                let t = yuj(val, '<select class="lang" id="lang1"></select>');
-                t.on("change", () => {
+                t = yuj(val, '<div class="in-flex"></div>');
+                yunj(t, '<select class="lang" id="lang1"></select>');
+                $("#lang1").on("change", () => {
                     if (app.auto) {
                         function hjk() {
                             $('#first').val(LipiLekhikA.antarparivartan($('#second').val(), $('#lang2').val(), $('#lang1').val()));
@@ -298,21 +302,23 @@ class अनुप्रयोगः {
                         LIPI.load_lang(LIPI.get_value("lang1"));
                     app.add_direction($("#first"), LIPI.get_value("lang1"));
                     app.font_add(LIPI.get_value('lang1'));
+                    app.add_convert_msg();
                 });
-                yuj(val, '<span class="ekam-left"></span><button id="set_text2" class="set_text"></button><button id="cp2" class="cpy_btn ekam"></button>');
+                yunj(t, '<span class="ekam-left"></span><button id="set_text2" class="set_text"></button><button id="cp2" class="cpy_btn ekam"></button>');
                 $("#set_text2").click(() => {
                     app.set_inter_values(1);
                 });
                 $("#cp2").click(() => {
                     app.copy_text('first');
                 });
-                yuj(val, `${app.br}<textarea id="first" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>`);
+                yuj(val, `<textarea id="first" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>`);
                 $("#first").on("input", function () {
                     app.edited();
                     if (app.auto)
                         $('#second').val(LipiLekhikA.antarparivartan(this.value, $('#lang1').val(), $('#lang2').val()));
                 });
-                yuj(val, `${app.br}<select class="lang" id="lang2"></select>`);
+                t = yuj(val, '<div class="in-flex"></div>');
+                yunj(t, `<select class="lang" id="lang2"></select>`);
                 $("#lang2").on("change", () => {
                     if (app.auto) {
                         function jk() {
@@ -323,18 +329,19 @@ class अनुप्रयोगः {
                         LIPI.load_lang(LIPI.get_value("lang2"));
                     app.add_direction($("#second"), LIPI.get_value("lang2"));
                     app.font_add(LIPI.get_value('lang2'));
+                    app.add_convert_msg();
                 });
-                yuj(val, '<button id="set_text1" class="set_text ekam-left"></button><button id="cp3" class="cpy_btn ekam"></button>');
+                yunj(t, '<button id="set_text1" class="set_text ekam-left"></button><button id="cp3" class="cpy_btn ekam"></button>');
                 $("#cp3").click(() => {
                     app.copy_text('second');
                 });
                 $("#set_text1").click(() => {
                     app.set_inter_values(2);
                 });
-                yuj(val, '<span id="up_arrow_img" class="imgs ekam-right"></span>');
-                yuj(val, '<span id="down_arrow_img" class="imgs ekam-right"></span>');
-                yuj(val, '<span id="auto_img" class="imgs ekam-left"></span>');
-                yuj(val, `${app.br}<textarea id="second" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>`);
+                yunj(t, '<span id="up_arrow_img" class="imgs ekam-right"></span>');
+                yunj(t, '<span id="down_arrow_img" class="imgs ekam-right"></span>');
+                yunj(t, '<span id="auto_img" class="imgs ekam-left"></span>');
+                yuj(val, `<textarea id="second" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>`);
                 $("#second").on("input", function () {
                     app.edited();
                     if (app.auto)
@@ -378,6 +385,17 @@ class अनुप्रयोगः {
         body();
         mukhya();
         this.html_initialized = true;
+    };
+    add_convert_msg() {
+        let db = app.lang_texts[LIPI.get_value('app_lang')];
+        let data = db.scripts;
+        db = db.others;
+        let val = [LIPI.get_value("lang1"), LIPI.get_value("lang2")];
+        val[0] = LIPI.substring(data[val[0]], 0, -3);
+        val[1] = LIPI.substring(data[val[1]], 0, -3);
+        let elm = [$("#down_arrow_img")[0], $("#up_arrow_img")[0]];
+        elm[0].title = `${db.convert} :- ${val[0]}➠ ${val[1]}`;
+        elm[1].title = `${db.convert} :- ${val[1]}➠ ${val[0]}`;
     };
     edited() {
         this.once_editded = true;
@@ -483,7 +501,7 @@ class अनुप्रयोगः {
     set_lang_text(val = LIPI.get_value("app_lang")) {
         let data = app.lang_texts[val];
         let g = (df) => LIPI.replace_all(df, "\n", this.br);
-        $("title").html(data["t"]);
+        $("title").html(data.others.page_title);
         for (let x in data["values"]) {
             let nm = g(data["values"][x]);
             if (x == "about_text")
@@ -494,7 +512,7 @@ class अनुप्रयोगः {
             LIPI.set_html("1" + x, data["scripts"][x]);
             LIPI.set_html("2" + x, data["scripts"][x]);
             LIPI.set_html("3" + x, data["scripts"][x]);
-            LIPI.set_html("o_" + x, LIPI.substring(data["scripts"][x], 0, -4));
+            LIPI.set_html("o_" + x, LIPI.substring(data["scripts"][x], 0, -4 - (LIPI.includes(this.up_lipyaH, x) ? 1 : 0)));
             LIPI.set_html(x, data["scripts"][x]);
         };
         LipiLekhikA.set_interface_lang(this.anulipyaH[val]);
@@ -511,7 +529,7 @@ class अनुप्रयोगः {
                 "title": val,
                 "alt": val
             });
-        }
+        };
     };
     set_font_size() {
         let x = lang_sizes[LIPI.get_value("app_lang")];
@@ -523,16 +541,16 @@ class अनुप्रयोगः {
         if (mode == 0) {
             this.karya = !this.karya;
             let elm = $("#dynamic"),
-                msg = "Lipi-LekhikA-Off";
-            if (this.karya)
-                elm.removeClass(msg);
-            else
-                elm.addClass(msg);
+                msg = "lipi-lekhika";
             let val = [
                 ["off", "on"],
                 ""
             ];
             val[1] = val[0][this.karya ? 1 : 0];
+            if (this.karya)
+                elm.attr(msg, val[1]);
+            else
+                elm.attr(msg, val[1]);
             let cl = `img${val[1]}`;
             elm = $("#main_switch").addClass(cl);
             elm.removeClass(`img${val[0][Math.abs(val[0].indexOf(val[1])-1)]}`);
@@ -544,16 +562,17 @@ class अनुप्रयोगः {
         } else if (mode == 1) {
             this.sahayika_usage = !this.sahayika_usage;
             let elm = $("#dynamic"),
-                msg = "Lekhan-SahAyikA-Off";
-            if (this.sahayika_usage)
-                elm.removeClass(msg);
-            else
-                elm.addClass(msg);
+                msg = "lekhan-sahayika";
             let val = [
                 ["off1", "on1"],
                 ""
             ];
             val[1] = val[0][this.sahayika_usage ? 1 : 0];
+            let vl = LIPI.substring(val[1], 0, -1);
+            if (this.sahayika_usage)
+                elm.attr(msg, vl);
+            else
+                elm.attr(msg, vl);
             let cl = `img${val[1]}`;
             elm = $("#sahayika_switch").addClass(cl);
             elm.removeClass(`img${val[0][Math.abs(val[0].indexOf(val[1])-1)]}`);
@@ -564,7 +583,7 @@ class अनुप्रयोगः {
             });
         }
     };
-    set_cookie(name, val, defal = false) {
+    store_values(name, val, defal = false) {
         if (defal) {
             switch (name) {
                 case "script":
@@ -590,27 +609,27 @@ class अनुप्रयोगः {
             storage.setItem(name, val);
         }
     };
-    get_cookie(name) {
+    get_values(name) {
         if (name in storage) {
             let val = storage[name];
             switch (name) {
                 case "script":
                     if (!LIPI.includes(lang_list, val)) {
                         val = "Hindi";
-                        this.set_cookie("script", val);
+                        this.store_values("script", val);
                     }
                     break;
                 case "app_lang":
                     if (!(val in display_lang_list[1])) {
                         val = "English";
-                        this.set_cookie("app_lang", val);
+                        this.store_values("app_lang", val);
                     }
                     break;
             }
             return val;
         } else {
-            this.set_cookie(name, "", true);
-            return app.get_cookie(name);
+            this.store_values(name, "", true);
+            return app.get_values(name);
         }
     };
     getUrlVars() {
@@ -750,7 +769,7 @@ for (x in ah) {
         if (ah[x] == "amam")
             args[x] = ah[x];
 };
-let lng1 = app.get_cookie("app_lang");
+let lng1 = app.get_values("app_lang");
 if ("app_lang" in args)
     lng1 = args["app_lang"];
 $.ajax({
@@ -760,6 +779,8 @@ $.ajax({
         app.init_html();
         $("#bdy").children().hide();
         app.initialize(config[1]);
+        $("#sahayika_switch").addClass(`imgon1`);
+        $("#main_switch").addClass(`imgon`);
         app.set_lang_text(lng1);
         on_loaded();
     }
@@ -799,19 +820,14 @@ if (!debug)
 $("#lipi_icon").remove();
 
 function on_loaded() {
-    $(".cpy_btn").html("<span class='imgs cpy_btn_img'></span>");
-    // $("#main_switch").addClass(`img${["off","on"][LipiLekhikA.karya?1:0]}`);
-    $("#main_switch").addClass(`imgon`);
-    // $("#sahayika_switch").addClass(`img${["off1","on1"][LipiLekhikA.sahayika_usage?1:0]}`);
-    $("#sahayika_switch").addClass(`imgon1`);
     if (!("app_lang" in args))
-        LIPI.set_value("app_lang", app.get_cookie("app_lang"));
+        LIPI.set_value("app_lang", app.get_values("app_lang"));
     else
         LIPI.set_value("app_lang", args["app_lang"]);
     let lng = LIPI.get_value("app_lang");
     app.loaded_display_lng.push(lng);
     if (!("lang" in args))
-        LIPI.set_value("main_lang", app.get_cookie("script"));
+        LIPI.set_value("main_lang", app.get_values("script"));
     else
         LIPI.set_value("main_lang", args["lang"]);
     if ("mode" in args) {
@@ -837,24 +853,53 @@ function on_loaded() {
     LipiLekhikA.set_lang_and_state(akl, app.set_sa_val, true);
     app.font_add(akl);
     app.set_image(akl);
-    LIPI.set_html("menu_btn", '<svg viewBox="0 0 512 512"><title/><g><path d="M441.13,166.52h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/><path d="M441.13,279.72h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/><path d="M441.13,392.92h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/></g></svg>')
-    $(".cpy_btn").html('<svg class="cpy_btn_img" viewBox="0 0 21 22"><g class="प्रति" fill="black" transform="translate(-86.000000, -127.000000)"><g transform="translate(86.500000, 127.000000)"><path d="M14,0 L2,0 C0.9,0 0,0.9 0,2 L0,16 L2,16 L2,2 L14,2 L14,0 L14,0 Z M17,4 L6,4 C4.9,4 4,4.9 4,6 L4,20 C4,21.1 4.9,22 6,22 L17,22 C18.1,22 19,21.1 19,20 L19,6 C19,4.9 18.1,4 17,4 L17,4 Z M17,20 L6,20 L6,6 L17,6 L17,20 L17,20 Z"/></g></g></svg>');
+    LIPI.set_html("menu_btn", '<svg width="35px" height="35px" viewBox="0 0 512 512"><g><path d="M441.13,166.52h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/><path d="M441.13,279.72h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/><path d="M441.13,392.92h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/></g></svg>')
+    $(".cpy_btn").html('<svg class="cpy_btn_img" viewBox="0 0 21 22"><g class="प्रति" transform="translate(-86.000000, -127.000000)"><g transform="translate(86.500000, 127.000000)"><path d="M14,0 L2,0 C0.9,0 0,0.9 0,2 L0,16 L2,16 L2,2 L14,2 L14,0 L14,0 Z M17,4 L6,4 C4.9,4 4,4.9 4,6 L4,20 C4,21.1 4.9,22 6,22 L17,22 C18.1,22 19,21.1 19,20 L19,6 C19,4.9 18.1,4 17,4 L17,4 Z M17,20 L6,20 L6,6 L17,6 L17,20 L17,20 Z"/></g></g></svg>');
     $(".cpy_btn").hover((e) => {
         let elm = e.delegateTarget;
         e = e.type;
-        $(elm).find(".प्रति").css("fill", {
-            "mouseenter": "brown",
-            "mouseleave": "black"
-        } [e]);
+        e = ["mouseenter", "mouseleave"].indexOf(e);
+        elm = $(elm).find(".प्रति");
+        elm.css("fill", e == 0 ? "black" : "");
     });
     $(".git").html('<svg viewBox="0 0 512 512"><g><path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14  c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5 c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7 c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3 c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7 C480,134.8,379.7,32,256,32z"/></g></svg>')
     if (LIPI.includes(["Urdu", "Romanized", "Kashmiri"], akl))
         $("#sa_mode").hide();
     app.font_add(LIPI.get_value("lang1"));
+    $(".bhAShAnyAH").hover((e) => {
+        let elm = e.delegateTarget;
+        e = e.type;
+        e = ["mouseenter", "mouseleave"].indexOf(e);
+        elm = $(elm).find(".bhAShAnyAH_name");
+        elm.css("color", e == 0 ? "blue" : "");
+    });
+    $("#parivartak").hover((e) => {
+        let elm = $("#convert_img");
+        e = e.type;
+        e = ["mouseenter", "mouseleave"].indexOf(e);
+        elm.css("background-color", e == 0 ? "blue" : "");
+        let cl = "convert_anim";
+        if (e == 0)
+            elm.addClass(cl);
+        else
+            elm.removeClass(cl);
+    });
+    $(".menu_items").hover((e) => {
+        let elm = e.delegateTarget;
+        e = e.type;
+        e = ["mouseenter", "mouseleave"].indexOf(e);
+        elm = $(elm).find(".menu_msg");
+        let cl = "menu_msg_hover";
+        if (e == 0)
+            elm.addClass(cl);
+        else
+            elm.removeClass(cl);
+    });
     app.font_add(LIPI.get_value("lang2"));
     app.add_direction($("#dynamic"), akl);
     app.add_direction($("#first"), LIPI.get_value("lang1"));
     app.add_direction($("#second"), LIPI.get_value("lang2"));
+    app.add_convert_msg();
     app.set_font_size();
     $.lipi_lekhika();
 };

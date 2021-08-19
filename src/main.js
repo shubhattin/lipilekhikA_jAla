@@ -220,7 +220,7 @@ class लिपिलेखिकापरिवर्तक {
     mukhya(elmt, e) {
         if (!this.karya)
             return;
-        if (LIPI.includes(elmt.attr("class"), "Lipi-LekhikA-Off"))
+        if (elmt.attr("lipi-lekhika") != "on")
             return;
         e = e.data;
         if (e == null || e == undefined) {
@@ -896,9 +896,13 @@ jQuery.fn.lipi_lekhika_add = (attri = false) => {
 };
 jQuery.lipi_lekhika = (time = null) => {
     let elm = $(".Lipi-LekhikA");
+    let lek = ["lipi-lekhika", "lekhan-sahayika"];
     for (let x of elm) {
         if (!LIPI.includes(["span", "div", "textarea", "input"], x.tagName.toLowerCase()))
             continue;
+        for (let v of lek)
+            if (elm.attr(v) == undefined)
+                elm.attr(v, "on");
         x.oninput = () => {
             LipiLekhikA.mukhya($(x), event);
         };
@@ -940,8 +944,8 @@ class लिपिलेखिकालेखनसहायिका {
         row1 += `<td></td>`;
         row2 += `<td></td>`;
         for (let x = 0; x < 60; x++) {
-            row1 += `<td></td>`;
-            row2 += `<td></td>`;
+            row1 += `<td class="लिপিಜಃ"></td>`;
+            row2 += `<td class="लिপিಜಂ"></td>`;
         };
         let table = `<table><tbody><tr>${row2}</tr><tr>${row1}</tr></tbody></table><div style="font-size: 10.5px;color: purple;"></div>`;
         this.elm.html(table);
@@ -1002,8 +1006,6 @@ class लिपिलेखिकालेखनसहायिका {
             "text-align": "center",
             "cursor": "grab"
         });
-        $(tr1).css("padding", "0.5px");
-        $(tr2).css("padding", "0.5px");
         $(this.bhaNDAra.key1).css({
             "color": "brown",
             "font-size": "19.5px",
@@ -1073,10 +1075,11 @@ class लिपिलेखिकालेखनसहायिका {
                 sah = true;
             else if (LIPI.includes(bh.tbody, p) && !LIPI.includes([bh.key1, bh.key2], event)) {
                 sah = true;
-                let el = o.adhar;
+                let el = o.adhar,
+                    mUla = p.style.cursor;
                 let st = (b) => p.style.cursor = b;
                 st("grabbing");
-                setTimeout(() => st("grab"), 150);
+                setTimeout(() => st(mUla), 150);
                 for (let x of event.value) {
                     // if (LIPI.includes(["input", "textarea"], el[0].tagName.toLowerCase())) {
                     obj.from_click = true;
@@ -1094,6 +1097,10 @@ class लिपिलेखिकालेखनसहायिका {
                 return;
             obj.clear_all_val(true);
         });
+        let n = ":hover{color:blue;}",
+            l = ".लिপি",
+            p = "{padding:0.5px;}";
+        this.elm.append(`<style>${l}ಜಃ${n}${l}ಜಂ${n}${l}ಜಃ${p}${l}ಜಂ${p}</style>`)
     }
     hide_other(s = false) {
         let elm = LipiLekhikA.sahayika;
@@ -1131,7 +1138,7 @@ class लिपिलेखिकालेखनसहायिका {
         };
     }
     show(v) {
-        if (LIPI.includes(v["elm"].attr("class"), "Lekhan-SahAyikA-Off"))
+        if (v["elm"].attr("lekhan-sahayika") != "on")
             return;
         this.reset_capital_status = false;
 
