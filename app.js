@@ -147,7 +147,7 @@ class अनुप्रयोगः {
                     } else exec();
                 });
                 val = "#menu_body";
-                t = yuj(val, `<div class="menu_items ekam-left flex menu_borders menu_about"><span id="about_button" class="imgs"></span><span id="about_msg" class="menu_msg"></span></div>`);
+                t = yuj(val, `<div class="menu_items ekam-left flex menu_borders"><span id="about_button" class="imgs"></span><span id="about_msg" class="menu_msg"></span></div>`);
                 t.click(() => {
                     app.change_page('about');
                     $("#menu_blocker").trigger("click");
@@ -855,46 +855,10 @@ function on_loaded() {
     app.set_image(akl);
     LIPI.set_html("menu_btn", '<svg width="35px" height="35px" viewBox="0 0 512 512"><g><path d="M441.13,166.52h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/><path d="M441.13,279.72h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/><path d="M441.13,392.92h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/></g></svg>')
     $(".cpy_btn").html('<svg class="cpy_btn_img" viewBox="0 0 21 22"><g class="प्रति" transform="translate(-86.000000, -127.000000)"><g transform="translate(86.500000, 127.000000)"><path d="M14,0 L2,0 C0.9,0 0,0.9 0,2 L0,16 L2,16 L2,2 L14,2 L14,0 L14,0 Z M17,4 L6,4 C4.9,4 4,4.9 4,6 L4,20 C4,21.1 4.9,22 6,22 L17,22 C18.1,22 19,21.1 19,20 L19,6 C19,4.9 18.1,4 17,4 L17,4 Z M17,20 L6,20 L6,6 L17,6 L17,20 L17,20 Z"/></g></g></svg>');
-    $(".cpy_btn").hover((e) => {
-        let elm = e.delegateTarget;
-        e = e.type;
-        e = ["mouseenter", "mouseleave"].indexOf(e);
-        elm = $(elm).find(".प्रति");
-        elm.css("fill", e == 0 ? "black" : "");
-    });
     $(".git").html('<svg viewBox="0 0 512 512"><g><path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14  c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5 c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7 c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3 c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7 C480,134.8,379.7,32,256,32z"/></g></svg>')
     if (LIPI.includes(["Urdu", "Romanized", "Kashmiri"], akl))
         $("#sa_mode").hide();
     app.font_add(LIPI.get_value("lang1"));
-    $(".bhAShAnyAH").hover((e) => {
-        let elm = e.delegateTarget;
-        e = e.type;
-        e = ["mouseenter", "mouseleave"].indexOf(e);
-        elm = $(elm).find(".bhAShAnyAH_name");
-        elm.css("color", e == 0 ? "blue" : "");
-    });
-    $("#parivartak").hover((e) => {
-        let elm = $("#convert_img");
-        e = e.type;
-        e = ["mouseenter", "mouseleave"].indexOf(e);
-        elm.css("background-color", e == 0 ? "blue" : "");
-        let cl = "convert_anim";
-        if (e == 0)
-            elm.addClass(cl);
-        else
-            elm.removeClass(cl);
-    });
-    $(".menu_items").hover((e) => {
-        let elm = e.delegateTarget;
-        e = e.type;
-        e = ["mouseenter", "mouseleave"].indexOf(e);
-        elm = $(elm).find(".menu_msg");
-        let cl = "menu_msg_hover";
-        if (e == 0)
-            elm.addClass(cl);
-        else
-            elm.removeClass(cl);
-    });
     app.font_add(LIPI.get_value("lang2"));
     app.add_direction($("#dynamic"), akl);
     app.add_direction($("#first"), LIPI.get_value("lang1"));
