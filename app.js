@@ -60,22 +60,22 @@ class अनुप्रयोगः {
     };
     init_html() {
         let yuj = (x, y) => jQuery(y).appendTo(x);
-
-        let el = $("#back_btn").click(() => {
-            app.change_page("main");
-            $("#back_btn").hide();
-        });
-        el.css("display", "none");
-        $("#parivartak").click(() => {
-            app.change_page("inter");
-        });
-        $("#up_usage").click(() => {
-            app.set_image($("#main_lang").val());
-            $('#prayog').show();
-            $('#main1').hide();
-        });
-
-        function menu() {
+        if (true) { //main1
+            let el = $("#back_btn").click(() => {
+                app.change_page("main");
+                $("#back_btn").hide();
+            });
+            el.css("display", "none");
+            $("#parivartak").click(() => {
+                app.change_page("inter");
+            });
+            $("#up_usage").click(() => {
+                app.set_image($("#main_lang").val());
+                $('#prayog').show();
+                $('#main1').hide();
+            });
+        }
+        if (true) { //menu
             let left = 230,
                 time = 170,
                 op = "0.43";
@@ -132,6 +132,7 @@ class अनुप्रयोगः {
                     app.loaded_display_lng.push(v);
                     $.ajax({
                         url: app.pratyaya_sanchit + `/lang/${v}.json`,
+                        dataType: "json",
                         success: (result) => {
                             app.lang_texts[v] = result;
                             exec();
@@ -143,21 +144,21 @@ class अनुप्रयोगः {
                 app.change_page('about');
                 $("#menu_blocker").trigger("click");
             });
-        };
-        menu();
-
-        $("#lic").click(() => {
-            $.ajax({
-                url: app.pratyaya_sanchit + `/LICENCE.txt`,
-                success: (result) => {
-                    $("#licence").html(LIPI.replace_all(result, "\n", app.br));
-                    $("#licence").show();
-                    $("#lic").hide();
-                }
+        }
+        if (true) { //about
+            $("#lic").click(() => {
+                $.ajax({
+                    url: app.pratyaya_sanchit + `/LICENCE.txt`,
+                    dataType: "text",
+                    success: (result) => {
+                        $("#licence").html(LIPI.replace_all(result, "\n", app.br));
+                        $("#licence").show();
+                        $("#lic").hide();
+                    }
+                });
             });
-        });
-
-        function main() {
+        }
+        if (true) { //main
             $("#sahayika_switch").click(() => {
                 app.set_onoff_img(1);
             });
@@ -240,10 +241,8 @@ class अनुप्रयोगः {
                     y += "</div>";
             }
             yuj("#bhaashhaah1", y);
-        };
-        main();
-
-        function inter() {
+        }
+        if (true) { //inter prayog cha
             $("#lang1").on("change", () => {
                 if (app.auto) {
                     function hjk() {
@@ -263,12 +262,8 @@ class अनुप्रयोगः {
                     false: "off"
                 } [app.inter_on_off[0]]);
             });
-            $("#set_text2").click(() => {
-                app.set_inter_values(1);
-            });
-            $("#cp2").click(() => {
-                app.copy_text('first');
-            });
+            $("#set_text2").click(() => app.set_inter_values(1));
+            $("#cp2").click(() => app.copy_text('first'));
             $("#first").on("input", function () {
                 app.edited();
                 if (app.auto)
@@ -286,12 +281,8 @@ class अनुप्रयोगः {
                 app.add_convert_msg();
                 $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
             });
-            $("#cp3").click(() => {
-                app.copy_text('second');
-            });
-            $("#set_text1").click(() => {
-                app.set_inter_values(2);
-            });
+            $("#cp3").click(() => app.copy_text('second'));
+            $("#set_text1").click(() => app.set_inter_values(2));
             $(".img_inter2").click(() => {
                 app.inter_on_off[1] = !app.inter_on_off[1];
                 $("#second").attr("lipi-lekhika", {
@@ -326,14 +317,9 @@ class अनुप्रयोगः {
                 }
             });
             $("#auto_img").trigger("click");
-            $("#down_arrow_img").click(() => {
-                $('#second').val(LipiLekhikA.antarparivartan(LIPI.get_value("first"), $('#lang1').val(), $('#lang2').val()));
-            });
-            $("#up_arrow_img").click(() => {
-                $('#first').val(LipiLekhikA.antarparivartan(LIPI.get_value("second"), $('#lang2').val(), $('#lang1').val()));
-            });
-        };
-        inter();
+            $("#down_arrow_img").click(() => $('#second').val(LipiLekhikA.antarparivartan(LIPI.get_value("first"), $('#lang1').val(), $('#lang2').val())));
+            $("#up_arrow_img").click(() => $('#first').val(LipiLekhikA.antarparivartan(LIPI.get_value("second"), $('#lang2').val(), $('#lang1').val())));
+        }
         this.html_initialized = true;
     };
     add_convert_msg() {
@@ -730,11 +716,14 @@ if ("app_lang" in args)
     lng1 = args["app_lang"];
 $.ajax({
     url: app.pratyaya_sanchit + `/lang/${lng1}.json`,
+    dataType: "json",
     success: (result) => {
         $.ajax({
-            url: LIPI.substring(app.pratyaya_sanchit, 0, -3) + "app.html",
+            url: LIPI.substring(app.pratyaya_sanchit, 0, -3) + "app.xml",
+            dataType: "text",
             success: (result) => {
-                result = LIPI.replace_all(result, "{\\n}", app.br);
+                result = LIPI.replace_all(result, "<br>", app.br);
+                console.log(result)
                 $("body").append(result);
                 app.init_html();
                 $("#bdy").children().hide();

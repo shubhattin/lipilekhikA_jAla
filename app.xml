@@ -3,24 +3,24 @@
         <div class="in-flex">
             <span id="menu_btn" class="imgs"></span>
             <span tlt="back" class="back titles imgs" id="back_btn"></span>
+            <button id="parivartak" tlt="parivartak" class="in-flex titles">
+                <span id="convert_img" class="imgs btn_img"></span>
+                <span id="lbl3" lipi="parivartak" class="lipi"></span>
+            </button>
+            <span tlt='usage_btnm' class='usage_btnm imgs titles' id='up_usage'></span>
         </div>
-        <button id="parivartak" tlt="parivartak" class="in-flex titles">
-            <span id="convert_img" class="imgs btn_img"></span>
-            <span id="lbl3" lipi="parivartak" class="lipi"></span>
-        </button>
-        <span tlt='usage_btnm' class='usage_btnm imgs titles' id='up_usage'></span>
         <div id="bdy">
             <div id="about">
-                {\n}
+                <br>
                 <p id="about_text" lipi="about_text" class="lipi"></p>
-                <p id="paricaya"></p>{\n}
+                <p id="paricaya"></p><br>
                 <span class="in-flex">
                     <button id="lic" lipi="show_lic" class="lipi"></button>
                     <a class='web_only dvayam-left' href='https://api.lipilekhika.com/source' target='_blank'>
                         <span id='git' class='imgs git'></span>
                     </a>
-                </span>{\n}
-                <div id="licence"></div>
+                </span><br>
+                <div id="licence" style="display:none"></div>
             </div>
             <div id="main">
                 <div class="flex">
@@ -34,7 +34,8 @@
                             <label for="sa_14" id="sa_1" class="black-yellow"></label>
                         </span>
                     </span>
-                    <span id="sahayika_switch" tlt="imgon1" img_off="imgoff1" img_on="imgon1" class="imgs titles checkbox_img"></span>
+                    <span id="sahayika_switch" tlt="imgon1" img_off="imgoff1" img_on="imgon1"
+                        class="imgs titles checkbox_img"></span>
                     <span id="lekhan_sahayika" tlt="lekhan_sahayika" lipi="sahayika_text" class="lipi titles"></span>
                 </div>
                 <div id="dynamic"></div>
@@ -51,7 +52,8 @@
                     <button id="cp2" class="cpy_btn ekam titles" tlt="cpy_btn"></button>
                     <span class="imgs checkbox_img img_inter1" img_on="imgon2" img_off="imgoff2" img_check=0></span>
                 </div>
-                <textarea id="first" class="normal Lipi-LekhikA" lipi-lekhika="off" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
+                <textarea id="first" class="normal Lipi-LekhikA" lipi-lekhika="off" spellcheck="false"
+                    autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
                 <div class="in-flex">
                     <select class="lang" id="lang2"></select>
                     <button id="set_text1" class="set_text ekam-left"></button>
@@ -61,7 +63,8 @@
                     <span id="auto_img" class="imgs ekam-right"></span>
                     <span class="imgs checkbox_img img_inter2" img_on="imgon2" img_off="imgoff2" img_check=0></span>
                 </div>
-                <textarea id="second" class="normal Lipi-LekhikA" lipi-lekhika="off" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
+                <textarea id="second" class="normal Lipi-LekhikA" lipi-lekhika="off" spellcheck="false"
+                    autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
                 <div>
                     <span id='no_prvrtn' lipi='no_prvrtn' class='lipi'></span>
                 </div>
@@ -75,13 +78,13 @@
     <span id="prayog">
         <select class="lang" id="xcv"></select>
         <span id="close1_img" tlt="close_img" class="imgs titles"></span>
-        {\n}<img id="image" tlt="image">
+        <br><img id="image" tlt="image">
         <div id="shoonyam" lipi="anya_nirdesh" class="lipi"></div>
     </span>
 </span>
 <div id="menu_container" style="display:none;">
     <div id="menu_body">
-        <div id="lang_change_container">
+        <div id="lang_change_container" class="in-flex">
             <span id="lang_img" tlt="app_lang" class="imgs titles"></span>
             <select id="app_lang" tlt="app_lang" class="titles"></select>
         </div>

@@ -39,6 +39,7 @@ class लिपिलेखिकासहायक {
             return;
         $.ajax({
             url: this.sanchit + `/antar.json`,
+            dataType: "json",
             success: (result) => {
                 this.pratyakSharAH = result;
                 if (callback != null)
@@ -52,6 +53,7 @@ class लिपिलेखिकासहायक {
         if (!this.includes(this.loaded_scripts, lang)) {
             return $.ajax({
                 url: this.sanchit + `/${lang}.json`,
+                dataType: "json",
                 success: (result) => {
                     this.akSharAH[lang] = result;
                     this.loaded_scripts.push(lang);
@@ -1063,6 +1065,7 @@ class लिपिलेखिकालेखनसहायिका {
             if (!this.lang_loaded)
                 $.ajax({
                     url: `${LIPI.sanchit}/sahayika.json`,
+                    dataType: "json",
                     success: (result) => {
                         this.display = result;
                         this.set_lang(lng);
