@@ -719,11 +719,10 @@ $.ajax({
     dataType: "json",
     success: (result) => {
         $.ajax({
-            url: LIPI.substring(app.pratyaya_sanchit, 0, -3) + "app.xml",
+            url: LIPI.substring(app.pratyaya_sanchit, 0, -3) + "app.asp",
             dataType: "text",
             success: (result) => {
                 result = LIPI.replace_all(result, "<br>", app.br);
-                console.log(result)
                 $("body").append(result);
                 app.init_html();
                 $("#bdy").children().hide();
