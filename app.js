@@ -60,6 +60,7 @@ class अनुप्रयोगः {
     };
     init_html() {
         let yuj = (x, y) => jQuery(y).appendTo(x);
+
         let el = $("#back_btn").click(() => {
             app.change_page("main");
             $("#back_btn").hide();
@@ -858,7 +859,7 @@ function on_loaded() {
     app.add_direction($("#first"), LIPI.get_value("lang1"));
     app.add_direction($("#second"), LIPI.get_value("lang2"));
     app.add_convert_msg();
-    app.set_font_siz
+    app.set_font_size();
     $.lipi_lekhika();
     setTimeout(() => {
         $("#dynamic").html("<p></p>");
