@@ -7,7 +7,7 @@ class अनुप्रयोगः {
         this.c = 0;
         this.lang_texts = {};
         this.pratyaya_sanchit = {
-            "web": "https://cdn.jsdelivr.net/gh/nirukta/a@main/src",
+            "web": "https://cdn.jsdelivr.net/gh/ofsfobnelip/b/src",
             "local": "src"
         } [mode];
         this.translate = (f, t, v) => {
@@ -51,339 +51,288 @@ class अनुप्रयोगः {
         this.anulipyaH = LIPI.dict_rev(this.lipyaH);
         this.anulipyaH["English"] = "English";
         this.once_editded = false;
+        this.inter_on_off = [false, false];
+        this.do_not = false;
         this.auto = !false;
         this.html_initialized = false;
         this.current_page = "main";
         this.args = this.getUrlVars();
     };
     init_html() {
-        let yuj = (x, y) => jQuery(y).appendTo(x),
-            yunj = (x, y) => x.append(y);
+        let yuj = (x, y) => jQuery(y).appendTo(x);
+        let el = $("#back_btn").click(() => {
+            app.change_page("main");
+            $("#back_btn").hide();
+        });
+        el.css("display", "none");
+        $("#parivartak").click(() => {
+            app.change_page("inter");
+        });
+        $("#up_usage").click(() => {
+            app.set_image($("#main_lang").val());
+            $('#prayog').show();
+            $('#main1').hide();
+        });
 
-        function body() {
-            yuj("body", `<span id="main_section"></span>`);
-            yuj("#main_section", `<span id="main1"></span><span id="prayog"></span>`);
-        };
-
-        function mukhya() {
-            let val = "#main1",
-                t = null;
-            t = yuj(val, '<div class="in-flex"></div>');
-            yunj(t, `<span id="menu_btn" class="imgs"></span>`);
-            yunj(t, '<span class="back imgs" id="back_btn"></span>');
-            let el = $("#back_btn").click(() => {
-                app.change_page("main");
-                $("#back_btn").hide();
-            });
-            el.css("display", "none");
-            yunj(t, '<button id="parivartak" class="in-flex"><span id="convert_img" class="imgs btn_img"></span><span id="lbl3"></span></button>');
-            $("#parivartak").click(() => {
-                app.change_page("inter");
-            });
-            yunj(t, "<span class='usage_btnm imgs' id='up_usage'></span>");
-            $("#up_usage").click(() => {
-                app.set_image(LipiLekhikA.script);
-                LIPI.get_element('prayog').style.display = 'block';
-                LIPI.get_element('main1').style.display = 'none';
-            });
-
-            function menu() {
-                let left = 230,
-                    time = 170,
-                    mode = "linear";
-                yuj("body", `<div id="menu_container" style="display:none;"><div id="menu_body"></div><div id="menu_blocker" style="display:none;"></div></div>`);
-                let val = "#menu_body";
-                $("#menu_body").css("left", `-${left}px`)
-                $("#menu_btn").click(() => {
-                    $("html, body").css({
-                        "overflow": "hidden",
-                        "height": "100%"
-                    });
-                    $("#menu_container").show();
-                    $("#menu_body").animate({
-                        "left": "0px"
-                    }, time, mode, () => $("#menu_blocker").show());
-                    $("#main_section").animate({
-                        "opacity": "0.43"
-                    }, time - 120, mode);
-                    app.menu_sthiti = true;
+        function menu() {
+            let left = 230,
+                time = 170,
+                op = "0.43";
+            yuj("#menu_body", `<style>@keyframes menu_Agama{from{left:-${left}px}to{left:0px}}@keyframes menu_gama{to{left:-${left}px}from{left:0px}}@keyframes main_opac_add{from{opacity:1}to{opacity:${op}}}@keyframes main_opac_remove{to{opacity:1}from{opacity:${op}}}</style>`)
+            $("#menu_body").css("left", `-${left}px`)
+            $("#menu_btn").click(() => {
+                $("html, body").css({
+                    "overflow": "hidden",
+                    "height": "100%"
                 });
-                $("#menu_blocker").click(() => {
-                    $("html, body").attr("style", "");
-                    app.menu_sthiti = false;
-                    $("#menu_blocker").hide();
-                    $("#menu_body").animate({
-                        "left": `-${left}px`
-                    }, time + 10, mode, () => $("#menu_container").hide());
-                    $("#main_section").animate({
-                        "opacity": "1"
-                    }, time - 120, mode);
+                $("#menu_container").show();
+                $("#menu_body").css({
+                    "animation-name": "menu_Agama",
+                    "animation-duration": `${time}ms`,
+                    "left": "0px"
                 });
-                yuj(val, `<div id="lang_change_container" class="flex"></div>`);
-                val = "#lang_change_container";
-                yuj(val, `<span id="lang_img" class="imgs"></span>`);
-                t = yuj(val, `<select id="app_lang"></select>`);
-                for (let p in display_lang_list[0]) {
-                    let v = display_lang_list[0][p];
-                    yunj(t, `<option id="${p}" value="${v}" class="langsw">${v}</option>`)
+                setTimeout(() => $("#menu_blocker").show(), time);
+                $("#main_section").css({
+                    "animation-name": "main_opac_add",
+                    "animation-duration": `${time-80}ms`,
+                    "opacity": op
+                });
+                app.menu_sthiti = true;
+            });
+            $("#menu_blocker").click(() => {
+                $("html, body").attr("style", "");
+                app.menu_sthiti = false;
+                $("#menu_blocker").hide();
+                $("#menu_body").css({
+                    "animation-name": "menu_gama",
+                    "animation-duration": `${time+10}ms`,
+                    "left": `-${left}px`
+                });
+                setTimeout(() => $("#menu_container").hide(), time + 10);
+                $("#main_section").css({
+                    "animation-name": "main_opac_remove",
+                    "animation-duration": `${time-80}ms`,
+                    "opacity": "1"
+                });
+            });
+            for (let p in display_lang_list[0]) {
+                let v = display_lang_list[0][p];
+                yuj("#app_lang", `<option tlt="${p}" value="${v}" class="langsw titles">${v}</option>`)
+            };
+            $("#app_lang").on("change", function () {
+                let v = LIPI.get_value('app_lang');
+                let exec = () => {
+                    app.store_values('app_lang', LIPI.get_value('app_lang'));
+                    app.set_lang_text();
+                    app.set_font_size();
+                    app.add_convert_msg();
                 };
-                t.on("change", function () {
-                    let v = LIPI.get_value('app_lang');
-                    let exec = () => {
-                        app.store_values('app_lang', LIPI.get_value('app_lang'));
-                        app.set_lang_text();
-                        app.set_font_size();
-                        app.add_convert_msg();
-                    };
-                    if (!LIPI.includes(app.loaded_display_lng, v)) {
-                        app.loaded_display_lng.push(v);
-                        $.ajax({
-                            url: app.pratyaya_sanchit + `/lang/${v}.json`,
-                            success: (result) => {
-                                app.lang_texts[v] = result;
-                                exec();
-                            }
-                        });
-                    } else exec();
-                });
-                val = "#menu_body";
-                t = yuj(val, `<div class="menu_items ekam-left flex menu_borders"><span id="about_button" class="imgs"></span><span id="about_msg" class="menu_msg"></span></div>`);
-                t.click(() => {
-                    app.change_page('about');
-                    $("#menu_blocker").trigger("click");
-                });
-                yuj(val, `<div id="info_links" class="web_only vr-flex"></div>`);
-                val = "#info_links";
-                yuj(val, `<a target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://rebrand.ly/lekhika"><span class="imgs home_img"></span><span id="home_msg" class="menu_msg"></span></a>`);
-                yuj(val, `<a target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://rebrand.ly/lekhikadownload"><span class="imgs download_img"></span><span id="download_msg" class="menu_msg"></span></a>`);
-                yuj(val, `<a target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://api.lipilekhika.com/source"><span class="imgs git"></span><span id="source_msg" class="menu_msg"></span></a>`);
-            };
-            menu();
-            val = "#main1";
-            yuj(val, '<div id="bdy"></div>');
-            val = "#bdy";
-            yuj(val, `<div id="about"></div><div id="main"></div><div id="inter"></div>`);
-            val = "#about";
-
-            function about() {
-                let val = "#about";
-                yuj(val, `${app.br}<p id="about_text"></p><p id="paricaya"></p></span>${app.br}<button id="lic"></button>`);
-                yuj(val, "<span class='web_only dvayam-left' class='dvayam-left'><a href='https://api.lipilekhika.com/source' target='_blank'><span id='git' class='imgs git'></span></a></span>");
-                yuj(val, `${app.br}<div id="licence"></div>`);
-                $("#lic").click(() => {
+                if (!LIPI.includes(app.loaded_display_lng, v)) {
+                    app.loaded_display_lng.push(v);
                     $.ajax({
-                        url: app.pratyaya_sanchit + `/LICENCE.txt`,
+                        url: app.pratyaya_sanchit + `/lang/${v}.json`,
                         success: (result) => {
-                            $("#licence").html(LIPI.replace_all(result, "\n", app.br));
-                            $("#licence").show();
-                            $("#lic").hide();
+                            app.lang_texts[v] = result;
+                            exec();
                         }
                     });
-                });
-            };
-            about();
-
-            function main() {
-                let val = "#main";
-                let t = yuj(val, '<div class="flex"></div>');
-                yunj(t, '<span id="sa_mode" class="dvayam-right in-flex"></span>');
-                val = "#sa_mode";
-                yuj(val, '<input type="radio" class="sa_radio" name="sanskrit" id="sa_04"></input><label for="sa_04" id="sa_0" class="black-yeloow"></label>');
-                yuj(val, '<input type="radio" class="sa_radio" name="sanskrit" id="sa_14"></input><label for="sa_14" id="sa_1" class="black-yellow"></label>');
-                val = "#main";
-                t = yunj(t, '<span id="sahayika_switch" class="imgs"></span>');
-                $("#sahayika_switch").click(() => {
-                    app.set_onoff_img(1);
-                });
-                t = yunj(t, `<span id="lekhan_sahayika"></span>`);
-                $("#lekhan_sahayika").click(function () {
-                    this.style.color = 'white';
-                    app.set_onoff_img(1);
-                    setTimeout(() => $('#lekhan_sahayika').css("color", ""), 250);
-                });
-                $("#sa_04").click(() => {
-                    LipiLekhikA.sa_lang = 0;
-                });
-                $("#sa_14").click(() => {
-                    LipiLekhikA.sa_lang = 1;
-                });
-                val = "#main";
-                t = yuj(val, '<div id="dynamic"></div>');
-                $('#dynamic').summernote({
-                    toolbar: [
-                        ['style', ['bold', "italic", 'clear', "undo", "redo"]]
-                    ],
-                    focus: true,
-                });
-                $("#dynamic").remove();
-                $(".note-editable")[0].id = "dynamic";
-                let elm = $("#dynamic");
-                elm.attr({
-                    spellcheck: "false",
-                    autocapitalize: "none",
-                    autocomplete: "off",
-                    autocorrect: "off",
-                    class: "Lipi-LekhikA"
-                });
-                elm.css({
-                    margin: "0",
-                    padding: "4px"
-                });
-                $(".note-toolbar").css("background-color", "white");
-                $(".note-btn").css("border", "1px solid black");
-                yuj(val, '<button id="table_btn" class="in-flex"><span class="usage_btnm imgs btn_img"></span><span id="table"></span></button>');
-                $("#table_btn").click(() => {
-                    app.set_image(LipiLekhikA.script);
-                    LIPI.get_element('prayog').style.display = 'block';
-                    LIPI.get_element('main1').style.display = 'none';
-                });
-                t = $(".note-style").before('<select class="lang block" id="main_lang"></select>');
-                $("#main_lang").on("change", () => {
-                    let jkl = () => {
-                        let ak = LIPI.get_value('main_lang');
-                        LipiLekhikA.script = ak;
-                        app.store_values('script', ak);
-                        app.set_image(LipiLekhikA.script);
-                        if (LIPI.includes(["Urdu", "Romanized", "Kashmiri"], ak))
-                            $("#sa_mode").hide();
-                        else
-                            $("#sa_mode").show();
-                        app.set_sa_val();
-                        LipiLekhikA.akSharANi = LIPI.akSharAH[ak];
-                        LipiLekhikA.sa_lang = LipiLekhikA.akSharANi['く'];
-                        app.font_add(ak);
-                        app.add_direction($("#dynamic"), LIPI.get_value("main_lang"));
-                        if (!app.once_editded)
-                            app.add_direction($("#first"), LIPI.get_value("main_lang"));
-                    };
-                    LipiLekhikA.set_lang_and_state($("#main_lang").val(), jkl);
-                });
-                $(".note-style").after('<span id="main_switch" class="imgs"></span>');
-                $("#main_switch").click(() => {
-                    app.set_onoff_img(0);
-                });
-                $("#main_switch").after('<button id="cp1" class="cpy_btn"></button>');
-                $("#cp1").click(() => {
-                    app.copy_text('dynamic', 1);
-                    setTimeout(function () {
-                        document.execCommand("copy");
-                    }, 1);
-                });
-                val = "#main";
-                yuj(val, "<div class='web_only' id='bhaashhaah1'></div>");
-                val = "#bhaashhaah1";
-                let y = "";
-                let cn = 0;
-                for (let x in app.lipyaH) {
-                    cn++;
-                    if (cn % 5 == 1)
-                        y += "<div>"
-                    y += `<a class='bhAShAnyAH' href='https://app.lipilekhika.com/lang/${x}' target='_blank' id='i_${x}'>${app.lipyaH[x]} (<span class='bhAShAnyAH_name' id='o_${x}'></span>)${x!="Brahmi"?",":""}</a><span class="dvayam-right-anya-bhAShA"></span>`;
-                    if (cn % 5 == 0)
-                        y += "</div>";
-                }
-                yuj(val, y)
-                val = "#bdy";
-                val = "#inter";
-            };
-            main();
-
-            function inter() {
-                let val = "#inter";
-                t = yuj(val, '<div class="in-flex"></div>');
-                yunj(t, '<select class="lang" id="lang1"></select>');
-                $("#lang1").on("change", () => {
-                    if (app.auto) {
-                        function hjk() {
-                            $('#first').val(LipiLekhikA.antarparivartan($('#second').val(), $('#lang2').val(), $('#lang1').val()));
-                        }
-                        LIPI.load_lang(LIPI.get_value("lang1"), hjk);
-                    } else
-                        LIPI.load_lang(LIPI.get_value("lang1"));
-                    app.add_direction($("#first"), LIPI.get_value("lang1"));
-                    app.font_add(LIPI.get_value('lang1'));
-                    app.add_convert_msg();
-                });
-                yunj(t, '<span class="ekam-left"></span><button id="set_text2" class="set_text"></button><button id="cp2" class="cpy_btn ekam"></button>');
-                $("#set_text2").click(() => {
-                    app.set_inter_values(1);
-                });
-                $("#cp2").click(() => {
-                    app.copy_text('first');
-                });
-                yuj(val, `<textarea id="first" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>`);
-                $("#first").on("input", function () {
-                    app.edited();
-                    if (app.auto)
-                        $('#second').val(LipiLekhikA.antarparivartan(this.value, $('#lang1').val(), $('#lang2').val()));
-                });
-                t = yuj(val, '<div class="in-flex"></div>');
-                yunj(t, `<select class="lang" id="lang2"></select>`);
-                $("#lang2").on("change", () => {
-                    if (app.auto) {
-                        function jk() {
-                            $('#second').val(LipiLekhikA.antarparivartan($('#first').val(), $('#lang1').val(), $('#lang2').val()));
-                        }
-                        LIPI.load_lang(LIPI.get_value("lang2"), jk);
-                    } else
-                        LIPI.load_lang(LIPI.get_value("lang2"));
-                    app.add_direction($("#second"), LIPI.get_value("lang2"));
-                    app.font_add(LIPI.get_value('lang2'));
-                    app.add_convert_msg();
-                });
-                yunj(t, '<button id="set_text1" class="set_text ekam-left"></button><button id="cp3" class="cpy_btn ekam"></button>');
-                $("#cp3").click(() => {
-                    app.copy_text('second');
-                });
-                $("#set_text1").click(() => {
-                    app.set_inter_values(2);
-                });
-                yunj(t, '<span id="up_arrow_img" class="imgs ekam-right"></span>');
-                yunj(t, '<span id="down_arrow_img" class="imgs ekam-right"></span>');
-                yunj(t, '<span id="auto_img" class="imgs ekam-left"></span>');
-                yuj(val, `<textarea id="second" class="normal" spellcheck="false" autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>`);
-                $("#second").on("input", function () {
-                    app.edited();
-                    if (app.auto)
-                        $('#first').val(LipiLekhikA.antarparivartan(this.value, $('#lang2').val(), $('#lang1').val()));
-                });
-                yuj(val, "<div><span id='no_prvrtn'></span></div>");
-                val = "#prayog";
-                yuj(val, `<select class="lang" id="xcv"></select><span id="close1_img" class="imgs"></span>${app.br}<img id="image"><div id="shoonyam"></div>`);
-                $("#close1_img").click(() => {
-                    $('#prayog').hide();
-                    $('#main1').show();
-                });
-                $("#xcv").on("change", () => {
-                    app.set_image();
-                });
-                yuj("#inter", "<div id='warning1'><span id='warning'></span><span id='hide_warning'>❌</span></div>");
-                $("#hide_warning").click(() => {
-                    $("#warning1").hide();
-                });
-                $("#auto_img").click(() => {
-                    app.auto = !app.auto;
-                    LIPI.get_element("auto_img").style.backgroundColor = `${app.auto?"#ff6464":"lightgreen"}`;
-                    if (!app.auto) {
-                        $("#up_arrow_img").show();
-                        $("#down_arrow_img").show();
-                    } else {
-                        $("#up_arrow_img").hide();
-                        $("#down_arrow_img").hide();
-                    }
-                });
-                $("#auto_img").trigger("click");
-                $("#down_arrow_img").click(() => {
-                    $('#second').val(LipiLekhikA.antarparivartan(LIPI.get_value("first"), $('#lang1').val(), $('#lang2').val()));
-                });
-                $("#up_arrow_img").click(() => {
-                    $('#first').val(LipiLekhikA.antarparivartan(LIPI.get_value("second"), $('#lang2').val(), $('#lang1').val()));
-                });
-            };
-            inter();
+                } else exec();
+            });
+            $($("#about_button").parent()).click(() => {
+                app.change_page('about');
+                $("#menu_blocker").trigger("click");
+            });
         };
-        body();
-        mukhya();
+        menu();
+
+        $("#lic").click(() => {
+            $.ajax({
+                url: app.pratyaya_sanchit + `/LICENCE.txt`,
+                success: (result) => {
+                    $("#licence").html(LIPI.replace_all(result, "\n", app.br));
+                    $("#licence").show();
+                    $("#lic").hide();
+                }
+            });
+        });
+
+        function main() {
+            $("#sahayika_switch").click(() => {
+                app.set_onoff_img(1);
+            });
+            $("#lekhan_sahayika").click(function () {
+                this.style.color = 'white';
+                $("#sahayika_switch").trigger("click");
+                setTimeout(() => $('#lekhan_sahayika').css("color", ""), 250);
+            });
+            $("#sa_04").click(() => {
+                LipiLekhikA.sa_lang = 0;
+            });
+            $("#sa_14").click(() => {
+                LipiLekhikA.sa_lang = 1;
+            });
+            $('#dynamic').summernote({
+                toolbar: [
+                    ['style', ['bold', "italic", 'clear', "undo", "redo"]]
+                ],
+                focus: true,
+            });
+            $("#dynamic").remove();
+            $(".note-editable")[0].id = "dynamic";
+            let elm = $("#dynamic");
+            elm.attr({
+                spellcheck: "false",
+                autocapitalize: "none",
+                autocomplete: "off",
+                autocorrect: "off",
+                class: "Lipi-LekhikA titles",
+                tlt: "mukhya_lekhan"
+            });
+            elm.css({
+                padding: "4px"
+            });
+            $(".note-toolbar").css("background-color", "white");
+            $(".note-btn").css("border", "1px solid black");
+            $("#table_btn").click(() => {
+                app.set_image($("#main_lang").val());
+                $('#prayog').show();
+                $('#main1').hide();
+            });
+            $(".note-style").before('<select class="lang block titles" tlt="typ_lang" id="main_lang"></select>');
+            $("#main_lang").on("change", () => {
+                let jkl = () => {
+                    let ak = LIPI.get_value('main_lang');
+                    LipiLekhikA.script = ak;
+                    app.store_values('script', ak);
+                    if (LIPI.includes(["Urdu", "Romanized", "Kashmiri"], ak))
+                        $("#sa_mode").hide();
+                    else
+                        $("#sa_mode").show();
+                    app.set_sa_val();
+                    LipiLekhikA.akSharANi = LIPI.akSharAH[ak];
+                    LipiLekhikA.sa_lang = LipiLekhikA.akSharANi['く'];
+                    app.add_direction($("#dynamic"), LIPI.get_value("main_lang"));
+                    if (!app.once_editded)
+                        app.add_direction($("#first"), LIPI.get_value("main_lang"));
+                };
+                LipiLekhikA.set_lang_and_state($("#main_lang").val(), jkl);
+            });
+            $(".note-style").after('<span id="main_switch" tlt="imgon" img_off="imgoff" img_on="imgon" class="imgs titles checkbox_img"></span>');
+            $("#main_switch").click(() => {
+                app.set_onoff_img(0);
+            });
+            $("#main_switch").after('<button id="cp1" class="cpy_btn titles" tlt="cpy_btn"></button>');
+            $("#cp1").click(() => {
+                app.copy_text('dynamic', 1);
+                setTimeout(function () {
+                    document.execCommand("copy");
+                }, 1);
+            });
+            let y = "";
+            let cn = 0;
+            for (let x in app.lipyaH) {
+                cn++;
+                if (cn % 5 == 1)
+                    y += "<div>"
+                y += `<a class='bhAShAnyAH dvayam-right-anya-bhAShA' href='https://app.lipilekhika.com/lang/${x}' target='_blank' id='title_${x}'>${app.lipyaH[x]} (<span class='bhAShAnyAH_name' id='link_${x}'></span>)${x!="Brahmi"?",":""}</a>`;
+                if (cn % 5 == 0)
+                    y += "</div>";
+            }
+            yuj("#bhaashhaah1", y);
+        };
+        main();
+
+        function inter() {
+            $("#lang1").on("change", () => {
+                if (app.auto) {
+                    function hjk() {
+                        $('#first').val(LipiLekhikA.antarparivartan($('#second').val(), $('#lang2').val(), $('#lang1').val()));
+                    }
+                    LIPI.load_lang(LIPI.get_value("lang1"), hjk);
+                } else
+                    LIPI.load_lang(LIPI.get_value("lang1"));
+                app.add_direction($("#first"), LIPI.get_value("lang1"));
+                app.add_convert_msg();
+                $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
+            });
+            $(".img_inter1").click(() => {
+                app.inter_on_off[0] = !app.inter_on_off[0];
+                $("#first").attr("lipi-lekhika", {
+                    true: "on",
+                    false: "off"
+                } [app.inter_on_off[0]]);
+            });
+            $("#set_text2").click(() => {
+                app.set_inter_values(1);
+            });
+            $("#cp2").click(() => {
+                app.copy_text('first');
+            });
+            $("#first").on("input", function () {
+                app.edited();
+                if (app.auto)
+                    $('#second').val(LipiLekhikA.antarparivartan(this.value, $('#lang1').val(), $('#lang2').val()));
+            });
+            $("#lang2").on("change", () => {
+                if (app.auto) {
+                    function jk() {
+                        $('#second').val(LipiLekhikA.antarparivartan($('#first').val(), $('#lang1').val(), $('#lang2').val()));
+                    }
+                    LIPI.load_lang(LIPI.get_value("lang2"), jk);
+                } else
+                    LIPI.load_lang(LIPI.get_value("lang2"));
+                app.add_direction($("#second"), LIPI.get_value("lang2"));
+                app.add_convert_msg();
+                $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
+            });
+            $("#cp3").click(() => {
+                app.copy_text('second');
+            });
+            $("#set_text1").click(() => {
+                app.set_inter_values(2);
+            });
+            $(".img_inter2").click(() => {
+                app.inter_on_off[1] = !app.inter_on_off[1];
+                $("#second").attr("lipi-lekhika", {
+                    true: "on",
+                    false: "off"
+                } [app.inter_on_off[1]]);
+            });
+            $("#second").on("input", function () {
+                app.edited();
+                if (app.auto)
+                    $('#first').val(LipiLekhikA.antarparivartan(this.value, $('#lang2').val(), $('#lang1').val()));
+            });
+            $("#close1_img").click(() => {
+                $('#prayog').hide();
+                $('#main1').show();
+            });
+            $("#xcv").on("change", () => {
+                app.set_image();
+            });
+            $("#hide_warning").click(() => {
+                $("#warning1").hide();
+            });
+            $("#auto_img").click(() => {
+                app.auto = !app.auto;
+                LIPI.get_element("auto_img").style.backgroundColor = `${app.auto?"#ff6464":"lightgreen"}`;
+                if (!app.auto) {
+                    $("#up_arrow_img").show();
+                    $("#down_arrow_img").show();
+                } else {
+                    $("#up_arrow_img").hide();
+                    $("#down_arrow_img").hide();
+                }
+            });
+            $("#auto_img").trigger("click");
+            $("#down_arrow_img").click(() => {
+                $('#second').val(LipiLekhikA.antarparivartan(LIPI.get_value("first"), $('#lang1').val(), $('#lang2').val()));
+            });
+            $("#up_arrow_img").click(() => {
+                $('#first').val(LipiLekhikA.antarparivartan(LIPI.get_value("second"), $('#lang2').val(), $('#lang1').val()));
+            });
+        };
+        inter();
         this.html_initialized = true;
     };
     add_convert_msg() {
@@ -391,8 +340,8 @@ class अनुप्रयोगः {
         let data = db.scripts;
         db = db.others;
         let val = [LIPI.get_value("lang1"), LIPI.get_value("lang2")];
-        val[0] = LIPI.substring(data[val[0]], 0, -3);
-        val[1] = LIPI.substring(data[val[1]], 0, -3);
+        val[0] = data[val[0]][0];
+        val[1] = data[val[1]][0];
         let elm = [$("#down_arrow_img")[0], $("#up_arrow_img")[0]];
         elm[0].title = `${db.convert} :- ${val[0]}➠ ${val[1]}`;
         elm[1].title = `${db.convert} :- ${val[1]}➠ ${val[0]}`;
@@ -405,9 +354,6 @@ class अनुप्रयोगः {
             i.attr("dir", "rtl");
         } else
             i.attr("dir", "ltr");
-    };
-    font_add(lang) {
-        LipiLekhikA.add_font(lang, this.pratyaya_sanchit + "/fonts");
     };
     set_sa_val() {
         let src = LIPI.get_value("main_lang");
@@ -431,6 +377,8 @@ class अनुप्रयोगः {
                 $("#lang2").val("Romanized");
                 $("#first").val(LIPI.get_Text_from_div($("#dynamic").html()));
                 $('#second').val(LipiLekhikA.antarparivartan($('#first').val(), $('#lang1').val(), $('#lang2').val()));
+                $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
+                $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
             };
             if (!app.antar_loaded) {
                 LIPI.load_inter_converter(exec);
@@ -449,9 +397,16 @@ class अनुप्रयोगः {
         }
         app.current_page = to;
     };
-    set_image(val = LIPI.get_element("xcv").value) {
-        LIPI.get_element("xcv").value = val;
-        LIPI.get_element('image').src = LIPI.substring(this.pratyaya_sanchit, 0, -3) + `img/lang/${['Sanskrit', 'Marathi', 'Nepali', 'Konkani'].includes(val) ? 'Hindi' : (val == 'Kashmiri' ? 'Urdu' : val)}.png`;
+    set_image(val = $("#xcv").val()) {
+        let data = this.lang_texts[$("#app_lang").val()],
+            elm = $('#image');
+        let v = `${data.scripts[val][0]} - ${data.title.image}`;
+        $("#xcv").val(val);
+        elm.attr("src", LipiLekhikA.usage_table_link(val));
+        elm.attr({
+            title: v,
+            alt: v
+        });
     };
     set_inter_values(n) {
         if (n == 1) {
@@ -502,30 +457,31 @@ class अनुप्रयोगः {
         let data = app.lang_texts[val];
         let g = (df) => LIPI.replace_all(df, "\n", this.br);
         $("title").html(data.others.page_title);
-        for (let x in data["values"]) {
-            let nm = g(data["values"][x]);
-            if (x == "about_text")
+        for (let x of $(".lipi")) {
+            let el = $(x);
+            let n = el.attr("lipi");
+            let nm = g(data.lipi[n]);
+            if (n == "about_text")
                 nm = LIPI.replace_all(LIPI.replace_all(nm, "{1}", "</a>"), "{0}", "<a href='https://rebrand.ly/lekhika' target='_blank'>");
-            LIPI.set_html(x, nm);
+            el.html(nm);
         };
-        for (let x in data["scripts"]) {
-            LIPI.set_html("1" + x, data["scripts"][x]);
-            LIPI.set_html("2" + x, data["scripts"][x]);
-            LIPI.set_html("3" + x, data["scripts"][x]);
-            LIPI.set_html("o_" + x, LIPI.substring(data["scripts"][x], 0, -4 - (LIPI.includes(this.up_lipyaH, x) ? 1 : 0)));
-            LIPI.set_html(x, data["scripts"][x]);
+        for (let x in data.scripts) {
+            let v = data.scripts[x];
+            $("." + x).html(`${v[0]} (${v[1]})`);
+            $("#link_" + x).html(`${v[0]}`);
         };
         LipiLekhikA.set_interface_lang(this.anulipyaH[val]);
-        for (let x in data["title"]) {
-            let val = data["title"][x];
-            $(x).attr({
+        for (let y of $(".titles")) {
+            let el = $(y);
+            let val = data.title[el.attr("tlt")];
+            el.attr({
                 "title": val,
                 "alt": val
             });
         }
         for (let x in this.lipyaH) {
-            let val = LIPI.substring(data["scripts"][x], 0, -4);
-            $("#i_" + x).attr({
+            let val = data["scripts"][x][0];
+            $("#title_" + x).attr({
                 "title": val,
                 "alt": val
             });
@@ -552,12 +508,12 @@ class अनुप्रयोगः {
             else
                 elm.attr(msg, val[1]);
             let cl = `img${val[1]}`;
-            elm = $("#main_switch").addClass(cl);
-            elm.removeClass(`img${val[0][Math.abs(val[0].indexOf(val[1])-1)]}`);
-            let v = data["." + cl];
+            elm = $("#main_switch");
+            let v = data[cl];
             elm.attr({
                 "title": v,
-                "alt": v
+                "alt": v,
+                tlt: "img" + val[1]
             });
         } else if (mode == 1) {
             this.sahayika_usage = !this.sahayika_usage;
@@ -574,12 +530,12 @@ class अनुप्रयोगः {
             else
                 elm.attr(msg, vl);
             let cl = `img${val[1]}`;
-            elm = $("#sahayika_switch").addClass(cl);
-            elm.removeClass(`img${val[0][Math.abs(val[0].indexOf(val[1])-1)]}`);
-            let v = data["." + cl];
+            elm = $("#sahayika_switch");
+            let v = data[cl];
             elm.attr({
                 "title": v,
-                "alt": v
+                "alt": v,
+                tlt: "img" + val[1]
             });
         }
     };
@@ -649,7 +605,6 @@ class अनुप्रयोगः {
             elm.removeAttribute("target");
         }
         let vbn = ["xcv", "lang1", "lang2", "main_lang"];
-        let niy = ["3", "1", "2", ""];
         for (let x in vbn) {
             let j = "";
             for (let y in lang_list) {
@@ -657,7 +612,7 @@ class अनुप्रयोगः {
                 if (lang_list[y] == "Devanagari" && !LIPI.includes(["lang1", "lang2"], vbn[x])) continue;
                 if (lang_list[y] == "Normal" && vbn[x] == "main_lang") continue;
                 if (LIPI.includes(["lang1", "lang2"], vbn[x]) && LIPI.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], lang_list[y])) continue;
-                j += `<option value="${lang_list[y]}" id="${niy[vbn.indexOf(vbn[x])]}${lang_list[y]}"></option>`;
+                j += `<option value="${lang_list[y]}" class="${lang_list[y]}"></option>`;
             }
             LIPI.set_html(vbn[x], j);
         }
@@ -680,7 +635,7 @@ let display_lang_list = [{
     "te-in": "తెలుగు",
     "kn-in": "ಕನ್ನಡ",
     "bn-in": "বাংলা",
-    "sa": "संस्कृतम्",
+    "sa-in": "संस्कृतम्",
 }, {}];
 display_lang_list[1] = LIPI.dict_rev(display_lang_list[0]);
 let lang_list = ["Devanagari", 'Hindi', 'Bengali', 'Telugu', 'Tamil', 'Marathi', 'Gujarati', 'Malayalam', 'Kannada', 'Oriya', 'Konkani', 'Assamese', 'Sanskrit', 'Tamil-Extended', 'Nepali', 'Punjabi', "Sinhala", 'Urdu', 'Kashmiri', 'Sharada', 'Modi', 'Siddham', 'Granth', 'Brahmi', "Romanized", "Normal"];
@@ -775,16 +730,22 @@ if ("app_lang" in args)
 $.ajax({
     url: app.pratyaya_sanchit + `/lang/${lng1}.json`,
     success: (result) => {
+        $.ajax({
+            url: LIPI.substring(app.pratyaya_sanchit, 0, -3) + "app.html",
+            success: (result) => {
+                result = LIPI.replace_all(result, "{\\n}", app.br);
+                $("body").append(result);
+                app.init_html();
+                $("#bdy").children().hide();
+                app.initialize(config[1]);
+                app.set_lang_text(lng1);
+                on_loaded();
+            }
+        });
         app.lang_texts[lng1] = result;
-        app.init_html();
-        $("#bdy").children().hide();
-        app.initialize(config[1]);
-        $("#sahayika_switch").addClass(`imgon1`);
-        $("#main_switch").addClass(`imgon`);
-        app.set_lang_text(lng1);
-        on_loaded();
     }
 });
+
 window.history.pushState(null, "", window.location.href);
 window.onpopstate = () => {
     $("title").html($("title").html());
@@ -847,23 +808,61 @@ function on_loaded() {
     if ("lang_to" in args)
         lang_2 = args["lang_to"];
     LIPI.set_value("lang2", lang_2);
-    LIPI.load_lang(LIPI.get_value("lang2"));
-    LIPI.load_lang(LIPI.get_value("lang1"));
+    LIPI.load_lang($("#lang2").val());
+    LIPI.load_lang($("#lang1").val());
+    $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
+    $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
     let akl = LIPI.get_value("main_lang");
     LipiLekhikA.set_lang_and_state(akl, app.set_sa_val, true);
-    app.font_add(akl);
-    app.set_image(akl);
     LIPI.set_html("menu_btn", '<svg width="35px" height="35px" viewBox="0 0 512 512"><g><path d="M441.13,166.52h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/><path d="M441.13,279.72h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/><path d="M441.13,392.92h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z"/></g></svg>')
     $(".cpy_btn").html('<svg class="cpy_btn_img" viewBox="0 0 21 22"><g class="प्रति" transform="translate(-86.000000, -127.000000)"><g transform="translate(86.500000, 127.000000)"><path d="M14,0 L2,0 C0.9,0 0,0.9 0,2 L0,16 L2,16 L2,2 L14,2 L14,0 L14,0 Z M17,4 L6,4 C4.9,4 4,4.9 4,6 L4,20 C4,21.1 4.9,22 6,22 L17,22 C18.1,22 19,21.1 19,20 L19,6 C19,4.9 18.1,4 17,4 L17,4 Z M17,20 L6,20 L6,6 L17,6 L17,20 L17,20 Z"/></g></g></svg>');
     $(".git").html('<svg viewBox="0 0 512 512"><g><path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14  c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5 c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7 c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3 c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7 C480,134.8,379.7,32,256,32z"/></g></svg>')
     if (LIPI.includes(["Urdu", "Romanized", "Kashmiri"], akl))
         $("#sa_mode").hide();
-    app.font_add(LIPI.get_value("lang1"));
-    app.font_add(LIPI.get_value("lang2"));
+    for (let x of $(".checkbox_img")) {
+        let v = x.checked,
+            e = $(x);
+        if (v == undefined) {
+            if (e.attr("img_check") == undefined) {
+                x.checked = true;
+                v = true;
+            } else {
+                v = [false, true][e.attr("img_check")];
+                x.checked = v;
+            }
+        }
+        let on = e.attr("img_on");
+        let off = e.attr("img_off");
+        e.addClass({
+            true: on,
+            false: off
+        } [v]);
+    }
+    $(".checkbox_img").click((event) => {
+        let e = $(event.target);
+        let el = e[0];
+        let v = !el.checked;
+        el.checked = v;
+        let on = e.attr("img_on");
+        let off = e.attr("img_off");
+        e.addClass({
+            true: on,
+            false: off
+        } [v]);
+        e.removeClass({
+            true: off,
+            false: on
+        } [v]);
+    })
     app.add_direction($("#dynamic"), akl);
     app.add_direction($("#first"), LIPI.get_value("lang1"));
     app.add_direction($("#second"), LIPI.get_value("lang2"));
     app.add_convert_msg();
-    app.set_font_size();
+    app.set_font_siz
     $.lipi_lekhika();
+    setTimeout(() => {
+        $("#dynamic").html("<p></p>");
+        $("#first").html("");
+        $("#second").html("");
+    }, 400);
 };

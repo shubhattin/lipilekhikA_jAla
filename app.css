@@ -9,7 +9,7 @@ textarea,
 select,
 #sa_0,
 #sa_1 {
-  font-family: "Calibri", "Nirmala UI", "LipiFont1", "LipiFont2", "Segoe UI Historic", "LipiFont3", "LipiFont4", "LipiFont5";
+  font-family: "Calibri", "Nirmala UI", "LipiFontBrahmi", "LipiFontSiddham", "Segoe UI Historic", "LipiFontGranth", "LipiFontSharada", "LipiFontModi";
 }
 
 select {
@@ -58,10 +58,12 @@ option {
   position: absolute;
   left: 5px;
   top: 5px;
-  width: 500px;
   margin-left: 8px;
   margin-bottom: 4px;
-  border: 2px solid black;
+  border-radius: 6px;
+  padding-top: 7px;
+  padding-left: 4px;
+  border: 2px solid blue;
   background-color: #e0e0cc;
 }
 
@@ -163,6 +165,7 @@ option {
 
 .back {
   margin-left: 15px;
+  margin-bottom: 10px;
 }
 
 #warning1 {
@@ -203,19 +206,22 @@ option {
   outline: none;
 }
 
-#lang2 {
-  font-size: 1.17em;
+select {
+  outline: none;
 }
 
 #dynamic {
   font-size: 1.2rem;
   border: 3px solid black;
   word-wrap: break-word;
-  width: 95%;
+  width: 90.5%;
   height: 69vh;
   z-index: 40;
   background-color: #e8fffb;
   overflow: scroll;
+  margin-left: 9px;
+  margin-bottom: 10px;
+  margin-top: 8.4px;
   outline: none;
   border-radius: 7px;
 }
@@ -229,11 +235,13 @@ option {
 }
 
 #dynamic:focus {
+  box-shadow: 0 4px 8.25px 0 #00000033, 0 6px 20px 0 #00000030;
   border-color: blue;
 }
 
 .normal:focus {
   border-color: blue;
+  box-shadow: 0 4px 8.25px 0 #00000033, 0 6px 20px 0 #00000030;
 }
 
 p#about_text {
@@ -256,7 +264,7 @@ p {
   font-size: 1.44em;
   font-weight: bold;
   color: white;
-  border: 1px solid blue;
+  border: 2px solid blue;
   background-color: brown;
   padding-left: 1px;
   padding-bottom: 1px;
@@ -264,7 +272,7 @@ p {
 
 .lang:hover {
   background-color: black;
-  border-color: blue;
+  border-color: green;
 }
 
 #app_lang {
@@ -377,7 +385,8 @@ button {
   font-size: 1.3em;
   font-weight: bold;
   color: black;
-  margin-left: 7px;
+  margin-left: 21px;
+  margin-bottom: 6px;
 }
 
 #close1_img {
@@ -545,8 +554,17 @@ button {
 }
 
 #image {
-  margin-left: 6px;
-  margin-top: 8px;
+  margin-left: 12px;
+  margin-top: 9px;
+  border-radius: 6px;
+  margin-right: 15px;
+  border: 2.6px solid black;
+  margin-bottom: 6px;
+  box-shadow: 0 4px 8.25px 0 #00000033, 0 6px 20px 0 #00000030;
+}
+
+#image:hover {
+  border-color: brown;
 }
 
 #xcv {
