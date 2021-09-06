@@ -1,15 +1,11 @@
-let config = ["local", "web"];
+let config = "web";
 class अनुप्रयोगः {
-    constructor(mode) {
-        this.mode = mode;
+    constructor() {
         this.env = "";
         this.time = 0;
         this.c = 0;
         this.lang_texts = {};
-        this.pratyaya_sanchit = {
-            "web": "https://cdn.jsdelivr.net/gh/ofsfobnelip/b/src",
-            "local": "src"
-        } [mode];
+        this.pratyaya_sanchit = "src";
         this.translate = (f, t, v) => {
             v = `https://translate.google.com/?sl=${f}&tl=${t}&text=${encodeURIComponent(v)}&op=translate`;
             window.open(v, "_blank");
@@ -163,8 +159,8 @@ class अनुप्रयोगः {
                 app.set_onoff_img(1);
             });
             $("#lekhan_sahayika").click(function () {
-                this.style.color = 'white';
                 $("#sahayika_switch").trigger("click");
+                $('#lekhan_sahayika').css("color", "white")
                 setTimeout(() => $('#lekhan_sahayika').css("color", ""), 250);
             });
             $("#sa_04").click(() => {
@@ -672,7 +668,7 @@ let lang_sizes = {
         "संस्कृतम्": "sa",
     }
 };
-let app = new अनुप्रयोगः(config[0]);
+let app = new अनुप्रयोगः();
 let storage = window.localStorage;
 let ah = app.args;
 let args = {};
@@ -726,7 +722,7 @@ $.ajax({
                 $("body").append(result);
                 app.init_html();
                 $("#bdy").children().hide();
-                app.initialize(config[1]);
+                app.initialize(config);
                 app.set_lang_text(lng1);
                 on_loaded();
             }

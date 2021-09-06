@@ -5,11 +5,7 @@ class लिपिलेखिकासहायक {
         };
         this.loaded_scripts = ["Normal"];
         this.antar_load = false;
-        let mode = "local";
-        this.sanchit = {
-            "web": "https://cdn.jsdelivr.net/gh/ofsfobnelip/b/src/dattAMsh",
-            "local": "src/dattAMsh"
-        } [mode];
+        this.sanchit = "src/dattAMsh";
         this.font_loca = this.substring(this.sanchit, 0, -8) + "fonts";
         this.image_loca = this.substring(this.sanchit, 0, -12) + "img/lang";
         this.pratyakSharAH = {};
