@@ -1,1 +1,153 @@
-{"lipi":{"about_msg":"About Lipi Lekhika","about_text":"This is an Application to type Indian Languages with full speed and accuracy.\nFor more information refer to {0}App's Website{1}.","anya_nirdesh":"Use .q (zero width joiner) to seperate consonant clusters.\nFor eg:- k.xyA(or kyA)➠क्या , k.x.qyA➠क्‌या\n .x is halant here, See Table Above.","download_link":"Download Lipi Lekhika","home_link":"Go to Lipi Lekhika's Home Page","no_prvrtn":"Write Between #^ and ^# to prevent Transliteration.","parivartak":"Lipi Parivartak","sahayika_text":"Lekhan Sahayika","show_lic":"Show Licence","show_table":"View Usage Table","source_link":"Veiw Lipi Lekhika's Source Code","warning":"⚠️ The Conversion between few Scripts might not be fully accurate."},"others":{"convert":"Convert","page_title":"Lipi Lekhika Online"},"scripts":{"Assamese": ["Assamese","অ"],"Bengali": ["Bengali","অ"],"Brahmi": ["Brahmi","𑀅"],"Devanagari": ["Devanagari","अ"],"Granth": ["Granth(Tamil)","𑌅"],"Gujarati": ["Gujarati","અ"],"Hindi": ["Hindi","अ"],"Kannada": ["Kannada","ಅ"],"Kashmiri": ["Kashmiri","ب"],"Konkani": ["Konkani","अ"],"Malayalam": ["Malayalam","അ"],"Marathi": ["Marathi","अ"],"Modi": ["Modi","𑘀"],"Nepali": ["Nepali","अ"],"Normal": ["Normal","A"],"Oriya": ["Oriya","ଅ"],"Punjabi": ["Punjabi","ਅ"],"Romanized": ["Romanized","ā"],"Sanskrit": ["Sanskrit","अ"],"Sharada": ["Sharada","𑆃"],"Siddham": ["Siddham","𑖀"],"Sinhala": ["Sinhala","අ"],"Tamil": ["Tamil","அ"],"Tamil-Extended": ["Tamil Extended","அ"],"Telugu": ["Telugu","అ"],"Urdu": ["Urdu","ب"]},"title":{"app_lang":"Set Lipi Lekhika's User Interface Language","back":"Go To Home Page","bn-in":"Bengali","close_img":"Close","cpy_btn":"Copy Text","en-in":"English","hi-in":"Hindi","hide_warning":"Hide Warning","image":"Usage Table","imgoff":"Turn On","imgoff1":"Turn Lekhan Sahayika On","imgon":"Turn Off","imgon1":"Turn Lekhan Sahayika Off","kn-in":"Kannada","lekhan_sahayika":"Typing Helper","mukhya_lekhan":"Lipi Lekhika Type Indian Languages with Full Speed and Accuracy","parivartak":"Script Converter","sa-in":"Sanskrit","sa_0":"Sanskrit Mode Off","sa_1":"Sanskrit Mode On","ta-in":"Tamil","te-in":"Telugu","typ_lang":"Choose Typing Language","usage_btnm":"Lipi Lekhika Usage Instructions","warning":"Warning"}}
+{
+    "lipi": {
+        "about_msg": "About Lipi Lekhika",
+        "about_text": "This is an Application to type Indian Languages with full speed and accuracy.\nFor more information refer to {0}App's Website{1}.",
+        "anya_nirdesh": "Use .q (zero width joiner) to seperate consonant clusters.\nFor eg:- k.xyA(or kyA)➠क्या , k.x.qyA➠क्‌या\n .x is halant here, See Table Above.",
+        "download_link": "Download Lipi Lekhika",
+        "home_link": "Go to Lipi Lekhika's Home Page",
+        "no_prvrtn": "Write Between #^ and ^# to prevent Transliteration.",
+        "parivartak": "Lipi Parivartak",
+        "sahayika_text": "Lekhan Sahayika",
+        "show_lic": "Show Licence",
+        "show_table": "View Usage Table",
+        "source_link": "Veiw Lipi Lekhika's Source Code",
+        "warning": "⚠️ The Conversion between few Scripts might not be fully accurate."
+    },
+    "others": {
+        "convert": "Convert",
+        "page_title": "Lipi Lekhika Online"
+    },
+    "scripts": {
+        "Assamese": [
+            "Assamese",
+            "অ"
+        ],
+        "Bengali": [
+            "Bengali",
+            "অ"
+        ],
+        "Brahmi": [
+            "Brahmi",
+            "𑀅"
+        ],
+        "Devanagari": [
+            "Devanagari",
+            "अ"
+        ],
+        "Granth": [
+            "Granth(Tamil)",
+            "𑌅"
+        ],
+        "Gujarati": [
+            "Gujarati",
+            "અ"
+        ],
+        "Hindi": [
+            "Hindi",
+            "अ"
+        ],
+        "Kannada": [
+            "Kannada",
+            "ಅ"
+        ],
+        "Kashmiri": [
+            "Kashmiri",
+            "ب"
+        ],
+        "Konkani": [
+            "Konkani",
+            "अ"
+        ],
+        "Malayalam": [
+            "Malayalam",
+            "അ"
+        ],
+        "Marathi": [
+            "Marathi",
+            "अ"
+        ],
+        "Modi": [
+            "Modi",
+            "𑘀"
+        ],
+        "Nepali": [
+            "Nepali",
+            "अ"
+        ],
+        "Normal": [
+            "Normal",
+            "A"
+        ],
+        "Oriya": [
+            "Oriya",
+            "ଅ"
+        ],
+        "Punjabi": [
+            "Punjabi",
+            "ਅ"
+        ],
+        "Romanized": [
+            "Romanized",
+            "ā"
+        ],
+        "Sanskrit": [
+            "Sanskrit",
+            "अ"
+        ],
+        "Sharada": [
+            "Sharada",
+            "𑆃"
+        ],
+        "Siddham": [
+            "Siddham",
+            "𑖀"
+        ],
+        "Sinhala": [
+            "Sinhala",
+            "අ"
+        ],
+        "Tamil": [
+            "Tamil",
+            "அ"
+        ],
+        "Tamil-Extended": [
+            "Tamil Extended",
+            "அ"
+        ],
+        "Telugu": [
+            "Telugu",
+            "అ"
+        ],
+        "Urdu": [
+            "Urdu",
+            "ب"
+        ]
+    },
+    "title": {
+        "app_lang": "Set Lipi Lekhika's User Interface Language",
+        "back": "Go To Home Page",
+        "bn-in": "Bengali",
+        "close_img": "Close",
+        "cpy_btn": "Copy Text",
+        "en-in": "English",
+        "hi-in": "Hindi",
+        "hide_warning": "Hide Warning",
+        "image": "Usage Table",
+        "imgoff": "Turn On",
+        "imgoff1": "Turn Lekhan Sahayika On",
+        "imgon": "Turn Off",
+        "imgon1": "Turn Lekhan Sahayika Off",
+        "kn-in": "Kannada",
+        "lekhan_sahayika": "Typing Helper",
+        "mukhya_lekhan": "Lipi Lekhika Type Indian Languages with Full Speed and Accuracy",
+        "parivartak": "Script Converter",
+        "sa-in": "Sanskrit",
+        "sa_0": "Sanskrit Mode Off",
+        "sa_1": "Sanskrit Mode On",
+        "ta-in": "Tamil",
+        "te-in": "Telugu",
+        "typ_lang": "Choose Typing Language",
+        "usage_btnm": "Lipi Lekhika Usage Instructions",
+        "warning": "Warning"
+    }
+}
