@@ -18,34 +18,34 @@ class अनुप्रयोगः {
         this.menu_sthiti = false;
         this.br = '<span class="line-break"></span>';
         this.lipyaH = {
-            'Hindi': 'हिन्दी',
-            'Bengali': 'বাংলা',
-            'Telugu': 'తెలుగు',
-            'Tamil': 'தமிழ்',
-            'Marathi': 'मराठी',
-            'Gujarati': 'ગુજરાતી',
-            'Malayalam': 'മലയാളം',
-            'Kannada': 'ಕನ್ನಡ',
-            'Oriya': 'ଓଡ଼ିଆ',
-            'Konkani': 'कोंकणी',
-            'Assamese': 'অসমীয়া',
-            'Sanskrit': 'संस्कृतम्',
-            'Nepali': 'नेपाली',
-            'Punjabi': 'ਪੰਜਾਬੀ',
-            'Urdu': '  اُردُو',
-            'Kashmiri': ' كٲشُر',
-            'Romanized': 'Romanized',
-            'Sinhala': 'සිංහල',
-            'Tamil-Extended': 'தமிழ்-Extended',
-            'Sharada': 'शारदा',
-            'Modi': 'मोडी',
-            'Siddham': 'सिद्धम्',
-            'Granth': 'கிரந்த (தமிழ்)',
-            'Brahmi': 'ब्राह्मी'
+            Assamese: ["অসমীয়া", "অজয্", "অ"],
+            Bengali: ["বাংলা", "অজয্", "অ"],
+            Brahmi: ["ब्राह्मी", "𑀅𑀚𑀬𑁆", "𑀅"],
+            Granth: ["கிரந்த", "𑌅𑌜𑌯𑍍", "𑌅"],
+            Gujarati: ["ગુજરાતી", "અજય્", "અ"],
+            Hindi: ["हिन्दी", "अजय्", "अ"],
+            Kannada: ["ಕನ್ನಡ", "ಅಜಯ್", "ಅ"],
+            Kashmiri: ["كٲشُر", "اجَے ", "ب"],
+            Konkani: ["कोंकणी", "अजय्", "अ"],
+            Malayalam: ["മലയാളം", "അജയ്", "അ"],
+            Marathi: ["मराठी", "अजय्", "अ"],
+            Modi: ["मोडी", "𑘀𑘕𑘧𑘿", "𑘀"],
+            Nepali: ["नेपाली", "अजय्", "अ"],
+            Oriya: ["ଓଡ଼ିଆ", "ଅଜଯ୍", "ଅ"],
+            Punjabi: ["ਪੰਜਾਬੀ", "ਅਜਯ੍", "ਅ"],
+            Romanized: ["Romanized", "ajay ", "ā"],
+            Sanskrit: ["संस्कृतम्", "अजय्", "अ"],
+            Sharada: ["शारदा", "𑆃𑆘𑆪𑇀", "𑆃"],
+            Siddham: ["सिद्धम्", "𑖀𑖕𑖧𑖿", "𑖀"],
+            Sinhala: ["සිංහල", "අජය්", "අ"],
+            Tamil: ["தமிழ்", "அஜய்", "அ"],
+            "Tamil-Extended": ["தமிழ்-Extended", "அஜய்", "அ"],
+            Telugu: ["తెలుగు", "అజయ్", "అ"],
+            Urdu: ["اُردُو", "اجَے ", "ب"],
+            Devanagari: ["", "", "अ"],
+            Normal: ["", "", "A"]
         };
         this.up_lipyaH = ["Siddham", "Brahmi", "Sharada", "Modi", "Granth"];
-        this.anulipyaH = LIPI.dict_rev(this.lipyaH);
-        this.anulipyaH["English"] = "English";
         this.once_editded = false;
         this.inter_on_off = [false, false];
         this.do_not = false;
@@ -112,9 +112,8 @@ class अनुप्रयोगः {
                     "opacity": "1"
                 });
             });
-            for (let p in display_lang_list[0]) {
-                let v = display_lang_list[0][p];
-                yuj("#app_lang", `<option tlt="${p}" value="${v}" class="langsw titles">${v}</option>`)
+            for (let p in display_lang_list) {
+                yuj("#app_lang", `<option tlt="${p}" value="${p}" class="langsw titles">${p}</option>`)
             };
             $("#app_lang").on("change", function () {
                 let v = LIPI.get_value('app_lang');
@@ -229,10 +228,12 @@ class अनुप्रयोगः {
             let y = "";
             let cn = 0;
             for (let x in app.lipyaH) {
+                if (LIPI.includes(['Devanagari', "Normal"], x))
+                    continue;
                 cn++;
                 if (cn % 5 == 1)
                     y += "<div>"
-                y += `<a class='bhAShAnyAH dvayam-right-anya-bhAShA' href='https://app.lipilekhika.com/lang/${x}' target='_blank' id='title_${x}'>${app.lipyaH[x]} (<span class='bhAShAnyAH_name' id='link_${x}'></span>)${x!="Brahmi"?",":""}</a>`;
+                y += `<a class='bhAShAnyAH dvayam-right-anya-bhAShA' href='https://app.lipilekhika.com/lang/${x}' target='_blank' id='title_${x}'>${app.lipyaH[x][0]} (<span class='bhAShAnyAH_name' id='link_${x}'></span>)${x!="Brahmi"?",":""}</a>`;
                 if (cn % 5 == 0)
                     y += "</div>";
             }
@@ -340,7 +341,7 @@ class अनुप्रयोगः {
     };
     set_sa_val() {
         let src = LIPI.get_value("main_lang");
-        let val = ajay[src];
+        let val = app.lipyaH[src][1];
         LIPI.get_element(`sa_${LIPI.akSharAH[src]["く"]}4`).checked = true;
         if (LIPI.includes(["Romanized", "Normal", "Urdu"], src))
             val += " ";
@@ -450,10 +451,10 @@ class अनुप्रयोगः {
         };
         for (let x in data.scripts) {
             let v = data.scripts[x];
-            $("." + x).html(`${v[0]} (${v[1]})`);
-            $("#link_" + x).html(`${v[0]}`);
+            $("." + x).html(`${v} (${this.lipyaH[x][2]})`);
+            $("#link_" + x).html(`${v}`);
         };
-        LipiLekhikA.set_interface_lang(this.anulipyaH[val]);
+        LipiLekhikA.set_interface_lang(display_lang_list[val][2]);
         for (let y of $(".titles")) {
             let el = $(y);
             let val = data.title[el.attr("tlt")];
@@ -471,9 +472,9 @@ class अनुप्रयोगः {
         };
     };
     set_font_size() {
-        let x = lang_sizes[LIPI.get_value("app_lang")];
+        let x = display_lang_list[LIPI.get_value("app_lang")][0];
         LIPI.get_element("main_section").style.fontSize = `${10+x}px`;
-        $("html").attr("lang", lang_sizes.codes[LIPI.get_value("app_lang")]);
+        $("html").attr("lang", display_lang_list[LIPI.get_value("app_lang")][1]);
     };
     set_onoff_img(mode) {
         let data = this.lang_texts[LIPI.get_value("app_lang")]["title"];
@@ -537,11 +538,11 @@ class अनुप्रयोगः {
                 return;
             switch (name) {
                 case "script":
-                    if (!LIPI.includes(lang_list, val))
+                    if (!(val in app.lipyaH))
                         return;
                     break;
                 case "app_lang":
-                    if (!(val in display_lang_list[1]))
+                    if (!(val in display_lang_list))
                         return;
                     break;
             }
@@ -553,13 +554,13 @@ class अनुप्रयोगः {
             let val = storage[name];
             switch (name) {
                 case "script":
-                    if (!LIPI.includes(lang_list, val)) {
+                    if (!(val in app.lipyaH)) {
                         val = "Hindi";
                         this.store_values("script", val);
                     }
                     break;
                 case "app_lang":
-                    if (!(val in display_lang_list[1])) {
+                    if (!(val in display_lang_list)) {
                         val = "English";
                         this.store_values("app_lang", val);
                     }
@@ -588,6 +589,7 @@ class अनुप्रयोगः {
             elm.removeAttribute("target");
         }
         let vbn = ["xcv", "lang1", "lang2", "main_lang"];
+        let lang_list = Object.keys(app.lipyaH);
         for (let x in vbn) {
             let j = "";
             for (let y in lang_list) {
@@ -611,63 +613,16 @@ class अनुप्रयोगः {
         return vars;
     };
 };
-let display_lang_list = [{
-    "en-in": "English",
-    "hi-in": "हिन्दी",
-    "ta-in": "தமிழ்",
-    "te-in": "తెలుగు",
-    "kn-in": "ಕನ್ನಡ",
-    "bn-in": "বাংলা",
-    "sa-in": "संस्कृतम्",
-}, {}];
-display_lang_list[1] = LIPI.dict_rev(display_lang_list[0]);
-let lang_list = ["Devanagari", 'Hindi', 'Bengali', 'Telugu', 'Tamil', 'Marathi', 'Gujarati', 'Malayalam', 'Kannada', 'Oriya', 'Konkani', 'Assamese', 'Sanskrit', 'Tamil-Extended', 'Nepali', 'Punjabi', "Sinhala", 'Urdu', 'Kashmiri', 'Sharada', 'Modi', 'Siddham', 'Granth', 'Brahmi', "Romanized", "Normal"];
-//Display Language Files
-let ajay = {
-    "Hindi": "अजय्",
-    "Sharada": "𑆃𑆘𑆪𑇀",
-    "Modi": "𑘀𑘕𑘧𑘿",
-    "Siddham": "𑖀𑖕𑖧𑖿",
-    "Granth": "𑌅𑌜𑌯𑍍",
-    "Brahmi": "𑀅𑀚𑀬𑁆",
-    "Sanskrit": "अजय्",
-    "Nepali": "अजय्",
-    "Marathi": "अजय्",
-    "Konkani": "अजय्",
-    "Sinhala": "අජය්",
-    "Tamil": "அஜய்",
-    "Tamil-Extended": "அஜய்",
-    "Telugu": "అజయ్",
-    "Malayalam": "അജയ്",
-    "Kannada": "ಅಜಯ್",
-    "Bengali": "অজয্",
-    "Oriya": "ଅଜଯ୍",
-    "Assamese": "অজয্",
-    "Gujarati": "અજય્",
-    "Punjabi": "ਅਜਯ੍",
-    "Urdu": "اجَی ",
-    "Kashmiri": "اجَی ",
-    "Romanized": "ajay ",
-    "Normal": "ajay "
+let display_lang_list = {
+    "English": [0, "en", "English"],
+    "हिन्दी": [0.5, "hi", "Hindi"],
+    "தமிழ்": [-0.45, "ta", "Tamil"],
+    "తెలుగు": [0.5, "te", "Telugu"],
+    "ಕನ್ನಡ": [0.5, "kn", "Kannada"],
+    "বাংলা": [0.5, "bn", "Bengali"],
+    "संस्कृतम्": [0.5, "sa", "Sanskrit"]
 };
-let lang_sizes = {
-    "English": 0,
-    "हिन्दी": 0.5,
-    "தமிழ்": -0.45,
-    "తెలుగు": 0.5,
-    "ಕನ್ನಡ": 0.5,
-    "বাংলা": 0.5,
-    "संस्कृतम्": 0.5,
-    "codes": {
-        "English": "en",
-        "हिन्दी": "hi",
-        "தமிழ்": "ta",
-        "తెలుగు": "te",
-        "ಕನ್ನಡ": "kn",
-        "বাংলা": "bn",
-        "संस्कृतम्": "sa",
-    }
-};
+
 let app = new अनुप्रयोगः();
 let storage = window.localStorage;
 let ah = app.args;
@@ -675,7 +630,7 @@ let args = {};
 for (x in ah) {
     if (x == "app_lang") {
         let v = decodeURIComponent(ah[x]);
-        if (v in lang_sizes.codes)
+        if (v in display_lang_list)
             args[x] = v;
         else
             args[x] = "English";
@@ -703,7 +658,7 @@ for (x in ah) {
             args[x] = v;
         else
             args[x] = "Devanagari";
-    } else if (x == "dev" && config[0] == "local")
+    } else if (x == "dev")
         if (ah[x] == "amam")
             args[x] = ah[x];
 };
@@ -758,6 +713,7 @@ function add_icon() {
         $("head").append(`<link rel="${x}" type="image/png" href="${pra}" class="lipi_icon">`);
 };
 add_icon();
+
 let debug = false;
 if ("dev" in args)
     debug = args["dev"] == "amam";

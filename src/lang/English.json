@@ -18,110 +18,32 @@
         "page_title": "Lipi Lekhika Online"
     },
     "scripts": {
-        "Assamese": [
-            "Assamese",
-            "অ"
-        ],
-        "Bengali": [
-            "Bengali",
-            "অ"
-        ],
-        "Brahmi": [
-            "Brahmi",
-            "𑀅"
-        ],
-        "Devanagari": [
-            "Devanagari",
-            "अ"
-        ],
-        "Granth": [
-            "Granth(Tamil)",
-            "𑌅"
-        ],
-        "Gujarati": [
-            "Gujarati",
-            "અ"
-        ],
-        "Hindi": [
-            "Hindi",
-            "अ"
-        ],
-        "Kannada": [
-            "Kannada",
-            "ಅ"
-        ],
-        "Kashmiri": [
-            "Kashmiri",
-            "ب"
-        ],
-        "Konkani": [
-            "Konkani",
-            "अ"
-        ],
-        "Malayalam": [
-            "Malayalam",
-            "അ"
-        ],
-        "Marathi": [
-            "Marathi",
-            "अ"
-        ],
-        "Modi": [
-            "Modi",
-            "𑘀"
-        ],
-        "Nepali": [
-            "Nepali",
-            "अ"
-        ],
-        "Normal": [
-            "Normal",
-            "A"
-        ],
-        "Oriya": [
-            "Oriya",
-            "ଅ"
-        ],
-        "Punjabi": [
-            "Punjabi",
-            "ਅ"
-        ],
-        "Romanized": [
-            "Romanized",
-            "ā"
-        ],
-        "Sanskrit": [
-            "Sanskrit",
-            "अ"
-        ],
-        "Sharada": [
-            "Sharada",
-            "𑆃"
-        ],
-        "Siddham": [
-            "Siddham",
-            "𑖀"
-        ],
-        "Sinhala": [
-            "Sinhala",
-            "අ"
-        ],
-        "Tamil": [
-            "Tamil",
-            "அ"
-        ],
-        "Tamil-Extended": [
-            "Tamil Extended",
-            "அ"
-        ],
-        "Telugu": [
-            "Telugu",
-            "అ"
-        ],
-        "Urdu": [
-            "Urdu",
-            "ب"
-        ]
+        "Assamese": "Assamese",
+        "Bengali": "Bengali",
+        "Brahmi": "Brahmi",
+        "Devanagari": "Devanagari",
+        "Granth": "Granth(Tamil)",
+        "Gujarati": "Gujarati",
+        "Hindi": "Hindi",
+        "Kannada": "Kannada",
+        "Kashmiri": "Kashmiri",
+        "Konkani": "Konkani",
+        "Malayalam": "Malayalam",
+        "Marathi": "Marathi",
+        "Modi": "Modi",
+        "Nepali": "Nepali",
+        "Normal": "Normal",
+        "Oriya": "Oriya",
+        "Punjabi": "Punjabi",
+        "Romanized": "Romanized",
+        "Sanskrit": "Sanskrit",
+        "Sharada": "Sharada",
+        "Siddham": "Siddham",
+        "Sinhala": "Sinhala",
+        "Tamil": "Tamil",
+        "Tamil-Extended": "Tamil Extended",
+        "Telugu": "Telugu",
+        "Urdu": "Urdu"
     },
     "title": {
         "app_lang": "Set Lipi Lekhika's User Interface Language",
