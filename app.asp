@@ -15,7 +15,7 @@
                 <p id="paricaya" class="br-above"></p>
                 <span class="flex br-above">
                     <button id="lic" lipi="show_lic" class="lipi"></button>
-                    <a class='web_only dvayam-left' href='https://api.lipilekhika.com/source' target='_blank'>
+                    <a class='web_only dvayam-left' href='https://web.lipilekhika.com/source' target='_blank'>
                         <span id='git' class='imgs git'></span>
                     </a>
                 </span>
@@ -105,7 +105,7 @@
                 <span class="imgs download_img"></span><span lipi="download_link" class="lipi menu_msg"></span>
             </a>
             <a target="_blank" class="menu_items menu_borders vr-flex no_under"
-                href="https://api.lipilekhika.com/source">
+                href="https://web.lipilekhika.com/source">
                 <span class="imgs git"></span><span lipi="source_link" class="lipi menu_msg"></span>
             </a>
         </div>
