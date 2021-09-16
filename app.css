@@ -2,6 +2,14 @@ body {
   background-color: white;
   font-family: "Nirmala UI";
   cursor: default;
+  user-select: none;
+  -moz-user-select: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+html {
+  height: 100%;
 }
 
 textarea,
@@ -9,7 +17,7 @@ textarea,
 select,
 #sa_0,
 #sa_1 {
-  font-family: "Calibri", "Nirmala UI", "LipiFontBrahmi", "LipiFontSiddham", "Segoe UI Historic", "LipiFontGranth", "LipiFontSharada", "LipiFontModi";
+  font-family: "Calibri", "Nirmala UI", "Segoe UI Historic", "LipiFontBrahmi", "LipiFontSiddham", "LipiFontGranth", "LipiFontSharada", "LipiFontModi";
 }
 
 select {
@@ -29,12 +37,7 @@ option {
   font-weight: bold;
 }
 
-#main_section {
-  display: none;
-}
-
-#main_lang {
-  margin-left: 30%;
+.typ_lang {
   margin-top: 7px;
 }
 
@@ -48,7 +51,8 @@ option {
 }
 
 #up_usage {
-  margin-right: 20px;
+  margin-left: 30px;
+  margin-bottom: 4px;
 }
 
 #prayog {
@@ -95,8 +99,33 @@ option {
   background-color: brown;
 }
 
-#bhaashhaah1 {
+#bhAShA_sanchit {
   margin-top: 16px;
+  max-width: 160px;
+  border: 2px solid green;
+  border-radius: 5px;
+  padding: 2.5px;
+  background-color: #ffffff;
+  margin-bottom: 8px;
+  overflow-x: scroll;
+  overflow-y: visible;
+}
+
+#bhAShA_sanchit::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+
+#bhAShA_sanchit:hover {
+  border-color: blue;
+}
+
+#bhAShA_sanchit a:hover {
+  background-color: #f8edd7;
+}
+
+#bhAShA_sanchit a {
+  text-align: center;
 }
 
 #parivartak {
@@ -105,7 +134,6 @@ option {
   font-size: 1.48em;
   margin-left: 7.5px;
   margin-bottom: 5px;
-  margin-right: 28px;
   padding-top: 3.3px;
   border: 2px solid blue;
   background-color: white;
@@ -395,7 +423,7 @@ button {
 }
 
 .bhAShAnyAH {
-  font-size: 1.47em;
+  font-size: 13.4px;
   color: blueviolet;
   text-decoration: none;
   font-weight: bolder;
@@ -413,7 +441,7 @@ button {
 
 .bhAShAnyAH_name {
   color: brown;
-  font-size: 13.8px;
+  font-size: 12px;
 }
 
 .ekam {
@@ -461,7 +489,6 @@ button {
 #lang_change_container {
   margin-top: 15px;
   margin-bottom: 10px;
-  margin-right: 15px;
 }
 
 .note-resizebar {
@@ -498,9 +525,16 @@ button {
   flex-direction: column;
 }
 
+.vr-flex1 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .in-flex {
   display: inline-flex;
   align-items: center;
+  text-align: center;
 }
 
 .mail {
@@ -509,10 +543,6 @@ button {
 }
 
 @media (min-width: 490px) {
-  .note-resizebar {
-    display: block;
-  }
-
   #warning1 {
     font-size: 1.25em;
     left: 10%;
@@ -523,11 +553,6 @@ button {
   margin-left: 48px;
   margin-top: 9px;
   position: absolute;
-}
-
-.line-break::after {
-  content: '\a';
-  white-space: pre;
 }
 
 .block {
@@ -559,6 +584,9 @@ button {
   margin-right: 15px;
   border: 2.6px solid black;
   margin-bottom: 6px;
+  background-color: #e7e7db;
+  min-width: 440px;
+  min-height: 500px;
   box-shadow: 0 4px 8.25px 0 #00000033, 0 6px 20px 0 #00000030;
 }
 
@@ -599,6 +627,7 @@ button {
   display: flex;
   align-items: center;
   flex-direction: column;
+  min-width: 176px;
 }
 
 .menu_borders {
@@ -693,4 +722,38 @@ button {
 
 .प्रति {
   fill: #424242;
+}
+
+.redirect {
+  fill: #1d6cff;
+  margin-top: 5.6px;
+  margin-left: 3px;
+}
+
+.redirect:hover {
+  fill: blue;
+}
+
+.br-above {
+  margin-top: 10px;
+}
+
+.br-bottom {
+  margin-top: 10px;
+}
+
+.विकल्पानि {
+  display: none;
+  font-size: 1.44em;
+  font-weight: bold;
+  padding-left: 1px;
+  padding-bottom: 1px;
+}
+
+@media (min-width:850px) {
+  .script {
+    position: absolute;
+    z-index: 12;
+    margin-left: 46%;
+  }
 }

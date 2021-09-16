@@ -107,21 +107,6 @@ class लिपिलेखिकासहायक {
     text_to_html(v) {
         return this.replace_all("<div>" + v + "</div>", "\n", "</div><div>");
     }
-    get_value(id) {
-        return document.getElementById(id).value;
-    }
-    get_element(id) {
-        return document.getElementById(id);
-    }
-    set_html(id, val) {
-        let fg = this.get_element(id);
-        if (fg == null || fg == undefined)
-            return;
-        fg.innerHTML = val;
-    }
-    set_value(id, val) {
-        this.get_element(id).value = val;
-    }
     last(s, l = -1) {
         if (s == null || s == undefined)
             return "";
@@ -202,7 +187,7 @@ class लिपिलेखिकापरिवर्तक {
         ];
         this.second_cap_time = 0;
         this.sahayika = new लिपिलेखिकालेखनसहायिका();
-        this.set_interface_lang = (lang = "English") => this.sahayika.load_lang(lang, LIPI.sanchit);
+        this.set_interface_lang = (lang = "English") => this.sahayika.load_lang(lang);
         this.hide = () => this.sahayika.elm.hide();
         this.from_click = false;
     };
@@ -940,6 +925,8 @@ class लिपिलेखिकालेखनसहायिका {
             "font-weight": "bold",
             "display": "none",
             "z-index": "1000000",
+            "user-select": "none",
+            "-moz-user-select": "none",
             "cursor": "default",
             "background-color": "white",
             "min-width": "58px",
@@ -1056,36 +1043,37 @@ class लिपिलेखिकालेखनसहायिका {
         let y = $(".निच्चैरुच्चैः");
         this.ins_button[2] = y[0];
         this.ins_button[3] = y[1];
-        this.lang_loaded = false;
+        this.lang_loaded = 0;
+        this.ins_msg = "";
         this.load_lang = (lng) => {
-            if (!this.lang_loaded)
+            if (this.lang_loaded == 0)
                 $.ajax({
                     url: `${LIPI.sanchit}/sahayika.json`,
                     dataType: "json",
                     success: (result) => {
                         this.display = result;
-                        this.set_lang(lng);
-                        this.lang_loaded = true;
+                        this.set_lang(lng, false);
+                        this.lang_loaded++;
                     }
                 });
-            else
-                this.set_lang(lng);
+            else {
+                this.set_lang(lng, this.lang_loaded >= 2 ? true : false);
+                this.lang_loaded++;
+            }
         };
-        this.load_lang("English");
+        this.load_lang("English", false);
         this.abhisthAnam = 0;
         $("body").click((event) => {
             let obj = LipiLekhikA;
             let o = this;
             let bh = o.bhaNDAra;
-            if (o.elm[0].style.display == "none")
+            if (o.elm.css("display") == "none")
                 return;
             event = event.target;
-            let p = $(event).parent()[0];
-            let sah = false;
-            let ins = o.ins_button;
-            if (LIPI.includes([ins[0][0], ins[2]], p) || LIPI.includes([ins[1][0], ins[3]], p))
-                sah = true;
-            else if (LIPI.includes(bh.tbody, p) && !LIPI.includes([bh.key1, bh.key2], event)) {
+            let p = $(event).parents();
+            let sah = p.index(o.elm[0]) != -1;
+            p = $(event).parent()[0];
+            if (LIPI.includes(bh.tbody, p) && !LIPI.includes([bh.key1, bh.key2], event)) {
                 sah = true;
                 let el = o.adhar;
                 for (let x of event.value) {
@@ -1109,22 +1097,23 @@ class लिपिलेखिकालेखनसहायिका {
             l = ".लिপি",
             p = "{padding:0.5px;}";
         this.elm.append(`<style>${l}ಜಃ${n}${l}ಜಂ${n}${l}ಜಃ${p}${l}ಜಂ${p}</style>`)
-    }
+    };
     hide_other() {
         let elm = LipiLekhikA.sahayika;
         if (elm.c == 1)
             elm.elm.hide();
         elm.c--;
-    }
+    };
     change_ins(i) {
         let elm = LipiLekhikA.sahayika;
         elm.ins_button[i].hide();
         let t = Math.abs(i - 1);
         elm.ins_sthiti = t;
         elm.ins_button[Math.abs(i - 1)].show();
-        elm = elm.bhaNDAra.sahayika;
-        elm.style.display = t == 1 ? "none" : "block";
-    }
+        let el = elm.bhaNDAra.sahayika;
+        elm.set_labels(1, t == 0 ? elm.ins_msg : "");
+        el.style.display = t == 1 ? "none" : "block";
+    };
     show(v) {
         if (v["elm"].attr("lekhan-sahayika") != "on")
             return;
@@ -1280,7 +1269,7 @@ class लिपिलेखिकालेखनसहायिका {
         setTimeout(function () {
             klj();
         }, 15000);
-    }
+    };
     hide_elm(type, x) {
         this.bhaNDAra[["pashchAta", "akShara"][type - 1]][x + 2].style.display = "none";
     };
@@ -1302,12 +1291,14 @@ class लिपिलेखिकालेखनसहायिका {
         } else
             this.bhaNDAra[this.bhaNDAra_index[type - 1]].innerHTML = txt;
     };
-    set_lang(l) {
+    set_lang(l, g = true) {
         let data = this.display[l];
-        this.set_labels(1, LIPI.text_to_html(data["ins"]));
+        this.ins_msg = LIPI.text_to_html(data["ins"]);
         this.elm.attr("title", data["title"]);
         for (let x in this.objs)
             this.objs[x].attr("title", data[x]);
+        if (g && this.ins_sthiti == 0)
+            this.set_labels(1, this.ins_msg);
     };
 };
 let LipiLekhikA = new लिपिलेखिकापरिवर्तक();

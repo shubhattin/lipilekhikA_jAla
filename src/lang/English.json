@@ -15,14 +15,16 @@
     },
     "others": {
         "convert": "Convert",
-        "page_title": "Lipi Lekhika Online"
+        "page_title": "Lipi Lekhika Online | Type Indian Languages with full Speed and Accuracy",
+        "title_lang": "Lipi Lekhika - {0} | Type {1} with full Speed and Accuracy",
+        "title_convert": "Lipi Parivartak - {0} | Lipi Lekhika | Convert Indian Scripts"
     },
     "scripts": {
         "Assamese": "Assamese",
         "Bengali": "Bengali",
         "Brahmi": "Brahmi",
         "Devanagari": "Devanagari",
-        "Granth": "Granth(Tamil)",
+        "Granth": "Granth",
         "Gujarati": "Gujarati",
         "Hindi": "Hindi",
         "Kannada": "Kannada",
@@ -70,6 +72,7 @@
         "te-in": "Telugu",
         "typ_lang": "Choose Typing Language",
         "usage_btnm": "Lipi Lekhika Usage Instructions",
-        "warning": "Warning"
+        "warning": "Warning",
+        "redirect_msg": "Go To More Appropriae Version of This Page"
     }
 }
