@@ -1,5 +1,5 @@
 <div id="main_section" style="display:none;">
-    <span id="main1">
+    <div id="main1">
         <div class="in-flex">
             <span id="menu_btn" class="imgs"></span>
             <span tlt="back" class="back titles imgs" id="back_btn"></span>
@@ -74,13 +74,18 @@
                 </div>
             </div>
         </div>
-    </span>
-    <span id="prayog">
-        <select class="lang" id="xcv"></select>
-        <span id="close1_img" tlt="close_img" class="imgs titles"></span>
-        <img id="image" class="block" tlt="image">
-        <p id="shoonyam" lipi="anya_nirdesh" class="lipi"></p>
-    </span>
+    </div>
+    <div class="vr-flex" id="prayog" style="display:none;">
+        <div id="prayog_in">
+            <select class="lang" id="xcv"></select>
+            <span class="flex">
+                <span id="close1_img" tlt="close_img" class="imgs titles"></span>
+            </span>
+            <img id="image" class="block" tlt="image">
+            <p id="shoonyam" lipi="anya_nirdesh" class="lipi"></p>
+        </div>
+        <div class="blocker"></div>
+    </div>
     <select class='विकल्पानि'>
         <option class='विकल्पम्'></option>
     </select>

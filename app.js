@@ -72,7 +72,7 @@ class अनुप्रयोगः {
             $("#up_usage").click(() => {
                 app.set_image($("#main_lang").val());
                 $('#prayog').show();
-                $('#main1').hide();
+                $('#main1').addClass("prayog_hide");
             });
         }
         if (true) { //menu
@@ -208,7 +208,7 @@ class अनुप्रयोगः {
             $("#table_btn").click(() => {
                 app.set_image($("#main_lang").val());
                 $('#prayog').show();
-                $('#main1').hide();
+                $('#main1').addClass("prayog_hide");
             });
             $(".note-style").before('<div class="vr-flex1 script"><div class="flex typ_lang"><select class="lang titles" tlt="typ_lang" id="main_lang"></select><span class="imgs redirect web_only" id="redirect0"></span></div></div>');
             $("#main_lang").on("change", () => {
@@ -309,8 +309,9 @@ class अनुप्रयोगः {
             });
             $("#close1_img").click(() => {
                 $('#prayog').hide();
-                $('#main1').show();
+                $('#main1').removeClass("prayog_hide");
             });
+            $("#prayog .blocker").click((e) => $("#close1_img").trigger("click"));
             $("#xcv").on("change", () => {
                 app.set_image();
             });
@@ -392,11 +393,7 @@ class अनुप्रयोगः {
                 app.antar_loaded = true;
             } else
                 exec();
-        } else if (to == "prayog")
-            $("#main1").hide();
-        else if (app.current_page == "prayog")
-            $("#main1").show();
-        else if (to == "main")
+        } else if (to == "main")
             $("#parivartak").show();
         if (LIPI.includes(["inter", "about"], to)) {
             $("#parivartak").hide();
