@@ -747,6 +747,7 @@ button {
   width: 100%;
   position: fixed;
   top: 0;
+  background-color: #00000017;
 }
 
 .sa_radio {

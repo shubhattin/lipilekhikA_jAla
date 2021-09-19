@@ -1,7 +1,5 @@
-let config = "web";
 class अनुप्रयोगः {
     constructor() {
-        this.env = "";
         this.time = 0;
         this.c = 0;
         this.lang_texts = {};
@@ -342,6 +340,31 @@ class अनुप्रयोगः {
                 }
             });
         }
+        if (true) { // adding lang options in select tags
+            if (s["mode"] == 1) {
+                $(".web_only").hide();
+                LipiLekhikA.only_web_status = false;
+                let elm = $(LipiLekhikA.sahayika.bhaNDAra.pashchAta[0]).children()[0];
+                elm.removeAttribute("href");
+                elm.removeAttribute("target");
+            }
+            let vbn = ["xcv", "lang1", "lang2", "main_lang"];
+            let lang_list = Object.keys(app.lipyaH);
+            for (let x in vbn) {
+                let j = "";
+                for (let y in lang_list) {
+                    if ((vbn[x] == "xcv" && lang_list[y] == "Normal") || lang_list[vbn] == "Vedic") continue;
+                    if (lang_list[y] == "Devanagari" && !LIPI.includes(["lang1", "lang2"], vbn[x])) continue;
+                    if (lang_list[y] == "Normal" && vbn[x] == "main_lang") continue;
+                    if (LIPI.includes(["lang1", "lang2"], vbn[x]) && LIPI.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], lang_list[y])) continue;
+                    j += `<option value="${lang_list[y]}" class="${lang_list[y]}"></option>`;
+                }
+                $("#" + vbn[x]).html(j);
+            }
+            $("#xcv").append("<option id='Vedic' value='Vedic'>Vedic Additions</option>")
+            $("#paricaya").html("<div class='br-above'>भारते रचितः</div>E-mail : <a href='mailto:lipilekhika@gmail.com' class='mail'>lipilekhika@gmail.com</a>");
+            $("#main_section").show();
+        }
     };
     add_convert_msg() {
         let db = app.lang_texts[$("#app_lang").val()];
@@ -601,32 +624,6 @@ class अनुप्रयोगः {
             return app.get_values(name);
         }
     };
-    initialize(device) {
-        this.env = device;
-        if (device == "android") {
-            $(".web_only").hide();
-            LipiLekhikA.only_web_status = false;
-            let elm = $(LipiLekhikA.sahayika.bhaNDAra.pashchAta[0]).children()[0];
-            elm.removeAttribute("href");
-            elm.removeAttribute("target");
-        }
-        let vbn = ["xcv", "lang1", "lang2", "main_lang"];
-        let lang_list = Object.keys(app.lipyaH);
-        for (let x in vbn) {
-            let j = "";
-            for (let y in lang_list) {
-                if ((vbn[x] == "xcv" && lang_list[y] == "Normal") || lang_list[vbn] == "Vedic") continue;
-                if (lang_list[y] == "Devanagari" && !LIPI.includes(["lang1", "lang2"], vbn[x])) continue;
-                if (lang_list[y] == "Normal" && vbn[x] == "main_lang") continue;
-                if (LIPI.includes(["lang1", "lang2"], vbn[x]) && LIPI.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], lang_list[y])) continue;
-                j += `<option value="${lang_list[y]}" class="${lang_list[y]}"></option>`;
-            }
-            $("#" + vbn[x]).html(j);
-        }
-        $("#xcv").append("<option id='Vedic' value='Vedic'>Vedic Additions</option>")
-        $("#paricaya").html("<div class='br-above'>भारते रचितः</div>E-mail : <a href='mailto:lipilekhika@gmail.com' class='mail'>lipilekhika@gmail.com</a>");
-        $("#main_section").show();
-    };
     open_link(lang = null, main = null) {
         if (lang == null)
             lang = app.sthAna.lang;
@@ -673,6 +670,8 @@ if (true) { //setting values
         s["vitroTanam"] = true;
     if (!("page" in s))
         s["page"] = 0;
+    if (!("mode" in s))
+        s["mode"] = 0;
 }
 $.ajax({
     url: app.pratyaya_sanchit + `/lang/${s["app_lang"]}.json`,
@@ -685,7 +684,6 @@ $.ajax({
                 $("body").append(result);
                 app.init_html();
                 $("#bdy").children().hide();
-                app.initialize(config);
                 $(".redirect").addClass("titles");
                 $(".redirect").attr("tlt", "redirect_msg");
                 if ("app_lang" in s1) {
