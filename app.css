@@ -12,12 +12,10 @@ html {
   height: 100%;
 }
 
-textarea,
-#dynamic,
-select,
-#sa_0,
-#sa_1 {
-  font-family: "Calibri", "Nirmala UI", "Segoe UI Historic", "LipiFontBrahmi", "LipiFontSiddham", "LipiFontGranth", "LipiFontSharada", "LipiFontModi";
+.fonts {
+  font-family: "Calibri", "Nirmala UI", "Segoe UI Historic", "LipiFontBrahmi", "LipiFontGranth", "LipiFontModi", "LipiFontSharada", "LipiFontSiddham";
+  min-width: 43px;
+  min-height: 11px;
 }
 
 select {
@@ -75,7 +73,7 @@ option {
 
 @media (max-width:560px) {
   #prayog {
-    padding-left: 5px;
+    padding: 0 13px 0 10px;
   }
 
   #prayog_in {
@@ -133,13 +131,12 @@ option {
 }
 
 #bhAShA_sanchit {
-  margin-top: 16px;
   max-width: 160px;
   border: 2px solid green;
   border-radius: 5px;
   padding: 2.5px;
   background-color: #ffffff;
-  margin-bottom: 8px;
+  margin: 16px 4px 8px 4px;
   overflow-x: scroll;
   overflow-y: visible;
 }
@@ -229,21 +226,6 @@ option {
   margin-bottom: 10px;
 }
 
-#warning1 {
-  font-size: 1.15em;
-  color: red;
-  font-weight: bolder;
-  position: fixed;
-  bottom: 2px;
-  text-align: start;
-  left: 2px;
-  border: 1px solid black;
-  z-index: 10;
-  background-color: snow;
-  border-radius: 7px;
-  padding: 3.4px;
-}
-
 #lic {
   color: greenyellow;
   font-size: 1.2em;
@@ -254,7 +236,6 @@ option {
 .normal {
   background-color: #ecffe8;
   font-size: 1.2rem;
-  font-weight: bold;
   border: 3px solid #200b0b;
   word-wrap: break-word;
   width: 92vw;
@@ -289,9 +270,6 @@ select {
 
 .cpy_btn:hover {
   border-color: purple;
-}
-
-.cpy_btn:hover .प्रति {
   fill: black;
 }
 
@@ -403,6 +381,8 @@ option {
   padding-top: 2px;
   padding-bottom: 0;
   border-radius: 3.5px;
+  cursor: copy;
+  fill: #424242;
 }
 
 .set_text {
@@ -535,7 +515,7 @@ button {
 #licence {
   display: inline-block;
   overflow-y: scroll;
-  height: 420px;
+  height: 350px;
   margin-right: 9px;
   margin-left: 1px;
   margin-bottom: 5px;
@@ -543,6 +523,11 @@ button {
   padding: 9px;
   border: 2px solid purple;
   font-size: 15px;
+  border-radius: 8px;
+}
+
+#licence::-webkit-scrollbar {
+  display: none;
 }
 
 .only_web1 {
@@ -579,13 +564,6 @@ button {
   color: green;
 }
 
-@media (min-width: 490px) {
-  #warning1 {
-    font-size: 1.25em;
-    left: 10%;
-  }
-}
-
 #cp1 {
   margin-left: 48px;
   margin-top: 9px;
@@ -601,10 +579,6 @@ button {
 }
 
 @media (max-width: 365px) {
-  #warning1 {
-    font-size: 1.1em;
-  }
-
   .dvayam-right-anya-bhAShA {
     margin-right: 8px;
   }
@@ -615,12 +589,9 @@ button {
 }
 
 #image {
-  margin-left: 8px;
-  margin-top: 9px;
+  margin: 9px 12px 6px 8px;
   border-radius: 6px;
-  margin-right: 12px;
   border: 2.6px solid black;
-  margin-bottom: 6px;
   background-color: #e7e7db;
   min-width: 440px;
   min-height: 500px;
@@ -664,7 +635,7 @@ button {
   display: flex;
   align-items: center;
   flex-direction: column;
-  min-width: 176px;
+  min-width: 160px;
 }
 
 .menu_borders {
@@ -747,7 +718,6 @@ button {
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: #00000017;
 }
 
 .sa_radio {
@@ -756,10 +726,6 @@ button {
 
 #menu_btn {
   margin-bottom: 7.5px;
-}
-
-.प्रति {
-  fill: #424242;
 }
 
 .redirect {
@@ -794,4 +760,12 @@ button {
     z-index: 12;
     margin-left: 46%;
   }
+}
+
+#set_img {
+  margin-left: 6px;
+}
+
+#set_img:hover {
+  fill: blueviolet;
 }

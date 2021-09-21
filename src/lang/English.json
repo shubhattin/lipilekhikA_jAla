@@ -10,14 +10,13 @@
         "sahayika_text": "Lekhan Sahayika",
         "show_lic": "Show Licence",
         "show_table": "View Usage Table",
-        "source_link": "Veiw Lipi Lekhika's Source Code",
-        "warning": "⚠️ The Conversion between few Scripts might not be fully accurate."
+        "source_link": "Veiw Lipi Lekhika's Source Code"
     },
     "others": {
         "convert": "Convert",
         "page_title": "Lipi Lekhika Online | Type Indian Languages with full Speed and Accuracy",
-        "title_lang": "Lipi Lekhika - {0} | Type {1} with full Speed and Accuracy",
-        "title_convert": "Lipi Parivartak - {0} | Lipi Lekhika | Convert Indian Scripts"
+        "title_lang": "{0} | Lipi Lekhika | Type {0} with full Speed and Accuracy",
+        "title_convert": "{0} | Lipi Parivartak | Lipi Lekhika | Convert Indian Scripts"
     },
     "scripts": {
         "Assamese": "Assamese",
@@ -72,7 +71,7 @@
         "te-in": "Telugu",
         "typ_lang": "Choose Typing Language",
         "usage_btnm": "Lipi Lekhika Usage Instructions",
-        "warning": "Warning",
-        "redirect_msg": "Go To More Appropriae Version of This Page"
+        "redirect_msg": "Go To More Appropriae Version of This Page",
+        "setting": "Set Lipi Lekhik's Default Options"
     }
 }
