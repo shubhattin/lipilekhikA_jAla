@@ -10,7 +10,9 @@
         "sahayika_text": "Lekhan Sahayika",
         "show_lic": "Show Licence",
         "show_table": "View Usage Table",
-        "source_link": "Veiw Lipi Lekhika's Source Code"
+        "source_link": "Veiw Lipi Lekhika's Source Code",
+        "script_set": "Set Typing Language",
+        "defal_msg": "Set Default Options"
     },
     "others": {
         "convert": "Convert",

@@ -12,7 +12,8 @@ class अनुप्रयोगः {
         this.karya = true;
         this.app = LipiLekhikA;
         this.k = लिपि;
-        this.sahayika_usage = true;
+        this.sahayika_usage = 0;
+        this.sahayika_set = 0;
         this.loaded_display_lng = [];
         this.pages = ["inter", "about"];
         this.antar_loaded = false;
@@ -62,16 +63,28 @@ class अनुप्रयोगः {
     };
     init_html() {
         let yuj = app.yuj,
-            ht = app.anya_html;
+            ht = app.anya_html,
+            t = 0;
         if (true) { //main1
             let el = $("#back_btn").click(() => app.change_page("main"));
             el.css("display", "none");
             $("#parivartak").click(() => app.change_page("inter"));
             $(".prayog_btn").click(() => app.change_page("prayog", false));
+            t = $("#sahayika_set").attr("img_check", ["off", "on"].indexOf(app.get_values("sahayika")));
+            t.click(() => {
+                app.sahayika_set = !app.sahayika_set;
+                app.store_values("sahayika", {
+                    false: 'off',
+                    true: "on"
+                } [app.sahayika_set]);
+            });
+            $("#script_set").click(function () {
+                app.store_values('script', this.value);
+            });
         }
         if (true) { //menu
             let left = 230,
-                time = 220,
+                time = 210,
                 op = 0.43,
                 cl = "#00000017";
             yuj("#menu_body", `<style>@keyframes block_color1{from{background-color:transparent}to{background-color:${cl}}}@keyframes block_color2{to{background-color:transparent}from{background-color:${cl}}}</style>`)
@@ -167,6 +180,7 @@ class अनुप्रयोगः {
                 $('#lekhan_sahayika').css("color", "white")
                 setTimeout(() => $('#lekhan_sahayika').css("color", ""), 250);
             });
+            $("#sahayika_switch").attr("img_check", ["off", "on"].indexOf(app.get_values("sahayika")));
             $("#sa_04").click(() => {
                 app.app.sa_lang = 0;
             });
@@ -188,7 +202,8 @@ class अनुप्रयोगः {
                 autocomplete: "off",
                 autocorrect: "off",
                 class: "Lipi-LekhikA titles",
-                tlt: "mukhya_lekhan"
+                tlt: "mukhya_lekhan",
+                "lekhan-sahayika": app.get_values("sahayika")
             });
             $(".note-toolbar").css({
                 "background-color": "transparent",
@@ -205,7 +220,6 @@ class अनुप्रयोगः {
                 let jkl = () => {
                     let ak = $('#main_lang').val();
                     app.app.script = ak;
-                    app.store_values('script', ak);
                     if (app.k.includes(["Urdu", "Romanized", "Kashmiri"], ak))
                         $("#sa_mode").hide();
                     else
@@ -244,8 +258,13 @@ class अनुप्रयोगः {
             });
         }
         if (true) { //prayog
-            let t = $("#close1_img").click(() => app.change_page("mA_prayog", false));
+            let t = $("#close1").click(() => app.change_page("mA_prayog", false));
             $("#prayog .blocker").click(() => t.trigger("click"));
+        }
+        if (true) { //setting
+            $("#set_img").click(() => app.change_page("setting", false));
+            let t = $("#close2").click(() => app.change_page("mA_setting", false));
+            $("#setting .blocker").click(() => t.trigger("click"));
         }
         if (true) { //lipi parivartak
             $("#lang1").on("change", () => {
@@ -333,7 +352,7 @@ class अनुप्रयोगः {
                 elm.removeAttribute("href");
                 elm.removeAttribute("target");
             }
-            let vbn = ["xcv", "lang1", "lang2", "main_lang"];
+            let vbn = ["xcv", "lang1", "lang2", "main_lang", "script_set"];
             let lang_list = Object.keys(app.lipyaH);
             for (let x in vbn) {
                 let j = "";
@@ -416,6 +435,12 @@ class अनुप्रयोगः {
             $('#main1').addClass("prayog_hide");
         } else if (to == "mA_prayog") {
             $('#prayog').hide();
+            $('#main1').removeClass("prayog_hide");
+        } else if (to == "setting") {
+            $('#setting').show();
+            $('#main1').addClass("prayog_hide");
+        } else if (to == "mA_setting") {
+            $('#setting').hide();
             $('#main1').removeClass("prayog_hide");
         }
         if (set)
@@ -575,14 +600,17 @@ class अनुप्रयोगः {
         if (defal) {
             switch (name) {
                 case "script":
-                    storage.setItem("script", "Hindi")
+                    storage.setItem(name, "Hindi")
                     break;
                 case "app_lang":
-                    storage.setItem("app_lang", "English");
+                    storage.setItem(name, "English");
+                    break;
+                case "sahayika":
+                    storage.setItem(name, "on");
                     break;
             }
         } else {
-            if (!app.k.includes(["app_lang", "script"], name))
+            if (!app.k.includes(["app_lang", "script", "sahayika"], name))
                 return;
             switch (name) {
                 case "script":
@@ -591,6 +619,10 @@ class अनुप्रयोगः {
                     break;
                 case "app_lang":
                     if (!(val in display_lang_list))
+                        return;
+                    break;
+                case "sahayika":
+                    if (!(val == "on" || val == "off"))
                         return;
                     break;
             }
@@ -604,13 +636,19 @@ class अनुप्रयोगः {
                 case "script":
                     if (!(val in app.lipyaH)) {
                         val = "Hindi";
-                        this.store_values("script", val);
+                        this.store_values(name, val);
                     }
                     break;
                 case "app_lang":
                     if (!(val in display_lang_list)) {
                         val = "English";
-                        this.store_values("app_lang", val);
+                        this.store_values(name, val);
+                    }
+                    break;
+                case "sahayika":
+                    if (!(val == "off" || val == "on")) {
+                        val = "on";
+                        this.store_values(name, val);
                     }
                     break;
             }
@@ -643,6 +681,11 @@ let display_lang_list = {
 
 let app = new अनुप्रयोगः();
 let storage = window.localStorage;
+app.sahayika_usage = {
+    "on": true,
+    "off": false
+} [app.get_values("sahayika")];
+app.sahayika_set = app.sahayika_usage;
 if (true) { //pre settings
     let devan_sthiti = (s) => app.k.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], s)
     if ("main_lang" in s)
@@ -705,6 +748,8 @@ $.ajax({
                     if ("main_lang" in s1) {
                         t = $("#main_lang").after(ht("main_set", s1["main_lang"]));
                         t.hide();
+                        t = $("#script_set").after(ht("main_set", s1["main_lang"]));
+                        t.hide();
                         app.sthAna.main = "/lang/" + s["main_lang"];
                     }
                     if ("from" in s1) {
@@ -735,11 +780,15 @@ window.onpopstate = () => {
     let hde = () => $("#back_btn").hide();
     if (!back)
         window.history.pushState(null, "", window.location.href);
-    let pg = app.pRShThedAnIm;
+    let pg = app.pRShThedAnIm,
+        bck = {
+            "prayog": "#close1",
+            "setting": "#close2"
+        };
     if (pg == "menu")
         $("#menu_blocker").trigger("click");
-    else if (pg == "prayog")
-        $("#close1_img").trigger("click");
+    else if (pg in bck)
+        $(bck[pg]).trigger("click");
     else if (app.k.includes(app.pages, app.current_page)) {
         app.change_page("main");
         hde();
@@ -762,6 +811,7 @@ function on_loaded() {
     $("#lang1").val(s["from"]);
     $("#xcv").val(s["main_lang"]);
     $("#lang2").val(s["to"]);
+    $("#script_set").val(app.get_values("script"));
     app.k.load_lang($("#lang2").val());
     app.k.load_lang($("#lang1").val());
     if (s["page"] == 0)
@@ -777,12 +827,21 @@ function on_loaded() {
     $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
     let akl = $("#main_lang").val();
     app.app.set_lang_and_state(akl, app.set_sa_val, true);
-    let ht = app.anya_html;
-    $("#menu_btn").html(ht.menu_btn);
-    $(".cpy_btn").html(ht.cpy_btn);
-    $(".git").html(ht.git);
-    $("#up_arrow_img").html(ht.up_arrow);
-    $("#down_arrow_img").html(ht.down_arrow);
+    let ht = app.anya_html,
+        lt = {
+            "#menu_btn": "menu_btn",
+            ".cpy_btn": "cpy_btn",
+            ".git": "git",
+            "#up_arrow_img": "up_arrow",
+            "#down_arrow_img": "down_arrow",
+            ".imgon2": "imgon2",
+            ".imgoff2": "imgoff2",
+            "#back_btn": "back",
+            ".close_img": "close_img",
+            "#about_button":"about"
+        };
+    for (let x in lt)
+        $(x).html(ht[lt[x]]);
     if (app.k.includes(["Urdu", "Romanized", "Kashmiri"], akl))
         $("#sa_mode").hide();
     $(".redirect").html(ht.redirect);
@@ -799,29 +858,21 @@ function on_loaded() {
                 x.checked = v;
             }
         }
-        let on = e.attr("img_on");
-        let off = e.attr("img_off");
-        e.addClass({
-            true: on,
-            false: off
-        } [v]);
+        let d = [false, true].indexOf(v);
+        e = e.children();
+        $(e[d]).removeClass("hidden");
+        $(e[Math.abs(d - 1)]).addClass("hidden");
     }
-    $(".checkbox_img").click((event) => {
-        let e = $(event.target);
+    $(".checkbox_img").click(function () {
+        let e = $(this);
         let el = e[0];
         let v = !el.checked;
         el.checked = v;
-        let on = e.attr("img_on");
-        let off = e.attr("img_off");
-        e.addClass({
-            true: on,
-            false: off
-        } [v]);
-        e.removeClass({
-            true: off,
-            false: on
-        } [v]);
-    })
+        let d = [false, true].indexOf(v);
+        e = e.children();
+        $(e[d]).removeClass("hidden");
+        $(e[Math.abs(d - 1)]).addClass("hidden");
+    });
     app.add_direction($("#dynamic"), akl);
     app.add_direction($("#first"), $("#lang1").val());
     app.add_direction($("#second"), $("#lang2").val());

@@ -53,7 +53,7 @@ option {
   margin-bottom: 4px;
 }
 
-#prayog {
+.extra {
   top: 10px;
   left: 0;
   width: 100%;
@@ -61,7 +61,11 @@ option {
   position: absolute;
 }
 
-#prayog .blocker {
+.extra>.flex {
+  height: 100%;
+}
+
+.blocker {
   z-index: 9992;
   width: 100%;
   height: 100%;
@@ -72,22 +76,21 @@ option {
 }
 
 @media (max-width:560px) {
-  #prayog {
+  .extra {
     padding: 0 13px 0 10px;
   }
 
-  #prayog_in {
-    height: 100%;
+  .in-extra {
     width: 100%;
     overflow: scroll;
   }
 
-  #prayog_in::-webkit-scrollbar {
+  .in-extra::-webkit-scrollbar {
     display: none;
   }
 }
 
-#prayog_in {
+.in-extra {
   border-radius: 6px;
   padding-top: 2px;
   padding-left: 4px;
@@ -97,7 +100,7 @@ option {
   display: inline-block;
 }
 
-#prayog_in .flex {
+.close_contain {
   width: 100%;
   justify-content: flex-end;
 }
@@ -268,6 +271,7 @@ select {
   border-radius: 7px;
 }
 
+
 .cpy_btn:hover {
   border-color: purple;
   fill: black;
@@ -430,9 +434,9 @@ button {
   margin-bottom: 6px;
 }
 
-#close1_img {
+.close_minus {
   position: absolute;
-  margin: -14px 6px 14px 9px;
+  margin: -14px 1px 14px 9px;
 }
 
 .prayog_hide {
@@ -764,8 +768,42 @@ button {
 
 #set_img {
   margin-left: 6px;
+  fill: black;
 }
 
 #set_img:hover {
   fill: blueviolet;
+}
+
+.hidden {
+  display: none;
+}
+
+#setting_in {
+  padding: 9px 0 9px 6px;
+}
+
+
+.defal {
+  display: flex;
+  align-items: center;
+}
+
+.defal .one {
+  margin-right: 30px;
+  color: blueviolet;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+#script_set {
+  margin-right: 10px;
+  margin-left: -12px;
+}
+
+#set_msg {
+  font-size: 1.65em;
+  font-weight: bold;
+  text-align: center;
+  margin-right: 45px;
 }

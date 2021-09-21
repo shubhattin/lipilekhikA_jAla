@@ -33,8 +33,10 @@
                             <label for="sa_14" id="sa_1" class="black-yellow ajay"></label>
                         </span>
                     </span>
-                    <span id="sahayika_switch" tlt="imgon1" img_off="imgoff1" img_on="imgon1"
-                        class="imgs titles checkbox_img"></span>
+                    <span id="sahayika_switch" tlt="imgon1" class="titles checkbox_img">
+                        <span class="imgoff1 imgs"></span>
+                        <span class="imgon1 imgs"></span>
+                    </span>
                     <span id="lekhan_sahayika" tlt="lekhan_sahayika" lipi="sahayika_text" class="lipi titles"></span>
                 </div>
                 <div id="dynamic"></div>
@@ -48,7 +50,10 @@
                     <select class="lang" id="lang1"></select>
                     <button id="set_text2" class="set_text ekam-left"></button>
                     <button id="cp2" class="cpy_btn ekam titles" tlt="cpy_btn"></button>
-                    <span class="imgs checkbox_img img_inter1" img_on="imgon2" img_off="imgoff2" img_check=0></span>
+                    <span class="checkbox_img img_inter1" img_check=0>
+                        <span class="imgoff2 imgs"></span>
+                        <span class="imgon2 imgs"></span>
+                    </span>
                     <span class="imgs redirect inter_redirect web_only"></span>
                 </div>
                 <textarea id="first" class="normal Lipi-LekhikA" lipi-lekhika="off" spellcheck="false"
@@ -60,7 +65,10 @@
                     <span id="up_arrow_img" class="imgs" style="margin:0 0px 0 5px;"></span>
                     <span id="down_arrow_img" class="imgs" style="margin:0 4px 0 -3.5px;"></span>
                     <span id="auto_img" class="imgs ekam-right"></span>
-                    <span class="imgs checkbox_img img_inter2" img_on="imgon2" img_off="imgoff2" img_check=0></span>
+                    <span class="checkbox_img img_inter2" img_check=0>
+                        <span class="imgoff2 imgs"></span>
+                        <span class="imgon2 imgs"></span>
+                    </span>
                     <span class="imgs redirect inter_redirect web_only"></span>
                 </div>
                 <textarea id="second" class="normal Lipi-LekhikA" lipi-lekhika="off" spellcheck="false"
@@ -71,20 +79,43 @@
             </div>
         </div>
     </div>
-    <div class="vr-flex" id="prayog" style="display:none;">
-        <div id="prayog_in">
+    <div class="vr-flex extra" id="prayog" style="display:none;">
+        <div class="in-extra">
             <select class="lang" id="xcv"></select>
-            <span class="flex">
-                <span id="close1_img" tlt="close_img" class="imgs titles"></span>
-            </span>
+            <div class="close_contain flex">
+                <span id="close1" tlt="close_img" class="imgs close_img close_minus titles"></span>
+            </div>
             <img id="image" class="block" tlt="image">
             <p id="shoonyam" lipi="anya_nirdesh" class="lipi"></p>
+        </div>
+        <div class="blocker"></div>
+    </div>
+    <div class="vr-flex extra" id="setting" style="display:none;">
+        <div class="flex">
+            <div class="in-extra" id="setting_in">
+                <div class="lipi" lipi="defal_msg" id="set_msg"></div>
+                <div class="close_contain flex">
+                    <span id="close2" tlt="close_img" class="imgs close_img close_minus titles"></span>
+                </div>
+                <div class="defal">
+                    <span tlt="lekhan_sahayika" lipi="sahayika_text" class="one lipi titles"></span>
+                    <span id="sahayika_set" tlt="imgon1" class="checkbox_img">
+                        <span class="imgoff2 imgs"></span>
+                        <span class="imgon2 imgs"></span>
+                    </span>
+                </div>
+                <div class="defal">
+                    <span class="one lipi" lipi="script_set"></span>
+                    <select id="script_set" class="lang"></select>
+                </div>
+            </div>
         </div>
         <div class="blocker"></div>
     </div>
     <select class='विकल्पानि'>
         <option class='विकल्पम्'></option>
     </select>
+</div>
 </div>
 <div id="menu_container" style="display:none;">
     <div id="menu_body">
@@ -116,7 +147,10 @@
 </div>
 <div id="store_html">
     <p nm="main_btn">
-        <span id="main_switch" tlt="imgon" img_off="imgoff" img_on="imgon" class="imgs titles checkbox_img"></span>
+        <span id="main_switch" tlt="imgon" class="titles checkbox_img">
+            <span class="imgoff imgs"></span>
+            <span class="imgon imgs"></span>
+        </span>
         <button id="cp1" class="cpy_btn titles" tlt="cpy_btn"></button>
     </p>
     <div nm="main_lang">
@@ -167,6 +201,12 @@
                 d="M27.526,18.036L27,17.732c-0.626-0.361-1-1.009-1-1.732s0.374-1.371,1-1.732l0.526-0.304  c1.436-0.83,1.927-2.662,1.098-4.098l-1-1.732c-0.827-1.433-2.666-1.925-4.098-1.098L23,7.339c-0.626,0.362-1.375,0.362-2,0  c-0.626-0.362-1-1.009-1-1.732V5c0-1.654-1.346-3-3-3h-2c-1.654,0-3,1.346-3,3v0.608c0,0.723-0.374,1.37-1,1.732  c-0.626,0.361-1.374,0.362-2,0L8.474,7.036C7.042,6.209,5.203,6.701,4.375,8.134l-1,1.732c-0.829,1.436-0.338,3.269,1.098,4.098  L5,14.268C5.626,14.629,6,15.277,6,16s-0.374,1.371-1,1.732l-0.526,0.304c-1.436,0.829-1.927,2.662-1.098,4.098l1,1.732  c0.828,1.433,2.667,1.925,4.098,1.098L9,24.661c0.626-0.363,1.374-0.361,2,0c0.626,0.362,1,1.009,1,1.732V27c0,1.654,1.346,3,3,3h2  c1.654,0,3-1.346,3-3v-0.608c0-0.723,0.374-1.37,1-1.732c0.625-0.361,1.374-0.362,2,0l0.526,0.304  c1.432,0.826,3.271,0.334,4.098-1.098l1-1.732C29.453,20.698,28.962,18.865,27.526,18.036z M16,21c-2.757,0-5-2.243-5-5s2.243-5,5-5  s5,2.243,5,5S18.757,21,16,21z" />
         </svg>
     </p>
+    <p nm="close_img">
+        <svg viewBox="0 0 512 512">
+            <path
+                d="M437.5,386.6L306.9,256l130.6-130.6c14.1-14.1,14.1-36.8,0-50.9c-14.1-14.1-36.8-14.1-50.9,0L256,205.1L125.4,74.5  c-14.1-14.1-36.8-14.1-50.9,0c-14.1,14.1-14.1,36.8,0,50.9L205.1,256L74.5,386.6c-14.1,14.1-14.1,36.8,0,50.9  c14.1,14.1,36.8,14.1,50.9,0L256,306.9l130.6,130.6c14.1,14.1,36.8,14.1,50.9,0C451.5,423.4,451.5,400.6,437.5,386.6z" />
+        </svg>
+    </p>
     <p nm="down_arrow">
         <svg viewBox="0 0 32 32" height="28.5px" width="28.5px">
             <g>
@@ -177,6 +217,15 @@
             </g>
         </svg>
     </p>
+    <p nm="back">
+        <svg viewBox="0 0 32 32">
+            <g>
+                <path
+                    d="M13,26a1,1,0,0,1-.71-.29l-9-9a1,1,0,0,1,0-1.42l9-9a1,1,0,1,1,1.42,1.42L5.41,16l8.3,8.29a1,1,0,0,1,0,1.42A1,1,0,0,1,13,26Z" />
+                <path d="M28,17H4a1,1,0,0,1,0-2H28a1,1,0,0,1,0,2Z" />
+            </g>
+        </svg>
+    </p>
     <p nm="up_arrow">
         <svg viewBox="0 0 32 32" height="28.5px" width="28.5px">
             <g>
@@ -184,6 +233,26 @@
                     d="M16.47,15.12,26.34,25a1,1,0,0,1-1.41,1.41l-9.06-9.06-8.8,8.8a1,1,0,0,1-1.41,0h0a1,1,0,0,1,0-1.42l9.61-9.61A.85.85,0,0,1,16.47,15.12Z" />
                 <path
                     d="M16.47,5.54l9.87,9.88a1,1,0,0,1-1.41,1.41L15.87,7.77l-8.8,8.8a1,1,0,0,1-1.41,0h0a1,1,0,0,1,0-1.41l9.61-9.62A.85.85,0,0,1,16.47,5.54Z" />
+            </g>
+        </svg>
+    </p>
+    <p nm="imgon2">
+        <svg viewBox="0 0 16 16">
+            <path
+                d="M11,3H5C2.239,3,0,5.239,0,8s2.239,5,5,5h6c2.761,0,5-2.239,5-5S13.761,3,11,3z M11,12H5c-2.206,0-4-1.794-4-4s1.794-4,4-4  h6c2.206,0,4,1.794,4,4S13.206,12,11,12z" />
+            <circle style="fill:green" cx="11" cy="8" r="3" /></svg>
+    </p>
+    <p nm="imgoff2">
+        <svg viewBox="0 0 16 16">
+            <path
+                d="M11,3H5C2.239,3,0,5.239,0,8s2.239,5,5,5h6c2.761,0,5-2.239,5-5S13.761,3,11,3z M11,12H5c-2.206,0-4-1.794-4-4s1.794-4,4-4  h6c2.206,0,4,1.794,4,4S13.206,12,11,12z" />
+            <circle style="fill:red" cx="5" cy="8" r="3" /></svg>
+    </p>
+    <p nm="about">
+        <svg viewBox="0 0 32 32">
+            <g>
+                <path
+                    d="M22.6787,5H9.3213A4.3216,4.3216,0,0,0,5,9.3218V22.6782A4.3216,4.3216,0,0,0,9.3213,27H22.6787A4.3216,4.3216,0,0,0,27,22.6782V9.3218A4.3216,4.3216,0,0,0,22.6787,5ZM16,9.0625a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,16,9.0625ZM18.0625,23h-4a1,1,0,0,1,0-2H15V15h-.9375a1,1,0,0,1,0-2H17v8h1.0625a1,1,0,0,1,0,2Z" />
             </g>
         </svg>
     </p>
