@@ -72,7 +72,7 @@ option {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #0000004b;
+  background-color: #00000063;
 }
 
 @media (max-width:560px) {

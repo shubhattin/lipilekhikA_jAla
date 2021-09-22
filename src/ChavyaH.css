@@ -15,7 +15,7 @@
 #about_button {
   height: 32.5px;
   width: 32.5px;
-  fill: #04c0ff;
+  fill: #00b8f5;
 }
 
 .download_img {
@@ -93,13 +93,22 @@
   width: 32px;
 }
 
-/* .google {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAASISURBVFiFxZdZbFRlFMd/5869nTpDV2oZCwW6AAVKWkJGtkpBHgS0QiJCJBhjEBPUqIkCiU+EYlAejImBuGEkLvFBQyNoKhIaQNYmLNFq2WSgLW0pS7dpO9v9fBja6c0M0Ok08f8ymZOz/L5zz/nujEzc2e0C3hJRmcQhU1T1tQ2pe+OJiSVdRP0IzI83UDNlAZAwgAbMHVakUJT3aXfJSABoww1WJqtHAmDYEtRqlJL/DQDIz/+sZ1YiCfQEAXhpqln7rtcbV0wgEEApZdpsth0P7YBNQH+AV7UHVFzlQdd1lFJaKBTaFLMDAiwvFNYUCVMywxBX2uGnS4rv6xVBM+Lb4oXzNxWl2UMfBZGwr1JKiwKwCWx/QliWF3YKKQiaUJAOm9yCywk7aq1nrvZAafaQ61sUBfBycbh4hx+2nzI51CAETcX8HGF5Aew6F93wao9io1uwDWMfLAC6FgZQwMbDJsdvQP8TrmlQ1DTETnKrF860KtwuK0EwGMIfDGI3DGy22INkAZicAWlJ4OlQ94qH9fEiYZRhTb6nzuRoU+R7tQfcLmvyX47VcuDEGV54qpyymdMfDuDUIycarNkuISXJatv/rzB4/n/zmBTc/QORiO1qUysAp+su0tDaFgkWoaLMjaHbrACN3eHPotGCw4CeQDjZmzUKmyg0gR0LNNLtcL3LCtTuE/bXd5Dha4w65ZXGZq40NltsS+bMjAZo9sK5NkXpo8JmN2w9Ed6C2pYwyLpiId0OTd2K823Rw5hRVM66vLYoO0BVzUlud3RSPmsGhbmPkZxkADG24IPTij1LhOcmCVMyhN+vKXqDsDBXmJcDpoL3T0HIjKrB2fYUZkxOw9Dgz8sexmSmk52ZzoVrTdzu6CTF8QjLy+dgTzLw+XyxAf66BRsOmny4QKM4C4qzIsPX5YctJxRHGmPffZ1+ONkMye0X+XrfQcZlZ/HG6gq+/fUQACsWzcV+7+T9krxdXTGzOQxhca5i2mjBpsGlu+F97/LHrD2gZwugci589N1ePDdacSTb6enzMTUvl9dXVXDvEhzowH0BhiunAYdXadxtv8O2L38AwNB1tm5YS6rTMeDXD5Do6zhK3gDsq+9id9WBAVsgGGR31QHudHZF+dsynn5vy0hD1F9tIPlOHYW5OaxZupDrLW1cb2nj2Lm/8fb1kZ/jon+yRvwRANhUkMrCOp6ZV4qmCf5AgJ+PnOLo2TpMU7HttRdJNsLzrwM9gOOBGeNUSHTs48LFAZIMg5WLy3jSXcI/VxtIG+WMzIAIX4xk8X5Ve6JtmakpzC+ZZrEJQP5Or1uJOTHeIr2XLzyPPzi+ZLzjccH643Ty2FFsX+G6X2hkDeMtOlhZr9a8IkqiOpidarDvnemMSTNihVkAElrDdHvvN8DNwTa7ofH5ukkPLD5YCQFc/mSZD6UsHahcOYHSCc4h50j4IlKmscumEQJYv8jFqtlZccUnDHDrq7Ib40cnH583KZXNFeOGFKNU+OoRkY6E/5gAuPOclW8vHbtW16RvCMWTQqFQsYj4dV1f/x8TeJXv/mgf5AAAAABJRU5ErkJggg==");
-} */
-
 .imgon2,
 .imgoff2 {
   height: 26px;
   width: 26px;
   margin: 2px 2px 0 0;
+}
+
+.anuvadak {
+  height: 27px;
+  width: 27px;
+  cursor: pointer;
+  display: none;
+}
+
+#anu_main {
+  margin-left: 81px;
+  margin-top: 10px;
+  position: absolute;
 }

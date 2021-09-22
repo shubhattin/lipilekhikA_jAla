@@ -4,7 +4,7 @@ class अनुप्रयोगः {
         this.c = 0;
         this.lang_texts = {};
         this.pratyaya_sanchit = "src";
-        this.translate = (f, t, v) => {
+        this.translate = (v, f, t) => {
             v = `https://translate.google.com/?sl=${f}&tl=${t}&text=${encodeURIComponent(v)}&op=translate`;
             window.open(v, "_blank");
         };
@@ -18,32 +18,32 @@ class अनुप्रयोगः {
         this.pages = ["inter", "about"];
         this.antar_loaded = false;
         this.lipyaH = {
-            Hindi: ["हिन्दी", "अजय्", "अ"],
-            Devanagari: ["", "", "अ"],
-            Bengali: ["বাংলা", "অজয্", "অ"],
-            Telugu: ["తెలుగు", "అజయ్", "అ"],
-            Tamil: ["தமிழ்", "அஜய்", "அ"],
-            Marathi: ["मराठी", "अजय्", "अ"],
-            Gujarati: ["ગુજરાતી", "અજય્", "અ"],
-            Malayalam: ["മലയാളം", "അജയ്", "അ"],
-            Kannada: ["ಕನ್ನಡ", "ಅಜಯ್", "ಅ"],
-            Oriya: ["ଓଡ଼ିଆ", "ଅଜଯ୍", "ଅ"],
-            Assamese: ["অসমীয়া", "অজয্", "অ"],
-            Konkani: ["कोंकणी", "अजय्", "अ"],
-            Sanskrit: ["संस्कृतम्", "अजय्", "अ"],
-            Punjabi: ["ਪੰਜਾਬੀ", "ਅਜਯ੍", "ਅ"],
-            Nepali: ["नेपाली", "अजय्", "अ"],
-            Urdu: ["اُردُو", "اجَے ", "ب"],
-            Kashmiri: ["كٲشُر", "اجَے ", "ب"],
-            Romanized: ["Romanized", "ajay ", "ā"],
-            Sinhala: ["සිංහල", "අජය්", "අ"],
-            "Tamil-Extended": ["தமிழ்-Extended", "அஜய்", "அ"],
-            Sharada: ["शारदा", "𑆃𑆘𑆪𑇀", "𑆃"],
-            Modi: ["मोडी", "𑘀𑘕𑘧𑘿", "𑘀"],
-            Siddham: ["सिद्धम्", "𑖀𑖕𑖧𑖿", "𑖀"],
-            Granth: ["கிரந்த", "𑌅𑌜𑌯𑍍", "𑌅"],
-            Brahmi: ["ब्राह्मी", "𑀅𑀚𑀬𑁆", "𑀅"],
-            Normal: ["", "", "A"]
+            Devanagari: ["", "", "अ", 0],
+            Hindi: ["हिन्दी", "अजय्", "अ", "hi"],
+            Bengali: ["বাংলা", "অজয্", "অ", "bn"],
+            Telugu: ["తెలుగు", "అజయ్", "అ", "te"],
+            Tamil: ["தமிழ்", "அஜய்", "அ", "ta"],
+            Marathi: ["मराठी", "अजय्", "अ", "mr"],
+            Gujarati: ["ગુજરાતી", "અજય્", "અ", "gu"],
+            Malayalam: ["മലയാളം", "അജയ്", "അ", "ml"],
+            Kannada: ["ಕನ್ನಡ", "ಅಜಯ್", "ಅ", "kn"],
+            Oriya: ["ଓଡ଼ିଆ", "ଅଜଯ୍", "ଅ", "or"],
+            Assamese: ["অসমীয়া", "অজয্", "অ", 0],
+            Konkani: ["कोंकणी", "अजय्", "अ", 0],
+            Sanskrit: ["संस्कृतम्", "अजय्", "अ", 0],
+            Punjabi: ["ਪੰਜਾਬੀ", "ਅਜਯ੍", "ਅ", "pn"],
+            Nepali: ["नेपाली", "अजय्", "अ", "ne"],
+            Urdu: ["اُردُو", "اجَے ", "ب", "ur"],
+            Kashmiri: ["كٲشُر", "اجَے ", "ب", 0],
+            Romanized: ["Romanized", "ajay ", "ā", 0],
+            Sinhala: ["සිංහල", "අජය්", "අ", "si"],
+            "Tamil-Extended": ["தமிழ்-Extended", "அஜய்", "அ", 0],
+            Sharada: ["शारदा", "𑆃𑆘𑆪𑇀", "𑆃", 0],
+            Modi: ["मोडी", "𑘀𑘕𑘧𑘿", "𑘀", 0],
+            Siddham: ["सिद्धम्", "𑖀𑖕𑖧𑖿", "𑖀", 0],
+            Granth: ["கிரந்த", "𑌅𑌜𑌯𑍍", "𑌅", 0],
+            Brahmi: ["ब्राह्मी", "𑀅𑀚𑀬𑁆", "𑀅", 0],
+            Normal: ["", "", "A", 0]
         };
         this.sthAna = {
             "main": "",
@@ -60,6 +60,8 @@ class अनुप्रयोगः {
         this.yuj = (x, y) => jQuery(y).appendTo(x);
         this.html_initialized = false;
         this.current_page = "main";
+        this.back_loaded = false;
+        this.in = (x, y) => this.k.includes(x, y);
     };
     init_html() {
         let yuj = app.yuj,
@@ -78,8 +80,8 @@ class अनुप्रयोगः {
                     true: "on"
                 } [app.sahayika_set]);
             });
-            $("#script_set").click(function () {
-                app.store_values('script', this.value);
+            $("#script_set").on("change", function () {
+                app.store_values('script', this.value)
             });
         }
         if (true) { //menu
@@ -135,7 +137,7 @@ class अनुप्रयोगः {
                     app.set_font_size();
                     app.add_convert_msg();
                 };
-                if (!app.k.includes(app.loaded_display_lng, v)) {
+                if (!app.in(app.loaded_display_lng, v)) {
                     app.loaded_display_lng.push(v);
                     $.ajax({
                         url: app.pratyaya_sanchit + `/lang/${v}.json`,
@@ -220,7 +222,7 @@ class अनुप्रयोगः {
                 let jkl = () => {
                     let ak = $('#main_lang').val();
                     app.app.script = ak;
-                    if (app.k.includes(["Urdu", "Romanized", "Kashmiri"], ak))
+                    if (app.in(["Urdu", "Romanized", "Kashmiri"], ak))
                         $("#sa_mode").hide();
                     else
                         $("#sa_mode").show();
@@ -230,6 +232,11 @@ class अनुप्रयोगः {
                     app.add_direction($("#dynamic"), $("#main_lang").val());
                     if (!app.once_editded)
                         app.add_direction($("#first"), $("#main_lang").val());
+                    let e = $("#anu_main");
+                    if (app.lipyaH[ak][3] == 0)
+                        e.hide();
+                    else
+                        e.show();
                 };
                 app.app.set_lang_and_state($("#main_lang").val(), jkl);
             });
@@ -245,7 +252,7 @@ class अनुप्रयोगः {
             });
             let y = "";
             for (let x in app.lipyaH) {
-                if (app.k.includes(['Devanagari', "Normal"], x))
+                if (app.in(['Devanagari', "Normal"], x))
                     continue;
                 y += `<a class='bhAShAnyAH block dvayam-right-anya-bhAShA' href='/lang/${x}' target='_blank' id='title_${x}'>${app.lipyaH[x][0]} (<span class='bhAShAnyAH_name' id='link_${x}'></span>)</a>`;
             }
@@ -255,6 +262,11 @@ class अनुप्रयोगः {
                     window.open("/", "_blank");
                 else
                     app.open_link(null, "/lang/" + $("#main_lang").val());
+            });
+            $("#anu_main").click(() => {
+                let v = app.k.get_Text_from_div($("#dynamic").html()),
+                    fr = app.lipyaH[$("#main_lang").val()][3];
+                app.translate(v, fr, "en")
             });
         }
         if (true) { //prayog
@@ -348,22 +360,23 @@ class अनुप्रयोगः {
             if (s["mode"] == 1) {
                 $(".web_only").hide();
                 app.app.only_web_status = false;
-                let elm = $(app.app.sahayika.bhaNDAra.pashchAta[0]).children()[0];
-                elm.removeAttribute("href");
-                elm.removeAttribute("target");
-            }
-            let vbn = ["xcv", "lang1", "lang2", "main_lang", "script_set"];
-            let lang_list = Object.keys(app.lipyaH);
-            for (let x in vbn) {
+                let e = (x) => $(app.app.sahayika.bhaNDAra.pashchAta[0]).children()[0].removeAttribute(x);
+                e("href");
+                e("target");
+            };
+            for (let z of $(".lang")) {
+                let x = $(z).attr("id");
                 let j = "";
-                for (let y in lang_list) {
-                    if ((vbn[x] == "xcv" && lang_list[y] == "Normal") || lang_list[vbn] == "Vedic") continue;
-                    if (lang_list[y] == "Devanagari" && !app.k.includes(["lang1", "lang2"], vbn[x])) continue;
-                    if (lang_list[y] == "Normal" && vbn[x] == "main_lang") continue;
-                    if (app.k.includes(["lang1", "lang2"], vbn[x]) && app.k.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], lang_list[y])) continue;
-                    j += `<option value="${lang_list[y]}" class="${lang_list[y]}"></option>`;
+                for (let y in app.lipyaH) {
+                    if (y == "Devanagari" && !app.in(["lang1", "lan2g"], x))
+                        continue;
+                    if (y == "Normal" && app.in(["main_lang", "xcv", "script_set"], x))
+                        continue;
+                    if (app.in(["lang1", "lang2"], x) && app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], y))
+                        continue;
+                    j += `<option value="${y}" class="${y}"></option>`;
                 }
-                $("#" + vbn[x]).html(j);
+                $("#" + x).html(j);
             }
             $("#xcv").append("<option id='Vedic' value='Vedic'>Vedic Additions</option>")
             $("#paricaya").html("<div class='br-above'>भारते रचितः</div>E-mail : <a href='mailto:lipilekhika@gmail.com' class='mail'>lipilekhika@gmail.com</a>");
@@ -385,7 +398,7 @@ class अनुप्रयोगः {
         this.once_editded = true;
     };
     add_direction(i, lang) {
-        if (app.k.includes(["Urdu", "Kashmiri"], lang)) {
+        if (app.in(["Urdu", "Kashmiri"], lang)) {
             i.attr("dir", "rtl");
         } else
             i.attr("dir", "ltr");
@@ -394,14 +407,15 @@ class अनुप्रयोगः {
         let src = $("#main_lang").val();
         let val = app.lipyaH[src][1];
         $(`#sa_${app.k.akSharAH[src]["く"]}4`)[0].checked = true;
-        if (app.k.includes(["Romanized", "Normal", "Urdu"], src))
+        if (app.in(["Romanized", "Normal", "Urdu"], src))
             val += " ";
         let extra = 0;
-        if (app.k.includes(["Brahmi", "Modi", "Sharada", "Siddham", "Granth"], src))
+        if (app.in(["Brahmi", "Modi", "Sharada", "Siddham", "Granth"], src))
             extra++;
         let val1 = val.substring(0, val.length - 1 - extra);
         $("#sa_0").html(`ajay ➠ ${val1}`);
         $("#sa_1").html(`ajay ➠ ${val}`);
+        if (s.mode == 1 && !app.back_loaded) set_background();
     };
     change_page(to, set = true) {
         if (set) {
@@ -414,7 +428,7 @@ class अनुप्रयोगः {
         }
         if (to == "inter" && !app.once_editded) {
             let exec = () => {
-                $("#lang1").val(app.k.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
+                $("#lang1").val(app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
                 $("#lang2").val("Romanized");
                 $("#first").val(app.k.get_Text_from_div($("#dynamic").html()));
                 $('#second').val(app.app.antarparivartan($('#first').val(), $('#lang1').val(), $('#lang2').val()));
@@ -460,12 +474,12 @@ class अनुप्रयोगः {
     };
     set_inter_values(n) {
         if (n == 1) {
-            $("#lang1").val(app.k.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
+            $("#lang1").val(app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
             $("#first").val(app.k.get_Text_from_div($("#dynamic").html()));
             if (app.auto)
                 $('#second').val(app.app.antarparivartan($('#first').val(), $('#lang1').val(), $('#lang2').val()));
         } else {
-            $("#lang2").val(app.k.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
+            $("#lang2").val(app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
             $("#second").val(app.k.get_Text_from_div($("#dynamic").html()));
             if (app.auto)
                 $('#first').val(app.app.antarparivartan($('#second').val(), $('#lang2').val(), $('#lang1').val()));
@@ -610,7 +624,7 @@ class अनुप्रयोगः {
                     break;
             }
         } else {
-            if (!app.k.includes(["app_lang", "script", "sahayika"], name))
+            if (!app.in(["app_lang", "script", "sahayika"], name))
                 return;
             switch (name) {
                 case "script":
@@ -686,10 +700,12 @@ app.sahayika_usage = {
     "off": false
 } [app.get_values("sahayika")];
 app.sahayika_set = app.sahayika_usage;
+let s1 = {};
 if (true) { //pre settings
-    let devan_sthiti = (s) => app.k.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], s)
+    let devan_sthiti = (s) => app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], s)
     if ("main_lang" in s)
         s["from"] = s["main_lang"];
+    s1 = JSON.parse(JSON.stringify(s));
     if ("from" in s) {
         s["main_lang"] = s["from"] == "Devanagari" ? "Sanskrit" : s["from"];
         s["from"] = devan_sthiti(s["from"]) ? "Devanagari" : s["from"];
@@ -697,19 +713,14 @@ if (true) { //pre settings
     if ("to" in s)
         s["to"] = devan_sthiti(s["to"]) ? "Devanagari" : s["to"];
 }
-let s1 = JSON.parse(JSON.stringify(s));
-if (true) { //adding backgroud image
-    let lc = `body{background-image:url(${app.k.substring(app.k.image_loca, 0, -5)}/lipi-`;
-    let l2 = (x) => `@media(${["min","max"][x]+"-width:630px){"+lc+["pc","an"][x]}.jpg);}}`;
-    app.yuj("body", `<style>${l2(0)+l2(1)}</style>`);
-}
+
 if (true) { //setting values
     if (!("app_lang" in s))
         s["app_lang"] = app.get_values("app_lang");
     if (!("main_lang" in s))
         s["main_lang"] = app.get_values("script");
     if (!("from" in s))
-        s["from"] = app.k.includes(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], s["main_lang"]) ? "Devanagari" : s["main_lang"];
+        s["from"] = app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], s["main_lang"]) ? "Devanagari" : s["main_lang"];
     if (!("to" in s))
         s["to"] = "Romanized";
     if (!("vitroTanam" in s))
@@ -730,8 +741,19 @@ $.ajax({
             success: (result) => {
                 $("body").append(result);
                 let e = $("#store_html").children();
-                for (let x of e)
-                    app.anya_html[$(x).attr("nm")] = x.innerHTML;
+                for (let x of e) {
+                    let atr = $(x).attr("nm"),
+                        ht = x.innerHTML;
+                    if (atr == "img") {
+                        app.anya_html[atr] = {};
+                        for (let y of $(x).children()) {
+                            let tr = $(y).attr("nm");
+                            ht = y.innerHTML;
+                            app.anya_html[atr][tr] = ht;
+                        }
+                    } else
+                        app.anya_html[atr] = ht;
+                }
                 $("#store_html").remove();
                 app.init_html();
                 $("#bdy").children().hide();
@@ -748,19 +770,19 @@ $.ajax({
                     if ("main_lang" in s1) {
                         t = $("#main_lang").after(ht("main_set", s1["main_lang"]));
                         t.hide();
-                        t = $("#script_set").after(ht("main_set", s1["main_lang"]));
+                        t = $("#script_set").after(ht("script_set", s1["main_lang"]));
                         t.hide();
                         app.sthAna.main = "/lang/" + s["main_lang"];
                     }
                     if ("from" in s1) {
                         t = $("#lang1").after(ht("from_set", s1["from"]));
                         t.hide();
-                        app.sthAna.from = "/converter/" + s["from"];
+                        app.sthAna.from = "/converter/" + s1["from"];
                     }
                     if ("to" in s1) {
                         t = $("#lang2").after(ht("to_set", s1["to"]));
                         t.hide();
-                        app.sthAna.to = "/" + s["to"];
+                        app.sthAna.to = "/" + s1["to"];
                     }
                 }
                 app.set_lang_text(s["app_lang"]);
@@ -770,6 +792,13 @@ $.ajax({
     }
 });
 
+function set_background() {
+    let lc = `body{background-image:url(${app.k.substring(app.k.image_loca, 0, -5)}/lipi-`;
+    let l2 = (x) => `@media(${["min","max"][x]+"-width:630px){"+lc+["pc","an"][x]}.jpg);}}`;
+    app.yuj("body", `<style>${l2(0)+l2(1)}</style>`);
+    app.back_loaded = true;
+}
+if (s["mode"] == 0) set_background();
 window.history.pushState(null, "", window.location.href);
 window.onpopstate = () => {
     $("title").html($("title").html());
@@ -789,7 +818,7 @@ window.onpopstate = () => {
         $("#menu_blocker").trigger("click");
     else if (pg in bck)
         $(bck[pg]).trigger("click");
-    else if (app.k.includes(app.pages, app.current_page)) {
+    else if (app.in(app.pages, app.current_page)) {
         app.change_page("main");
         hde();
     }
@@ -806,78 +835,83 @@ function add_icon() {
 add_icon();
 
 function on_loaded() {
-    $("#app_lang").val(s["app_lang"]);
-    $("#main_lang").val(s["main_lang"]);
-    $("#lang1").val(s["from"]);
-    $("#xcv").val(s["main_lang"]);
-    $("#lang2").val(s["to"]);
-    $("#script_set").val(app.get_values("script"));
-    app.k.load_lang($("#lang2").val());
-    app.k.load_lang($("#lang1").val());
-    if (s["page"] == 0)
-        $("#main").show();
-    else if (s["page"] == 1) {
-        app.current_page = "inter";
-        $("#inter").show();
-        app.k.load_inter_converter();
-        $("#parivartak").hide();
-        $("#back_btn").show();
-    }
-    $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
-    $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
-    let akl = $("#main_lang").val();
-    app.app.set_lang_and_state(akl, app.set_sa_val, true);
-    let ht = app.anya_html,
-        lt = {
-            "#menu_btn": "menu_btn",
-            ".cpy_btn": "cpy_btn",
-            ".git": "git",
-            "#up_arrow_img": "up_arrow",
-            "#down_arrow_img": "down_arrow",
-            ".imgon2": "imgon2",
-            ".imgoff2": "imgoff2",
-            "#back_btn": "back",
-            ".close_img": "close_img",
-            "#about_button":"about"
-        };
-    for (let x in lt)
-        $(x).html(ht[lt[x]]);
-    if (app.k.includes(["Urdu", "Romanized", "Kashmiri"], akl))
-        $("#sa_mode").hide();
-    $(".redirect").html(ht.redirect);
-    $("#set_img").html(ht.setting);
-    for (let x of $(".checkbox_img")) {
-        let v = x.checked,
-            e = $(x);
-        if (v == undefined) {
-            if (e.attr("img_check") == undefined) {
-                x.checked = true;
-                v = true;
-            } else {
-                v = [false, true][e.attr("img_check")];
-                x.checked = v;
-            }
+    if (true) {
+        $("#app_lang").val(s["app_lang"]);
+        $("#main_lang").val(s["main_lang"]);
+        $("#lang1").val(s["from"]);
+        $("#xcv").val(s["main_lang"]);
+        $("#lang2").val(s["to"]);
+        $("#script_set").val(app.get_values("script"));
+        app.k.load_lang($("#lang2").val());
+        app.k.load_lang($("#lang1").val());
+        if (s["page"] == 0)
+            $("#main").show();
+        else if (s["page"] == 1) {
+            app.current_page = "inter";
+            $("#inter").show();
+            app.k.load_inter_converter();
+            $("#parivartak").hide();
+            $("#back_btn").show();
         }
-        let d = [false, true].indexOf(v);
-        e = e.children();
-        $(e[d]).removeClass("hidden");
-        $(e[Math.abs(d - 1)]).addClass("hidden");
+        $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
+        $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
     }
-    $(".checkbox_img").click(function () {
-        let e = $(this);
-        let el = e[0];
-        let v = !el.checked;
-        el.checked = v;
-        let d = [false, true].indexOf(v);
-        e = e.children();
-        $(e[d]).removeClass("hidden");
-        $(e[Math.abs(d - 1)]).addClass("hidden");
-    });
-    app.add_direction($("#dynamic"), akl);
-    app.add_direction($("#first"), $("#lang1").val());
-    app.add_direction($("#second"), $("#lang2").val());
-    app.add_convert_msg();
-    app.set_font_size();
+    if (true) {
+        let akl = $("#main_lang").val();
+        app.app.set_lang_and_state(akl, app.set_sa_val, true);
+        let ht = app.anya_html.img,
+            lt = {
+                "#menu_btn": "menu_btn",
+                ".cpy_btn": "cpy_btn",
+                ".git": "git",
+                "#up_arrow_img": "up_arrow",
+                "#down_arrow_img": "down_arrow",
+                ".imgon2": "imgon2",
+                ".imgoff2": "imgoff2",
+                "#back_btn": "back",
+                ".close_img": "close_img",
+                "#about_button": "about",
+                ".anuvadak": "anuvadak"
+            };
+        for (let x in lt)
+            $(x).html(ht[lt[x]]);
+        if (app.in(["Urdu", "Romanized", "Kashmiri"], akl))
+            $("#sa_mode").hide();
+        $(".redirect").html(ht.redirect);
+        $("#set_img").html(ht.setting);
+        for (let x of $(".checkbox_img")) {
+            let v = x.checked,
+                e = $(x);
+            if (v == undefined) {
+                if (e.attr("img_check") == undefined) {
+                    x.checked = true;
+                    v = true;
+                } else {
+                    v = [false, true][e.attr("img_check")];
+                    x.checked = v;
+                }
+            }
+            let d = [false, true].indexOf(v);
+            e = e.children();
+            $(e[d]).removeClass("hidden");
+            $(e[Math.abs(d - 1)]).addClass("hidden");
+        }
+        $(".checkbox_img").click(function () {
+            let e = $(this);
+            let el = e[0];
+            let v = !el.checked;
+            el.checked = v;
+            let d = [false, true].indexOf(v);
+            e = e.children();
+            $(e[d]).removeClass("hidden");
+            $(e[Math.abs(d - 1)]).addClass("hidden");
+        });
+        app.add_direction($("#dynamic"), akl);
+        app.add_direction($("#first"), $("#lang1").val());
+        app.add_direction($("#second"), $("#lang2").val());
+        app.add_convert_msg();
+        app.set_font_size();
+    }
     if (s.vitroTanam)
         window.onbeforeunload = () => "Do you really want to Leave";
     $("#lipi_icon").remove();
