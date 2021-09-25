@@ -74,6 +74,7 @@
         "typ_lang": "Choose Typing Language",
         "usage_btnm": "Lipi Lekhika Usage Instructions",
         "redirect_msg": "Go To More Appropriae Version of This Page",
-        "setting": "Set Lipi Lekhik's Default Options"
+        "setting": "Set Lipi Lekhik's Default Options",
+        "anuvadak": "Translate using Google Translate"
     }
 }

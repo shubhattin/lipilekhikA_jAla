@@ -318,7 +318,7 @@ p {
   border-color: green;
 }
 
-#app_lang {
+.app_lang {
   font-size: 0.9em;
   font-weight: bold;
   color: yellow;
@@ -332,7 +332,7 @@ option {
   text-align: center;
 }
 
-#app_lang:hover {
+.app_lang:hover {
   background-color: white;
   color: red;
   border-color: blue;
@@ -796,7 +796,7 @@ button {
   font-size: 1.5em;
 }
 
-#script_set {
+.script_set {
   margin-right: 10px;
   margin-left: -12px;
 }
