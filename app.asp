@@ -1,8 +1,24 @@
 <div id="main_section" style="display:none;">
     <div id="main1">
         <div class="in-flex">
-            <span id="menu_btn" class="imgs"></span>
-            <span tlt="back" class="back titles imgs" id="back_btn"></span>
+            <span id="menu_btn" class="imgs">
+                <svg width="35px" height="35px" viewBox="0 0 512 512">
+                    <g>
+                        <path d="M441.13,166.52h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z" />
+                        <path d="M441.13,279.72h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z" />
+                        <path d="M441.13,392.92h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z" />
+                    </g>
+                </svg>
+            </span>
+            <span tlt="back" class="back titles imgs" id="back_btn">
+                <svg viewBox="0 0 32 32">
+                    <g>
+                        <path
+                            d="M13,26a1,1,0,0,1-.71-.29l-9-9a1,1,0,0,1,0-1.42l9-9a1,1,0,1,1,1.42,1.42L5.41,16l8.3,8.29a1,1,0,0,1,0,1.42A1,1,0,0,1,13,26Z" />
+                        <path d="M28,17H4a1,1,0,0,1,0-2H28a1,1,0,0,1,0,2Z" />
+                    </g>
+                </svg>
+            </span>
             <button id="parivartak" tlt="parivartak" class="in-flex titles">
                 <span id="convert_img" class="imgs btn_img"></span>
                 <span id="lbl3" lipi="parivartak" class="lipi"></span>
@@ -24,14 +40,14 @@
             <div id="main">
                 <div class="flex">
                     <span id="sa_mode" class="dvayam-right in-flex">
-                        <span class="titles in-flex" tlt="sa_0">
-                            <input type="radio" class="sa_radio" name="sanskrit" id="sa_04">
-                            <label for="sa_04" id="sa_0" class="black-yeloow ajay"></label>
-                        </span>
-                        <span class="titles in-flex" tlt="sa_1">
-                            <input type="radio" class="sa_radio" name="sanskrit" id="sa_14">
-                            <label for="sa_14" id="sa_1" class="black-yellow ajay"></label>
-                        </span>
+                        <label class="titles in-flex" tlt="sa_0">
+                            <input type="radio" class="sa_radio" name="sa_mode" id="sa_04">
+                            <span id="sa_0" class="black-yeloow ajay"></span>
+                        </label>
+                        <label class="titles in-flex" tlt="sa_1">
+                            <input type="radio" class="sa_radio" name="sa_mode" id="sa_14">
+                            <span id="sa_1" class="black-yellow ajay"></span>
+                        </label>
                     </span>
                     <span id="sahayika_switch" tlt="imgon1" class="titles checkbox_img">
                         <span class="imgoff1 imgs"></span>
@@ -147,15 +163,15 @@
     <div id="menu_blocker"></div>
 </div>
 <div id="store_html" style="display:none;">
-    <i nm="main_btn">
+    <div nm="main_btn">
         <span id="main_switch" tlt="imgon" class="titles checkbox_img">
             <span class="imgoff imgs"></span>
             <span class="imgon imgs"></span>
         </span>
         <button id="cp1" class="cpy_btn titles" tlt="cpy_btn"></button>
         <span class="imgs anuvadak web_only titles" tlt="anuvadak" id="anu_main"></span>
-    </i>
-    <i nm="main_lang">
+    </div>
+    <div nm="main_lang">
         <div class="vr-flex1 script">
             <div class="flex typ_lang">
                 <select class="lang titles" tlt="typ_lang" id="main_lang"></select>
@@ -163,22 +179,22 @@
                 <span id="set_img" tlt="setting" class="imgs titles"></span>
             </div>
         </div>
-    </i>
-    <i nm="app_set">
+    </div>
+    <div nm="app_set">
         <span class="app_lang" style="padding-left:4px;padding-right:4px;border-radius:5px;">{0}</span>
-    </i>
-    <i nm="main_set">
+    </div>
+    <div nm="main_set">
         <span resize=0 style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts {0}"></span>
-    </i>
-    <i nm="script_set">
+    </div>
+    <div nm="script_set">
         <span resize=0 style="padding-left:4px;padding-right:4px;border-radius:5px;"
             class="lang script_set fonts {0}"></span>
-    </i>
-    <i nm="from_set">
+    </div>
+    <div nm="from_set">
         <span resize=0 style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts {0}"></span>
-    </i>
-    <i nm="to_set">
+    </div>
+    <div nm="to_set">
         <span resize=0 style="padding-left:4px;padding-right:4px;padding:2px;border-radius:5px;"
             class="lang fonts {0}"></span>
-    </i>
+    </div>
 </div>

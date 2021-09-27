@@ -858,7 +858,7 @@ class लिपिलेखिकापरिवर्तक {
         if (!लिपि.includes(script, lang) || लिपि.includes(this.added_fonts, lang))
             return;
         let name = `LipiFont${lang}`;
-        var font = new FontFace(name, `url(${लिपि.font_loca}/${lang}.ttf)`);
+        var font = new FontFace(name, `url(${लिपि.font_loca}/${lang}.woff2)`);
         let fnt = this.sahayika.elm.css("font-family");
         this.sahayika.elm.css("font-family", `${fnt},"${name}"`);
         font.load().then(function (loaded_face) {
@@ -912,13 +912,16 @@ class लिपिलेखिकालेखनसहायिका {
     constructor() {
         this.c = 0;
         this.d = 0;
+        this.k = लिपि;
         this.idAnIma = 0;
         this.reset_capital_status = false;
         this.pUrvavarNa = [
             ["", "", -1], ""
         ];
-        this.elm = jQuery('<div></div>').appendTo('body');
-        this.elm.css({
+        let id = "లిಪಿலேഖിକା",
+            c = "";
+        this.elm = jQuery(`<div id="${id}"></div>`).appendTo('body');
+        let css = {
             "position": "absolute",
             "background-color": "white",
             "padding": "2.5px",
@@ -933,7 +936,10 @@ class लिपिलेखिकालेखनसहायिका {
             "min-width": "58px",
             "box-shadow": "0 4px 8.25px 0 #00000033, 0 6px 20px 0 #00000030",
             "font-family": '"Nirmala UI","Calibri"'
-        });
+        };
+        for (let x in css)
+            c += `${x}:${css[x]};`;
+        c = `#${id}{${c}}`;
         let row1 = "",
             row2 = "";
         row1 += `<td><span></span><span></span></td>`;
@@ -945,7 +951,7 @@ class लिपिलेखिकालेखनसहायिका {
             row2 += `<td class="लिপিಜಂ"></td>`;
         };
         let table = `<table><tbody><tr>${row2}</tr><tr>${row1}</tr></tbody></table><div style="font-size: 10.5px;color: purple;"></div>`;
-        this.elm.html(table);
+        this.elm.append(table);
         this.bhaNDAra_index = ["sahayika", "pashchAta", "akShara", "key1", "key2"];
         this.bhaNDAra = {
             "sahayika": this.elm.children()[1],
@@ -1097,7 +1103,7 @@ class लिपिलेखिकालेखनसहायिका {
         let n = ":hover{color:blue;}",
             l = ".लिপি",
             p = "{padding:0.5px;}";
-        this.elm.append(`<style>${l}ಜಃ${n}${l}ಜಂ${n}${l}ಜಃ${p}${l}ಜಂ${p}</style>`)
+        this.elm.append(`<style>${l}ಜಃ${n}${l}ಜಂ${n}${l}ಜಃ${p}${l}ಜಂ${p}${c}</style>`)
     };
     hide_other() {
         let elm = LipiLekhikA.sahayika;

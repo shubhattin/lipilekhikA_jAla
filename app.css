@@ -83,6 +83,7 @@ option {
   .in-extra {
     width: 100%;
     overflow: scroll;
+    scrollbar-width: 0;
   }
 
   .in-extra::-webkit-scrollbar {
@@ -142,6 +143,7 @@ option {
   margin: 16px 4px 8px 4px;
   overflow-x: scroll;
   overflow-y: visible;
+  scrollbar-width: 0;
 }
 
 #bhAShA_sanchit::-webkit-scrollbar {
@@ -378,7 +380,7 @@ option {
 }
 
 .cpy_btn {
-  border: 2px solid blueviolet;
+  border: 2px solid #a75dec;
   background-color: white;
   padding-left: 2px;
   padding-right: 2px;
@@ -386,7 +388,7 @@ option {
   padding-bottom: 0;
   border-radius: 3.5px;
   cursor: copy;
-  fill: #424242;
+  fill: #505050;
 }
 
 .set_text {
@@ -527,6 +529,7 @@ button {
   padding: 9px;
   border: 2px solid purple;
   font-size: 15px;
+  scrollbar-width: 0;
   border-radius: 8px;
 }
 
@@ -656,6 +659,10 @@ button {
   background-color: #f1f1f1;
 }
 
+#menu_body {
+  scrollbar-width: 0;
+}
+
 #menu_body::-webkit-scrollbar {
   display: none;
   width: 0px;
@@ -733,8 +740,8 @@ button {
 }
 
 .redirect {
-  fill: #1d6cff;
-  margin-top: 5.6px;
+  fill: #367cff;
+  margin-top: 2px;
   margin-left: 3px;
 }
 
@@ -768,11 +775,12 @@ button {
 
 #set_img {
   margin-left: 6px;
-  fill: black;
+  fill: #5a5a5a;
+  margin-top: 2px;
 }
 
 #set_img:hover {
-  fill: blueviolet;
+  fill: black;
 }
 
 .hidden {

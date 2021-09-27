@@ -168,7 +168,7 @@ class अनुप्रयोगः {
                     url: app.pratyaya_sanchit + `/LICENCE.txt`,
                     dataType: "text",
                     success: (result) => {
-                        app.yuj("#licence", app.k.replace_all(result, "\n", "<br>"));
+                        $("#licence").html(app.k.replace_all(result, "\n", "<br>"));
                         $("#licence").show();
                         $("#lic").hide();
                     }
@@ -391,7 +391,6 @@ class अनुप्रयोगः {
             }
             app.yuj("#xcv", "<option id='Vedic' value='Vedic'>Vedic Additions</option>")
             app.yuj("#paricaya", "<div class='br-above'>भारते रचितः</div>E-mail : <a href='mailto:lipilekhika@gmail.com' class='mail'>lipilekhika@gmail.com</a>");
-            $("#main_section").show();
         }
     };
     set_inter_anuvadak() {
@@ -749,6 +748,7 @@ setTimeout(() => {
         if (!("mode" in s))
             s["mode"] = 0;
     }
+    if (s["mode"] == 0) set_background();
     $.ajax({
         url: app.pratyaya_sanchit + `/lang/${s["app_lang"]}.json`,
         dataType: "json",
@@ -793,7 +793,7 @@ setTimeout(() => {
                             app.sthAna.to = "/" + s1["to"];
                         }
                     }
-                    setTimeout(() => app.set_lang_text(s["app_lang"]), 1);
+                    app.set_lang_text(s["app_lang"]);
                     on_loaded();
                 }
             });
@@ -833,7 +833,6 @@ function set_background() {
     app.yuj("body", `<style>${l2(0)+l2(1)}</style>`);
     app.back_loaded = true;
 }
-if (s["mode"] == 0) set_background();
 let icon_link = $("#lipi_icon").attr("href");
 
 function add_icon() {
@@ -844,6 +843,35 @@ function add_icon() {
 add_icon();
 
 function on_loaded() {
+    setTimeout(() => $.ajax({
+        url: app.k.substring(app.k.image_loca, 0, -5) + "/img.asp",
+        dataType: "text",
+        success: (r) => {
+            let e1 = app.yuj('body', r),
+                lt = app.k.dict_rev({
+                    ".redirect": "redirect",
+                    "#set_img": "setting",
+                    ".cpy_btn": "cpy_btn",
+                    ".git": "git",
+                    "#up_arrow_img": "up_arrow",
+                    "#down_arrow_img": "down_arrow",
+                    ".imgon2": "imgon2",
+                    ".imgoff2": "imgoff2",
+                    ".close_img": "close_img",
+                    "#lang_img": "lang",
+                    "#auto_img": "auto",
+                    ".download_img": "download",
+                    "#about_button": "about",
+                    ".anuvadak": "anuvadak"
+                });
+            let e = $(e1).children();
+            for (let x of e) {
+                let atr = $(x).attr("nm");
+                app.yuj(lt[atr], $(x).html());
+            }
+            e1.remove();
+        }
+    }));
     if (true) {
         $("#app_lang").val(s["app_lang"]);
         $("#main_lang").val(s["main_lang"]);
@@ -860,6 +888,7 @@ function on_loaded() {
             $("#parivartak").hide();
             $("#back_btn").show();
         }
+        $("#main_section").show(); // showing the Application
         $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
         $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
     }
@@ -921,35 +950,4 @@ function on_loaded() {
     }
     for (let x of ["select", ".ajay", "#dynamic", ".normal"])
         $(x).addClass("fonts");
-    $.ajax({
-        url: app.k.substring(app.k.image_loca, 0, -5) + "/img.asp",
-        dataType: "text",
-        success: (r) => {
-            let e1 = app.yuj('body', r),
-                lt = app.k.dict_rev({
-                    ".redirect": "redirect",
-                    "#set_img": "setting",
-                    "#menu_btn": "menu_btn",
-                    ".cpy_btn": "cpy_btn",
-                    ".git": "git",
-                    "#up_arrow_img": "up_arrow",
-                    "#down_arrow_img": "down_arrow",
-                    ".imgon2": "imgon2",
-                    ".imgoff2": "imgoff2",
-                    "#back_btn": "back",
-                    ".close_img": "close_img",
-                    "#lang_img": "lang",
-                    "#auto_img": "auto",
-                    ".download_img": "download",
-                    "#about_button": "about",
-                    ".anuvadak": "anuvadak"
-                });
-            let e = $(e1).children();
-            for (let x of e) {
-                let atr = $(x).attr("nm");
-                app.yuj(lt[atr], $(x).html());
-            }
-            e1.remove();
-        }
-    });
 };

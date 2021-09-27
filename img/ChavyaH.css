@@ -25,11 +25,11 @@
 .close_img {
   width: 28px;
   height: 28px;
-  fill: #a80d0d;
+  fill: #ff5252;
 }
 
 .close_img:hover {
-  fill: red;
+  fill: #fa0000;
 }
 
 #close2 {
@@ -126,7 +126,12 @@
   width: 24px;
 }
 
+.imgoff2,
+.imgon2 .अनु1 {
+  fill: #6b6b6b;
+}
+
 .imgoff2:hover,
 .imgon2:hover .अनु1 {
-  fill: blue;
+  fill: black;
 }
