@@ -464,7 +464,8 @@ class अनुप्रयोगः {
             $("#parivartak").show();
             $("#back_btn").hide();
         } else if (to == "prayog") {
-            app.set_image($("#main_lang").val());
+            $("#xcv").val($("#main_lang").val());
+            $("#xcv").trigger("change");
             $('#prayog').show();
             $('#main1').addClass("prayog_hide");
         } else if (to == "mA_prayog") {
@@ -576,9 +577,7 @@ class अनुप्रयोगः {
             });
         };
         if (this.html_init)
-            $("select").each(function () {
-                app.resize($(this))
-            });
+            this.resize();
     };
     set_font_size() {
         let x = display_lang_list[$("#app_lang").val()][0];
@@ -858,11 +857,13 @@ function on_loaded() {
         o = app.k.replace_all(o, "id=", "idk=");
         o = app.yuj("body", o);
         o.html(`<option>${e.find("option:selected").html()}</option>`).text();
-        let f = o.css("width");
+        let f = o.width();
         o.remove();
-        e.css("width", f);
+        e.css("width", `${f+7}px`);
     };
-    app.resize = resize;
+    app.resize = () => $("select").each(function () {
+        resize($(this))
+    });
     $("select").on("change", (e) => resize($(e.target)));
     setTimeout(() => $.ajax({
         url: app.k.substring(app.k.image_loca, 0, -5) + "/img.asp",

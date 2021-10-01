@@ -181,17 +181,15 @@
         <span class="app_lang" style="padding-left:4px;padding-right:4px;border-radius:5px;">{0}</span>
     </div>
     <div nm="main_set">
-        <span resize=0 style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts {0}"></span>
+        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts {0}"></span>
     </div>
     <div nm="script_set">
-        <span resize=0 style="padding-left:4px;padding-right:4px;border-radius:5px;"
-            class="lang script_set fonts {0}"></span>
+        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang script_set fonts {0}"></span>
     </div>
     <div nm="from_set">
-        <span resize=0 style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts {0}"></span>
+        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts {0}"></span>
     </div>
     <div nm="to_set">
-        <span resize=0 style="padding-left:4px;padding-right:4px;padding:2px;border-radius:5px;"
-            class="lang fonts {0}"></span>
+        <span style="padding-left:4px;padding-right:4px;padding:2px;border-radius:5px;" class="lang fonts {0}"></span>
     </div>
 </div>
