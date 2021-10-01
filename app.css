@@ -321,7 +321,7 @@ p {
 }
 
 .app_lang {
-  font-size: 0.9em;
+  font-size: 14.3px;
   font-weight: bold;
   color: yellow;
   border: 2px solid red;
@@ -688,7 +688,7 @@ button {
 
 .menu_msg {
   color: purple;
-  font-size: 0.72em;
+  font-size: 1.15em;
   margin-left: 5px;
   padding: 2px;
   text-align: center;
@@ -697,7 +697,7 @@ button {
 
 #info_links .menu_msg {
   color: purple;
-  font-size: 0.6em;
+  font-size: 0.96em;
   margin-left: 5px;
   padding: 2px;
   margin-top: 2px;
@@ -755,14 +755,6 @@ button {
 
 .br-bottom {
   margin-top: 10px;
-}
-
-.विकल्पानि {
-  display: none;
-  font-size: 1.44em;
-  font-weight: bold;
-  padding-left: 1px;
-  padding-bottom: 1px;
 }
 
 @media (min-width:850px) {

@@ -78,7 +78,7 @@
                 <div class="in-flex">
                     <select class="lang" id="lang2"></select>
                     <button id="set_text1" class="set_text ekam-left"></button>
-                    <button id="cp3" class="cpy_btn ekam-left"></button>
+                    <button id="cp3" class="cpy_btn ekam-left titles" tlt="cpy_btn"></button>
                     <span id="up_arrow_img" class="imgs" style="margin:0 0 0 5px;"></span>
                     <span id="down_arrow_img" class="imgs" style="margin:0 -2px 0 -3.5px;"></span>
                     <span id="auto_img" class="imgs ekam-right" style="margin-left:5px;"></span>
@@ -129,9 +129,6 @@
         </div>
         <div class="blocker"></div>
     </div>
-    <select class='विकल्पानि'>
-        <option class='विकल्पम्'></option>
-    </select>
 </div>
 </div>
 <div id="menu_container" style="display:none;">

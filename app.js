@@ -57,8 +57,8 @@ class अनुप्रयोगः {
         this.inter_on_off = [false, false];
         this.do_not = false;
         this.auto = !false;
+        this.html_init = false;
         this.yuj = (x, y) => jQuery(y).appendTo(x);
-        this.html_initialized = false;
         this.current_page = "main";
         this.back_loaded = false;
         this.in = (x, y) => this.k.includes(x, y);
@@ -111,9 +111,10 @@ class अनुप्रयोगः {
                 app.pRShThedAnIm = "menu";
             });
             $("#menu_blocker").click(() => {
-                let r = (x) => $(x)[0].removeAttribute("style");
-                r("body");
-                r("html");
+                $("body, html").css({
+                    "height": "",
+                    "overflow": ""
+                });
                 app.pRShThedAnIm = "";
                 $("#menu_body").animate({
                     "left": -left + "px"
@@ -129,7 +130,7 @@ class अनुप्रयोगः {
                 setTimeout(() => $("#menu_container").hide(), time + 12);
             });
             for (let p in display_lang_list) {
-                yuj("#app_lang", `<option tlt="${p}" value="${p}" class="langsw titles">${p}</option>`)
+                yuj("#app_lang", `<option tlt="${display_lang_list[p][1]}-in" value="${p}" class="langsw titles">${p}</option>`)
             };
             $("#app_lang").on("change", function () {
                 let v = $("#app_lang").val();
@@ -359,6 +360,7 @@ class अनुप्रयोगः {
             $("#up_arrow_img").click(() => $('#first').val(app.app.antarparivartan($("#second").val(), $('#lang2').val(), $('#lang1').val())));
             $(".inter_redirect").click(() => {
                 if ("to" in s1)
+
                     window.open("/", "_blank");
                 else {
                     if ($("#lang1").val() == "Normal")
@@ -573,12 +575,14 @@ class अनुप्रयोगः {
                 "alt": val
             });
         };
-        if (this.html_initialized)
-            $(".lang").trigger('change');
+        if (this.html_init)
+            $("select").each(function () {
+                app.resize($(this))
+            });
     };
     set_font_size() {
         let x = display_lang_list[$("#app_lang").val()][0];
-        $("#main_section").css("font-size", `${10+x}px`);
+        $("body").css("font-size", `${10+x}px`);
         $("html").attr("lang", display_lang_list[$("#app_lang").val()][1]);
     };
     set_onoff_img(mode) {
@@ -708,6 +712,9 @@ let display_lang_list = {
     "తెలుగు": [0.5, "te", "Telugu"],
     "ಕನ್ನಡ": [0.5, "kn", "Kannada"],
     "বাংলা": [0.5, "bn", "Bengali"],
+    "मराठी": [0.5, "mr", "Marathi"],
+    "ગુજરાતી": [0.5, "gu", "Gujarati"],
+    "മലയാളം": [-0.3, "ml", "Malayalam"],
     "संस्कृतम्": [0.5, "sa", "Sanskrit"]
 };
 
@@ -724,11 +731,11 @@ setTimeout(() => {
         let devan_sthiti = (s) => app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], s)
         if ("main_lang" in s)
             s["from"] = s["main_lang"];
-        s1 = JSON.parse(JSON.stringify(s));
         if ("from" in s) {
             s["main_lang"] = s["from"] == "Devanagari" ? "Sanskrit" : s["from"];
             s["from"] = devan_sthiti(s["from"]) ? "Devanagari" : s["from"];
         }
+        s1 = JSON.parse(JSON.stringify(s));
         if ("to" in s)
             s["to"] = devan_sthiti(s["to"]) ? "Devanagari" : s["to"];
     }
@@ -780,7 +787,7 @@ setTimeout(() => {
                             t.hide();
                             t = $("#script_set").after(ht("script_set", s1["main_lang"]));
                             t.hide();
-                            app.sthAna.main = "/lang/" + s["main_lang"];
+                            app.sthAna.main = "/lang/" + s1["main_lang"];
                         }
                         if ("from" in s1) {
                             t = $("#lang1").after(ht("from_set", s1["from"]));
@@ -843,6 +850,20 @@ function add_icon() {
 add_icon();
 
 function on_loaded() {
+    function resize(e) {
+        e.css("width", "");
+        let i = e.html(),
+            o = e[0].outerHTML;
+        o = app.k.replace_all(o, i, "");
+        o = app.k.replace_all(o, "id=", "idk=");
+        o = app.yuj("body", o);
+        o.html(`<option>${e.find("option:selected").html()}</option>`).text();
+        let f = o.css("width");
+        o.remove();
+        e.css("width", f);
+    };
+    app.resize = resize;
+    $("select").on("change", (e) => resize($(e.target)));
     setTimeout(() => $.ajax({
         url: app.k.substring(app.k.image_loca, 0, -5) + "/img.asp",
         dataType: "text",
@@ -895,6 +916,7 @@ function on_loaded() {
     if (true) {
         let akl = $("#main_lang").val();
         app.app.karya = true;
+        $("#main_lang").trigger("change");
         if (app.in(["Urdu", "Romanized", "Kashmiri"], akl))
             $("#sa_mode").hide();
         for (let x of $(".checkbox_img")) {
@@ -933,17 +955,11 @@ function on_loaded() {
     if (s.vitroTanam)
         window.onbeforeunload = () => "Do you really want to Leave";
     $("#lipi_icon").remove();
-    $.lipi_lekhika();
-    $(".lang").on("change", (e) => {
-        e = $(e.target);
-        if (e.attr("resize") == "0")
-            return;
-        $(".विकल्पम्").html(e.find("option:selected").text());
-        let f = $(".विकल्पानि").width() + 10;
-        e.css("width", `${f}px`);
+    $("select").each(function () {
+        resize($(this))
     });
-    $(".lang").trigger("change");
-    app.html_initialized = true;
+    app.html_init = true;
+    $.lipi_lekhika();
     for (let x of ["#dynamic", "#first", "#second"]) {
         let e = $(x);
         e.css("height", e.css("height"));
