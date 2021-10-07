@@ -128,7 +128,11 @@ class लिपिलेखिकासहायक {
         else if (to < 0)
             return val.substring(from, val.length + to)
     };
-
+    format(val, l) {
+        for (let x = 0; x < l.length; x++)
+            val = this.replace_all(val, `{${x}}`, l[x]);
+        return val;
+    }
     get_Text_from_div(t) {
         t = this.replace_all(t, "&nbsp;", " ");
         t = this.replace_all(t, "&amp;", "");

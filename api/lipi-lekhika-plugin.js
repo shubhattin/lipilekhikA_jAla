@@ -5,7 +5,7 @@ class लिपिलेखिकासहायक {
         };
         this.loaded_scripts = ["Normal"];
         this.antar_load = false;
-        this.sanchit="https://cdn.jsdelivr.net/gh/ofsfobnelip/lipi/src/dattAMsh";
+        this.sanchit="https://cdn.jsdelivr.net/gh/ofsfobnelip/lipi@latest/src/dattAMsh";
         this.font_loca = this.substring(this.sanchit, 0, -8) + "fonts";
         this.image_loca = this.substring(this.sanchit, 0, -12) + "img/lang";
         this.pratyakSharAH = {};
@@ -128,7 +128,11 @@ class लिपिलेखिकासहायक {
         else if (to < 0)
             return val.substring(from, val.length + to)
     };
-
+    format(val, l) {
+        for (let x = 0; x < l.length; x++)
+            val = this.replace_all(val, `{${x}}`, l[x]);
+        return val;
+    }
     get_Text_from_div(t) {
         t = this.replace_all(t, "&nbsp;", " ");
         t = this.replace_all(t, "&amp;", "");

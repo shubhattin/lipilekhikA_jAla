@@ -543,16 +543,16 @@ class अनुप्रयोगः {
         let tlt = data.others.page_title,
             t1 = data.scripts;
         if ("main_lang" in s1)
-            tlt = app.k.replace_all(data.others.title_lang, "{0}", t1[s1["main_lang"]]);
+            tlt = app.k.format(data.others.title_lang, [t1[s1["main_lang"]]]);
         if ("to" in s1)
-            tlt = app.k.replace_all(data.others.title_convert, "{0}", `${t1[s1["from"]]} ➠ ${t1[s1["to"]]}`);
+            tlt = app.k.format(data.others.title_convert, [t1[s1["from"]], t1[s1["to"]]]);
         $("title").html(tlt);
         for (let x of $(".lipi")) {
             let el = $(x);
             let n = el.attr("lipi");
             let nm = app.k.replace_all(data.lipi[n], "\n", "<br>");
             if (n == "about_text")
-                nm = app.k.replace_all(app.k.replace_all(nm, "{1}", "</a>"), "{0}", "<a href='https://rebrand.ly/lekhika' target='_blank'>");
+                nm = app.k.format(nm, ["<a href='https://rebrand.ly/lekhika' target='_blank'>", "</a>"]);
             el.html(nm);
         };
         for (let x in data.scripts) {
@@ -773,7 +773,7 @@ setTimeout(() => {
                     $("#bdy").children().hide();
                     $(".redirect").addClass("titles");
                     $(".redirect").attr("tlt", "redirect_msg");
-                    let ht = (x, y) => app.k.replace_all(app.anya_html[x], "{0}", y),
+                    let ht = (x, y) => app.k.format(app.anya_html[x], [y]),
                         t = "";
                     if (true) { // init values
                         if ("app_lang" in s1) {
@@ -834,7 +834,7 @@ setTimeout(() => {
 }, 1);
 
 function set_background() {
-    let lc = `body{background-image:url(${app.k.substring(app.k.image_loca, 0, -5)}/lipi-`;
+    let lc = `#body_img{background-image:url(${app.k.substring(app.k.image_loca, 0, -5)}/lipi-`;
     let l2 = (x) => `@media(${["min","max"][x]+"-width:630px){"+lc+["pc","an"][x]}.jpg);}}`;
     app.yuj("body", `<style>${l2(0)+l2(1)}</style>`);
     app.back_loaded = true;
@@ -917,7 +917,7 @@ function on_loaded() {
     if (true) {
         let akl = $("#main_lang").val();
         app.app.karya = true;
-        $("#main_lang").trigger("change");
+        $("select").trigger("change");
         if (app.in(["Urdu", "Romanized", "Kashmiri"], akl))
             $("#sa_mode").hide();
         for (let x of $(".checkbox_img")) {
