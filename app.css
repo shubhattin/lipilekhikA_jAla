@@ -14,11 +14,11 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -5;
+  z-index: -60;
 }
 
 .fonts {
-  font-family: "Calibri", "Nirmala UI", "Segoe UI Historic", "LipiFontBrahmi", "LipiFontGranth", "LipiFontModi", "LipiFontSharada", "LipiFontSiddham";
+  font-family: "Nirmala UI", "Calibri", "Segoe UI Historic", "LipiFontBrahmi", "LipiFontGranth", "LipiFontModi", "LipiFontSharada", "LipiFontSiddham";
 }
 
 .ajay {
@@ -431,10 +431,7 @@ button {
   padding: 2.4px;
   border-radius: 3px;
   font-size: 1.25em;
-}
-
-#sahayika_switch {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 
 #shoonyam {
@@ -806,7 +803,6 @@ button {
 #setting_in {
   padding: 9px 0 9px 6px;
 }
-
 
 .defal {
   display: flex;

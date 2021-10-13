@@ -135,3 +135,50 @@
 .imgon2:hover .अनु1 {
   fill: black;
 }
+
+#menu_btn {
+  fill: #5d5d5d;
+}
+
+#menu_btn:hover {
+  fill: black;
+}
+
+#back_btn {
+  fill: #616161;
+}
+
+#back_btn:hover {
+  fill: black;
+}
+
+.cnvrt {
+  fill: #464646;
+}
+
+.cnvrt:hover {
+  fill: black;
+  background-color: yellow;
+}
+
+#auto_img:hover {
+  fill: blue;
+}
+.checkbox_img input[type=checkbox] {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.checkbox_img .lipi-on {
+  display: none;
+}
+
+.checkbox_img input:checked ~ .lipi-on {
+  display: inline-block;
+}
+
+.checkbox_img input:checked ~ .lipi-off {
+  display: none;
+}

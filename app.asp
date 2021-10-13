@@ -50,11 +50,13 @@
                             <span id="sa_1" class="black-yellow ajay"></span>
                         </label>
                     </span>
-                    <span id="sahayika_switch" tlt="imgon1" class="titles checkbox_img">
-                        <span class="imgoff1 imgs"></span>
-                        <span class="imgon1 imgs"></span>
-                    </span>
-                    <span id="lekhan_sahayika" tlt="lekhan_sahayika" lipi="sahayika_text" class="lipi titles"></span>
+                    <label class="checkbox_img in-flex">
+                        <input type="checkbox" id="sah_val">
+                        <span class="imgoff1 imgs titles lipi-off" tlt="imgoff1"></span>
+                        <span class="imgon1 imgs titles lipi-on" tlt="imgon1"></span>
+                        <span id="lekhan_sahayika" tlt="lekhan_sahayika" lipi="sahayika_text"
+                            class="lipi titles"></span>
+                    </label>
                 </div>
                 <div id="dynamic"></div>
                 <button id="table_btn" class="in-flex prayog_btn">
@@ -67,10 +69,11 @@
                     <select class="lang" id="lang1"></select>
                     <button id="set_text2" class="set_text ekam-left"></button>
                     <button id="cp2" class="cpy_btn ekam titles" tlt="cpy_btn"></button>
-                    <span class="checkbox_img img_inter1" img_check=0>
-                        <span class="imgoff2 imgs"></span>
-                        <span class="imgon2 imgs"></span>
-                    </span>
+                    <label class="checkbox_img">
+                        <input type="checkbox" class="img_inter1">
+                        <span class="imgoff2 imgs lipi-off"></span>
+                        <span class="imgon2 imgs lipi-on"></span>
+                    </label>
                     <span class="imgs redirect inter_redirect web_only"></span>
                     <span class="imgs anuvadak web_only titles" tlt="anuvadak" id="anu_main1"></span>
                 </div>
@@ -80,13 +83,14 @@
                     <select class="lang" id="lang2"></select>
                     <button id="set_text1" class="set_text ekam-left"></button>
                     <button id="cp3" class="cpy_btn ekam-left titles" tlt="cpy_btn"></button>
-                    <span id="up_arrow_img" class="imgs" style="margin:0 0 0 5px;"></span>
-                    <span id="down_arrow_img" class="imgs" style="margin:0 -2px 0 -3.5px;"></span>
+                    <span id="up_arrow_img" class="imgs cnvrt" style="margin:0 0 0 5px;"></span>
+                    <span id="down_arrow_img" class="imgs cnvrt" style="margin:0 -2px 0 -3.5px;"></span>
                     <span id="auto_img" class="imgs ekam-right" style="margin-left:5px;"></span>
-                    <span class="checkbox_img img_inter2" img_check=0>
-                        <span class="imgoff2 imgs"></span>
-                        <span class="imgon2 imgs"></span>
-                    </span>
+                    <label class="checkbox_img">
+                        <input type="checkbox" class="img_inter2">
+                        <span class="imgoff2 imgs lipi-off"></span>
+                        <span class="imgon2 imgs lipi-on"></span>
+                    </label>
                     <span class="imgs redirect inter_redirect web_only"></span>
                 </div>
                 <textarea id="second" class="normal Lipi-LekhikA" lipi-lekhika="off" spellcheck="false"
@@ -117,10 +121,11 @@
                 </div>
                 <div class="defal">
                     <span tlt="lekhan_sahayika" lipi="sahayika_text" class="one lipi titles"></span>
-                    <span id="sahayika_set" tlt="imgon1" class="checkbox_img">
-                        <span class="imgoff2 imgs"></span>
-                        <span class="imgon2 imgs"></span>
-                    </span>
+                    <label class="checkbox_img">
+                        <input type="checkbox" id="sah_set_val">
+                        <span class="imgoff2 imgs lipi-off"></span>
+                        <span class="imgon2 imgs lipi-on"></span>
+                    </label>
                 </div>
                 <div class="defal">
                     <span class="one lipi" lipi="script_set"></span>
@@ -162,10 +167,11 @@
 </div>
 <div id="store_html" style="display:none;">
     <div nm="main_btn">
-        <span id="main_switch" tlt="imgon" class="titles checkbox_img">
-            <span class="imgoff imgs"></span>
-            <span class="imgon imgs"></span>
-        </span>
+        <label id="main_switch" class="checkbox_img">
+            <input type="checkbox" id="main_val" checked="true">
+            <span class="imgoff imgs titles lipi-off" tlt="imgoff"></span>
+            <span class="imgon imgs titles lipi-on" tlt="imgon"></span>
+        </label>
         <button id="cp1" class="cpy_btn titles" tlt="cpy_btn"></button>
         <span class="imgs anuvadak web_only titles" tlt="anuvadak" id="anu_main"></span>
     </div>
