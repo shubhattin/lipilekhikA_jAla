@@ -791,10 +791,6 @@ setTimeout(() => {
             });
         }
     });
-    $.ajax({
-        url: app.pratyaya_sanchit + `/grIshamH/font/grIShmaH.woff2`,
-        dataType: "font"
-    });
     window.history.pushState(null, "", window.location.href);
     window.onpopstate = () => {
         $("title").html($("title").html());
