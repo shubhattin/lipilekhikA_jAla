@@ -175,10 +175,10 @@
   display: none;
 }
 
-.checkbox_img input:checked ~ .lipi-on {
+.checkbox_img input[type=checkbox]:checked ~ .lipi-on {
   display: inline-block;
 }
 
-.checkbox_img input:checked ~ .lipi-off {
+.checkbox_img input[type=checkbox]:checked ~ .lipi-off {
   display: none;
 }

@@ -4,16 +4,11 @@ class अनुप्रयोगः {
         this.c = 0;
         this.lang_texts = {};
         this.pratyaya_sanchit = "src";
-        this.translate = (v, f, t) => {
-            v = `https://translate.google.com/?sl=${f}&tl=${t}&text=${encodeURIComponent(v)}&op=translate`;
-            window.open(v, "_blank");
-        };
         this.anya_html = {};
         this.app = LipiLekhikA;
         this.k = लिपि;
         this.loaded_display_lng = [];
         this.pages = ["inter", "about"];
-        this.antar_loaded = false;
         this.lipyaH = {
             Devanagari: ["", "", "अ", "auto"],
             Hindi: ["हिन्दी", "अजय्", "अ", "hi"],
@@ -54,6 +49,10 @@ class अनुप्रयोगः {
             "മലയാളം": [-0.3, "ml", "Malayalam"],
             "संस्कृतम्": [0.5, "sa", "Sanskrit"]
         };
+        this.translate = (v, f, t) => {
+            v = `https://translate.google.com/?sl=${f}&tl=${t}&text=${encodeURIComponent(v)}&op=translate`;
+            window.open(v, "_blank");
+        };
         this.sthAna = {
             "main": "",
             "lang": "",
@@ -68,7 +67,7 @@ class अनुप्रयोगः {
         this.yuj = (x, y) => jQuery(y).appendTo(x);
         this.current_page = "main";
         this.back_loaded = false;
-        this.in = (x, y) => this.k.includes(x, y);
+        this.in = (x, y) => this.k.in(x, y);
     };
     init_html() {
         let yuj = app.yuj,
@@ -374,6 +373,7 @@ class अनुप्रयोगः {
                     $("#up_arrow_img").show();
                     $("#down_arrow_img").show();
                 } else {
+                    $("#down_arrow_img").trigger("click");
                     $("#up_arrow_img").hide();
                     $("#down_arrow_img").hide();
                 }
@@ -477,7 +477,7 @@ class अनुप्रयोगः {
                 alt: v
             })
         }
-    }
+    };
     change_page(to, set = true) {
         if (set) {
             $(`#${app.current_page}`).hide();
@@ -488,21 +488,16 @@ class अनुप्रयोगः {
             $("#back_btn").show();
         }
         if (to == "inter" && !app.once_editded) {
-            let exec = () => {
+            if (!("from" in s1))
                 $("#lang1").val(app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
+            if (!("to" in s1))
                 $("#lang2").val("Romanized");
-                $("#first").val(app.k.get_Text_from_div($("#dynamic").html()));
-                $('#second').val(app.app.antarparivartan($('#first').val(), $('#lang1').val(), $('#lang2').val()));
-                $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
-                $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
-                app.kr("inter-anuvadak");
-                $("#lang1, #lang2").trigger("change");
-            };
-            if (!app.antar_loaded) {
-                app.k.load_inter_converter(exec);
-                app.antar_loaded = true;
-            } else
-                exec();
+            $("#first").val(app.k.get_Text_from_div($("#dynamic").html()));
+            $('#second').val(app.app.antarparivartan($('#first').val(), $('#lang1').val(), $('#lang2').val()));
+            $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
+            $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
+            app.kr("inter-anuvadak");
+            $("#lang1, #lang2").trigger("change");
         } else if (to == "main") {
             $("#parivartak").show();
             $("#back_btn").hide();
@@ -525,7 +520,6 @@ class अनुप्रयोगः {
             app.current_page = to;
         app.pRShThedAnIm = to;
     };
-    set_image(val = $("#xcv").val()) {};
     copy_text(element, mode = 0) {
         function selectText(id) {
             var sel, range;
@@ -670,7 +664,7 @@ class अनुप्रयोगः {
             else
                 main = app.sthAna.main;
         window.open(lang + main, "_blank");
-    }
+    };
 };
 jQuery.fn.check = function (k = null) {
     if (k == null)
@@ -728,6 +722,34 @@ setTimeout(() => {
                         app.anya_html[$(x).attr("nm")] = x.innerHTML;
                     $("#store_html").remove();
                     app.init_html();
+                    setTimeout(() => $.ajax({
+                        url: app.k.substring(app.k.image_loca, 0, -5) + "/img.asp",
+                        dataType: "text",
+                        success: (r) => {
+                            let e1 = app.yuj('body', r),
+                                lt = app.k.dict_rev({
+                                    ".redirect": "redirect",
+                                    "#set_img": "setting",
+                                    ".cpy_btn": "cpy_btn",
+                                    ".git": "git",
+                                    "#up_arrow_img": "up_arrow",
+                                    "#down_arrow_img": "down_arrow",
+                                    ".imgon2": "imgon2",
+                                    ".imgoff2": "imgoff2",
+                                    ".close_img": "close_img",
+                                    "#lang_img": "lang",
+                                    "#auto_img": "auto",
+                                    ".download_img": "download",
+                                    "#about_button": "about",
+                                    ".anuvadak": "anuvadak"
+                                });
+                            let e = $(e1).children();
+                            for (let x of e)
+                                app.yuj(lt[$(x).attr("nm")], $(x).html());
+                            e1.remove();
+                            $("#main_section").show(); // showing the Application
+                        }
+                    }), 1);
                     $("#bdy").children().hide();
                     $(".redirect").addClass("titles");
                     $(".redirect").attr("tlt", "redirect_msg");
@@ -762,11 +784,16 @@ setTimeout(() => {
                     $(t).attr("tlt", "imgon");
                     t = $(".imgoff2").addClass("titles");
                     $(t).attr("tlt", "imgoff");
+
                     app.set_lang_text(s["app_lang"]);
                     on_loaded();
                 }
             });
         }
+    });
+    $.ajax({
+        url: app.pratyaya_sanchit + `/grIshamH/font/grIShmaH.woff2`,
+        dataType: "font"
     });
     window.history.pushState(null, "", window.location.href);
     window.onpopstate = () => {
@@ -833,35 +860,6 @@ function on_loaded() {
         resize($(this))
     });
     $("select").on("change", (e) => resize($(e.target)));
-    setTimeout(() => $.ajax({
-        url: app.k.substring(app.k.image_loca, 0, -5) + "/img.asp",
-        dataType: "text",
-        success: (r) => {
-            let e1 = app.yuj('body', r),
-                lt = app.k.dict_rev({
-                    ".redirect": "redirect",
-                    "#set_img": "setting",
-                    ".cpy_btn": "cpy_btn",
-                    ".git": "git",
-                    "#up_arrow_img": "up_arrow",
-                    "#down_arrow_img": "down_arrow",
-                    ".imgon2": "imgon2",
-                    ".imgoff2": "imgoff2",
-                    ".close_img": "close_img",
-                    "#lang_img": "lang",
-                    "#auto_img": "auto",
-                    ".download_img": "download",
-                    "#about_button": "about",
-                    ".anuvadak": "anuvadak"
-                });
-            let e = $(e1).children();
-            for (let x of e) {
-                let atr = $(x).attr("nm");
-                app.yuj(lt[atr], $(x).html());
-            }
-            e1.remove();
-        }
-    }));
     if (true) {
         $("#app_lang").val(s["app_lang"]);
         $("#main_lang").val(s["main_lang"]);
@@ -874,11 +872,9 @@ function on_loaded() {
         else if (s["page"] == 1) {
             app.current_page = "inter";
             $("#inter").show();
-            app.k.load_inter_converter();
             $("#parivartak").hide();
             $("#back_btn").show();
         }
-        $("#main_section").show(); // showing the Application
         $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
         $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
     }

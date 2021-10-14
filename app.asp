@@ -157,7 +157,7 @@
                 <span class="imgs download_img"></span><span lipi="download_link" class="lipi menu_msg"></span>
             </a>
             <a target="_blank" class="menu_items menu_borders vr-flex no_under"
-                href="https://get.lipilekhika.com/source">
+                href="https://get.lipilekhika.com/androidsource">
                 <span class="imgs git"></span><span lipi="source_link" class="lipi menu_msg"></span>
             </a>
         </div>
