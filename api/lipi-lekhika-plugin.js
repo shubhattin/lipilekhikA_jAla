@@ -20,7 +20,7 @@ class लिपिलेखिकासहायक {
         this.alph = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"];
         this.pUrNasarve = this.alph[0] + this.alph[1] + "01234567890'$.#?";
         this.re_arrange_num = (b) => b.replace(/[0-9]/g, '') + b.replace(/\D/g, '');
-        // r_lipi
+        this.lang_in = (x) => this.in(this.loaded_scripts, x);
         let mobile_check = function () {
             let nav = (x) => navigator.userAgent.match(x),
                 g = false;
@@ -29,7 +29,6 @@ class लिपिलेखिकासहायक {
             return g;
         };
         this.is_mobile = mobile_check();
-        // r_lipi
     }
     load_lang(lang, callback = null, call = null) {
         lang = lang == "Devanagari" ? "Sanskrit" : lang;
@@ -90,11 +89,9 @@ class लिपिलेखिकासहायक {
         var re = new RegExp(replaceWhat, "g");
         return str.replace(re, replaceTo);
     }
-    // r_lipi
     text_to_html(v) {
         return this.replace_all("<div>" + v + "</div>", "\n", "</div><div>");
     }
-    // r_lipi
     last(s, l = -1) {
         if (s == null || s == undefined)
             return "";
@@ -121,7 +118,6 @@ class लिपिलेखिकासहायक {
             val = this.replace_all(val, `{${x}}`, l[x]);
         return val;
     }
-    // r_lipi
     get_Text_from_div(t) {
         t = this.replace_all(t, "&nbsp;", " ");
         t = this.replace_all(t, "&amp;", "");
@@ -145,7 +141,6 @@ class लिपिलेखिकासहायक {
         res = this.replace_all(res, "觀", "\n");
         return res;
     }
-    // r_lipi
 }
 let लिपि = new लिपिलेखिकासहायक();
 class लिपिलेखिकापरिवर्तक {
@@ -154,6 +149,7 @@ class लिपिलेखिकापरिवर्तक {
         this.karya = false;
         this.time = लिपि.time();
         this.back_space = 0;
+        this.load_lang = (lang) => लिपि.load_lang(lang);
         this.sahayika_usage = true;
         this.halant_add_status = false;
         //[key record, output, whats on screen]
@@ -181,15 +177,12 @@ class लिपिलेखिकापरिवर्तक {
             ["", -1]
         ];
         this.second_cap_time = 0;
-        // r_lipi
         this.sahayika = new लिपिलेखिकालेखनसहायिका();
         this.set_interface_lang = (lang = "English") => this.sahayika.load_lang(lang);
         this.hide = () => this.sahayika.elm.hide();
         this.from_click = false;
         this.font_scripts = ["Sharada", "Modi", "Brahmi", "Siddham", "Granth"];
-        // r_lipi
     };
-    // r_lipi
     set_lang_and_state(lang, call = console.log, ks = null) {
         let exec = () => {
             this.script = lang;
@@ -226,7 +219,6 @@ class लिपिलेखिकापरिवर्तक {
         this.time = c;
         return t1;
     };
-    // r_lipi
     prakriyA(code, mode, lang, ajay, elm = null, html = false) {
         this.akSharANi = लिपि.akSharAH[lang];
         this.halant = !लिपि.in(["Normal", "Romanized", "Urdu", "Kashmiri"], lang) ? this.akSharANi["."][".x"][0] : "";
@@ -234,7 +226,6 @@ class लिपिलेखिकापरिवर्तक {
         this.dev_text = [];
         if (code == undefined || code == null)
             return;
-        // r_lipi
         html = mode == 0 && html ? true : false;
         if (html) {
             let t = code;
@@ -244,13 +235,11 @@ class लिपिलेखिकापरिवर्तक {
             t = लिपि.replace_all(t, "<br/>", "\n");
             t = लिपि.replace_all(t, "<br />", "\n");
             code = t;
-        }        
-        // r_lipi
+        }
         let html_st = false,
             ignore_st = false;
         for (let k = 0; k < code.length; k++) {
             let key = code[k];
-            // r_lipi
             if (key == "<" && html) {
                 html_st = true;
                 this.dev_text.push(key);
@@ -263,7 +252,6 @@ class लिपिलेखिकापरिवर्तक {
                 this.dev_text.push(key);
                 continue;
             }
-            // r_lipi
             if (key == "#" && code[k + 1] == "^" && mode == 0 && !ignore_st) {
                 ignore_st = true;
                 this.clear_all_val(true);
@@ -338,7 +326,6 @@ class लिपिलेखिकापरिवर्तक {
         let prev_temp = this.pUrva_lekhit[3][1];
         let temp = this.pUrva_lekhit[4][1];
         let varna_sthiti = लिपि.last(current);
-        // r_lipi
         if (this.capital[0] == 2 && mode == 1) {
             if (key == this.capital[1]) {
                 if (लिपि.time() - this.capital[4] <= 4.0) {
@@ -394,7 +381,6 @@ class लिपिलेखिकापरिवर्तक {
             } else
                 this.capital = [0, "", -1, -1, 0, 0, false];
         }
-        // r_lipi
         if (this.mAtrA_sthiti && लिपि.in([1, 2], varna_sthiti)) {
             this.clear_all_val(true);
             this.vitaraNa(लिपि.last(key), mode, sa, elm, lang);
@@ -524,8 +510,7 @@ class लिपिलेखिकापरिवर्तक {
             for (let p = 0; p < val[1]; p++)
                 this.dev_text.pop();
             this.dev_text.push(val[0]);
-        } 
-        // r_lipi
+        }
         else if (mode == 1) {
             let is_input = false;
             if (लिपि.in(["input", "textarea"], elm[0].tagName.toLowerCase()))
@@ -652,9 +637,7 @@ class लिपिलेखिकापरिवर्तक {
             } else
                 this.capital = b;
         }
-        // r_lipi
         this.next_chars = current[current.length - 2];
-        // r_lipi
         if (this.sahayika_usage && mode == 1) {
             let a = {
                 "key": [key, this.next_chars],
@@ -669,7 +652,6 @@ class लिपिलेखिकापरिवर्तक {
                 a["cap"] = true;
             this.sahayika.show(a);
         }
-        // r_lipi
         if (varna_sthiti == 3)
             this.store_last_of_3 = लिपि.last(this.varna[1]);
         if (this.next_chars == "")
@@ -727,12 +709,10 @@ class लिपिलेखिकापरिवर्तक {
                 ["", -1]
             ];
             this.store_last_of_3 = "";
-            // r_lipi
             this.capital = [0, "", -1, -1, 0, 0, false];
             this.madhye = false;
             this.sahayika.pUrvavarNa = [("", "", -1), ""]
             this.hide();
-            // r_lipi
         }
     };
     antarparivartan(val, from, to, html = false) {
@@ -740,11 +720,13 @@ class लिपिलेखिकापरिवर्तक {
             from = "Sanskrit";
         if (to == "Devanagari")
             to = "Sanskrit";
-        if (from == "Kashmiri")
-            from = "Urdu";
-        if (to == "Kashmiri")
-            to = "Urdu";
-        val = this.anulekhana(val, from, html);
+        if (!लिपि.in(लिपि.loaded_scripts, from)) {
+            return `${from}'s  resourse is not loaded`;
+        } else if (!लिपि.in(लिपि.loaded_scripts, to)) {
+            return `${to}'s  resourse is not loaded`;
+        }
+        if (from != "Normal")
+            val = this.anulekhana(val, from, html);
         let c = (x) => लिपि.in(["Romanized", "Normal", "Tamil", "Telugu", "Malayalam", "Kannada"], x);
         if (c(to) && !(c(from) || from == "Tamil-Extended")) {
             val = लिपि.replace_all(val, "o", "O");
@@ -864,7 +846,6 @@ class लिपिलेखिकापरिवर्तक {
         }
         return res;
     };
-    // r_lipi
     add_font(lang) {
         let script = this.font_scripts;
         if (!लिपि.in(script, lang) || लिपि.in(this.added_fonts, lang))
@@ -880,9 +861,7 @@ class लिपिलेखिकापरिवर्तक {
         });
         this.added_fonts.push(lang);
     };
-    // r_lipi
 };
-// r_lipi
 jQuery.fn.lipi_lekhika_add = function (attri = false) {
     if (लिपि.elms.indexOf(this) != -1)
         return;
@@ -1332,6 +1311,5 @@ class लिपिलेखिकालेखनसहायिका {
             this.set_labels(1, this.ins_msg);
     };
 };
-// r_lipi
 let LipiLekhikA = new लिपिलेखिकापरिवर्तक();
 !function(t,e){if("function"==typeof define&&define.amd)define("VanillaCaret",["module"],e);else if("undefined"!=typeof exports)e(module);else{var n={exports:{}};e(n),t.VanillaCaret=n.exports}}(this,function(t){"use strict";var e=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}(),n=function(){function t(e){(function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")})(this,t),this.target=e,this.isContentEditable=e&&e.contentEditable}return e(t,[{key:"getPos",value:function(){if(document.activeElement!==this.target)return-1;if(this.isContentEditable){this.target.focus();var t=document.getSelection().getRangeAt(0),e=t.cloneRange();return e.selectNodeContents(this.target),e.setEnd(t.endContainer,t.endOffset),e.toString().length}return this.target.selectionStart}},{key:"setPos",value:function(t){if(this.isContentEditable){if(t>=0){var e=window.getSelection(),n=this.createRange(this.target,{count:t});n&&(n.collapse(!1),e.removeAllRanges(),e.addRange(n))}}else this.target.setSelectionRange(t,t)}},{key:"createRange",value:function(t,e,n){if(n||((n=document.createRange()).selectNode(t),n.setStart(t,0)),0===e.count)n.setEnd(t,e.count);else if(t&&e.count>0)if(t.nodeType===Node.TEXT_NODE)t.textContent.length<e.count?e.count-=t.textContent.length:(n.setEnd(t,e.count),e.count=0);else for(var o=0;o<t.childNodes.length&&(n=this.createRange(t.childNodes[o],e,n),0!==e.count);o++);return n}}]),t}();t.exports=n}),function(t,e){"function"==typeof define&&define.amd?define(["jquery"],function(n){return t.returnExportsGlobal=e(n)}):"object"==typeof exports?module.exports=e(require("jquery")):e(jQuery)}(this,function(t){var e,n,o,r,i,s,a,l;e=function(){function e(t){this.$inputor=t,this.domInputor=this.$inputor[0]}return e.prototype.setPos=function(t){var e,n,o,r;return(r=a.getSelection())&&(o=0,n=!1,(e=function(t,i){var a,l,c,u,f,p;for(p=[],c=0,u=(f=i.childNodes).length;c<u&&(a=f[c],!n);c++)if(3===a.nodeType){if(o+a.length>=t){n=!0,(l=s.createRange()).setStart(a,t-o),r.removeAllRanges(),r.addRange(l);break}p.push(o+=a.length)}else p.push(e(t,a));return p})(t,this.domInputor)),this.domInputor},e.prototype.getIEPosition=function(){return this.getPosition()},e.prototype.getPosition=function(){var t,e;return e=this.getOffset(),t=this.$inputor.offset(),e.left-=t.left,e.top-=t.top,e},e.prototype.getOldIEPos=function(){var t,e;return e=s.selection.createRange(),(t=s.body.createTextRange()).moveToElementText(this.domInputor),t.setEndPoint("EndToEnd",e),t.text.length},e.prototype.getPos=function(){var t,e,n;return(n=this.range())?((t=n.cloneRange()).selectNodeContents(this.domInputor),t.setEnd(n.endContainer,n.endOffset),e=t.toString().length,t.detach(),e):s.selection?this.getOldIEPos():void 0},e.prototype.getOldIEOffset=function(){var t,e;return(t=s.selection.createRange().duplicate()).moveStart("character",-1),{height:(e=t.getBoundingClientRect()).bottom-e.top,left:e.left,top:e.top}},e.prototype.getOffset=function(e){var n,o,r,i,l;return a.getSelection&&(r=this.range())?(r.endOffset-1>0&&r.endContainer!==this.domInputor&&((n=r.cloneRange()).setStart(r.endContainer,r.endOffset-1),n.setEnd(r.endContainer,r.endOffset),o={height:(i=n.getBoundingClientRect()).height,left:i.left+i.width,top:i.top},n.detach()),o&&0!==(null!=o?o.height:void 0)||(n=r.cloneRange(),l=t(s.createTextNode("|")),n.insertNode(l[0]),n.selectNode(l[0]),o={height:(i=n.getBoundingClientRect()).height,left:i.left,top:i.top},l.remove(),n.detach())):s.selection&&(o=this.getOldIEOffset()),o&&(o.top+=t(a).scrollTop(),o.left+=t(a).scrollLeft()),o},e.prototype.range=function(){var t;if(a.getSelection)return(t=a.getSelection()).rangeCount>0?t.getRangeAt(0):null},e}(),n=function(){function e(t){this.$inputor=t,this.domInputor=this.$inputor[0]}return e.prototype.getIEPos=function(){var t,e,n,o,r,i;return e=this.domInputor,o=0,(r=s.selection.createRange())&&r.parentElement()===e&&(n=e.value.replace(/\r\n/g,"\n").length,(i=e.createTextRange()).moveToBookmark(r.getBookmark()),(t=e.createTextRange()).collapse(!1),o=i.compareEndPoints("StartToEnd",t)>-1?n:-i.moveStart("character",-n)),o},e.prototype.getPos=function(){return s.selection?this.getIEPos():this.domInputor.selectionStart},e.prototype.setPos=function(t){var e,n;return e=this.domInputor,s.selection?((n=e.createTextRange()).move("character",t),n.select()):e.setSelectionRange&&e.setSelectionRange(t,t),e},e.prototype.getIEOffset=function(t){var e;return e=this.domInputor.createTextRange(),t||(t=this.getPos()),e.move("character",t),{left:e.boundingLeft,top:e.boundingTop,height:e.boundingHeight}},e.prototype.getOffset=function(e){var n,o,r;return n=this.$inputor,s.selection?((o=this.getIEOffset(e)).top+=t(a).scrollTop()+n.scrollTop(),o.left+=t(a).scrollLeft()+n.scrollLeft(),o):(o=n.offset(),r=this.getPosition(e),{left:o.left+r.left-n.scrollLeft(),top:o.top+r.top-n.scrollTop(),height:r.height})},e.prototype.getPosition=function(t){var e,n,r,i,s;return e=this.$inputor,r=function(t){return t=t.replace(/<|>|`|"|&/g,"?").replace(/\r\n|\r|\n/g,"<br/>"),/firefox/i.test(navigator.userAgent)&&(t=t.replace(/\s/g,"&nbsp;")),t},void 0===t&&(t=this.getPos()),s=e.val().slice(0,t),n=e.val().slice(t),i="<span style='position: relative; display: inline;'>"+r(s)+"</span>",i+="<span id='caret' style='position: relative; display: inline;'>|</span>",i+="<span style='position: relative; display: inline;'>"+r(n)+"</span>",new o(e).create(i).rect()},e.prototype.getIEPosition=function(t){var e,n;return n=this.getIEOffset(t),e=this.$inputor.offset(),{left:n.left-e.left,top:n.top-e.top,height:n.height}},e}(),o=function(){function e(t){this.$inputor=t}return e.prototype.css_attr=["borderBottomWidth","borderLeftWidth","borderRightWidth","borderTopStyle","borderRightStyle","borderBottomStyle","borderLeftStyle","borderTopWidth","boxSizing","fontFamily","fontSize","fontWeight","height","letterSpacing","lineHeight","marginBottom","marginLeft","marginRight","marginTop","outlineWidth","overflow","overflowX","overflowY","paddingBottom","paddingLeft","paddingRight","paddingTop","textAlign","textOverflow","textTransform","whiteSpace","wordBreak","wordWrap"],e.prototype.mirrorCss=function(){var e,n=this;return e={position:"absolute",left:-9999,top:0,zIndex:-2e4},"TEXTAREA"===this.$inputor.prop("tagName")&&this.css_attr.push("width"),t.each(this.css_attr,function(t,o){return e[o]=n.$inputor.css(o)}),e},e.prototype.create=function(e){return this.$mirror=t("<div></div>"),this.$mirror.css(this.mirrorCss()),this.$mirror.html(e),this.$inputor.after(this.$mirror),this},e.prototype.rect=function(){var t,e,n;return n={left:(e=(t=this.$mirror.find("#caret")).position()).left,top:e.top,height:t.height()},this.$mirror.remove(),n},e}(),r={contentEditable:function(t){return!(!t[0].contentEditable||"true"!==t[0].contentEditable)}},i={pos:function(t){return t||0===t?this.setPos(t):this.getPos()},position:function(t){return s.selection?this.getIEPosition(t):this.getPosition(t)},offset:function(t){return this.getOffset(t)}},s=null,a=null,l=function(t){var e;return(e=null!=t?t.iframe:void 0)?(e,a=e.contentWindow,s=e.contentDocument||a.document):(void 0,a=window,s=document)},t.fn.caret=function(o,s,a){var c;return i[o]?(t.isPlainObject(s)?(l(s),s=void 0):l(a),c=r.contentEditable(this)?new e(this):new n(this),i[o].apply(c,[s])):t.error("Method "+o+" does not exist on jQuery.caret")},t.fn.caret.EditableCaret=e,t.fn.caret.InputCaret=n,t.fn.caret.Utils=r,t.fn.caret.apis=i});

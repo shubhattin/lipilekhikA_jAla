@@ -827,3 +827,7 @@ button {
   text-align: center;
   margin-right: 45px;
 }
+
+.note-btn-group {
+  min-width: 176px;
+}

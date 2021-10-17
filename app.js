@@ -2,13 +2,13 @@ class अनुप्रयोगः {
     constructor() {
         this.time = 0;
         this.c = 0;
+        this.k = लिपि;
         this.lang_texts = {};
-        this.pratyaya_sanchit = "src";
+        this.pratyaya_sanchit = this.k.substring(this.k.sanchit, 0, -9);
         this.anya_html = {};
         this.app = LipiLekhikA;
-        this.k = लिपि;
         this.loaded_display_lng = [];
-        this.pages = ["inter", "about"];
+        this.pages = ["inter", "parri"];
         this.lipyaH = {
             Devanagari: ["", "", "अ", "auto"],
             Hindi: ["हिन्दी", "अजय्", "अ", "hi"],
@@ -65,7 +65,7 @@ class अनुप्रयोगः {
         this.auto = !false;
         this.html_init = false;
         this.yuj = (x, y) => jQuery(y).appendTo(x);
-        this.current_page = "main";
+        this.current_page = "gRham";
         this.back_loaded = false;
         this.in = (x, y) => this.k.in(x, y);
     };
@@ -73,8 +73,8 @@ class अनुप्रयोगः {
         let yuj = app.yuj,
             ht = app.anya_html,
             t = 0;
-        if (true) { //main1
-            let el = $("#back_btn").click(() => app.change_page("main"));
+        if (true) { //main
+            let el = $("#back_btn").click(() => app.change_page("gRham"));
             el.css("display", "none");
             $("#parivartak").click(() => app.change_page("inter"));
             $(".prayog_btn").click(() => app.change_page("prayog", false));
@@ -126,7 +126,7 @@ class अनुप्रयोगः {
                 setTimeout(() => $("#menu_container").hide(), time + 12);
             });
             for (let p in app.lang_list) {
-                yuj("#app_lang", `<option tlt="${app.lang_list[p][1]}-in" value="${p}" class="langsw titles">${p}</option>`)
+                yuj("#app_lang", `<option tlt="${app.lang_list[p][1]}-in" value="${p}" class="langsw">${p}</option>`)
             };
             $("#app_lang").on("change", function () {
                 let v = $("#app_lang").val();
@@ -149,7 +149,7 @@ class अनुप्रयोगः {
                 } else exec();
             });
             $($("#about_button").parent()).click(() => {
-                app.change_page('about');
+                app.change_page("parri");
                 $("#menu_blocker").trigger("click");
             });
             $("#redirect1").click(() => {
@@ -216,7 +216,7 @@ class अनुप्रयोगः {
                 autocapitalize: "none",
                 autocomplete: "off",
                 autocorrect: "off",
-                class: "Lipi-LekhikA titles",
+                class: "Lipi-LekhikA",
                 tlt: "mukhya_lekhan",
                 "lekhan-sahayika": app.get_values("sahayika")
             });
@@ -409,7 +409,7 @@ class अनुप्रयोगः {
                         continue;
                     if (app.in(["lang1", "lang2"], x) && app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], y))
                         continue;
-                    j += `<option value="${y}" class="${y}"></option>`;
+                    j += `<option value="${y}"></option>`;
                 }
                 app.yuj("#" + x, j);
             }
@@ -483,7 +483,7 @@ class अनुप्रयोगः {
             $(`#${app.current_page}`).hide();
             $(`#${to}`).show();
         }
-        if (to == "inter" || to == "about") {
+        if (to == "inter" || to == "parri") {
             $("#parivartak").hide();
             $("#back_btn").show();
         }
@@ -498,23 +498,23 @@ class अनुप्रयोगः {
             $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
             app.kr("inter-anuvadak");
             $("#lang1, #lang2").trigger("change");
-        } else if (to == "main") {
+        } else if (to == "gRham") {
             $("#parivartak").show();
             $("#back_btn").hide();
         } else if (to == "prayog") {
             $("#xcv").val($("#main_lang").val());
             $("#xcv").trigger("change");
             $('#prayog').show();
-            $('#main1').addClass("prayog_hide");
+            $('#base').addClass("prayog_hide");
         } else if (to == "mA_prayog") {
             $('#prayog').hide();
-            $('#main1').removeClass("prayog_hide");
+            $('#base').removeClass("prayog_hide");
         } else if (to == "setting") {
             $('#setting').show();
-            $('#main1').addClass("prayog_hide");
+            $('#base').addClass("prayog_hide");
         } else if (to == "mA_setting") {
             $('#setting').hide();
-            $('#main1').removeClass("prayog_hide");
+            $('#base').removeClass("prayog_hide");
         }
         if (set)
             app.current_page = to;
@@ -561,35 +561,25 @@ class अनुप्रयोगः {
         if ("to" in s1)
             tlt = app.k.format(data.others.title_convert, [t1[s1["from"]], t1[s1["to"]]]);
         $("title").html(tlt);
-        for (let x of $(".lipi")) {
-            let el = $(x);
-            let n = el.attr("lipi");
-            let nm = app.k.replace_all(data.lipi[n], "\n", "<br>");
-            if (n == "about_text")
-                nm = app.k.format(nm, ["<a href='https://rebrand.ly/lekhika' target='_blank'>", "</a>"]);
-            el.html(nm);
+        for (let x in data.lipi) {
+            let v = app.k.replace_all(data.lipi[x], "\n", "<br>");
+            if (x == "about_text")
+                v = app.k.format(v, ["<a href='https://rebrand.ly/lekhika' target='_blank'>", "</a>"]);
+            $(`[lipi=${x}]`).html(v);
         };
         for (let x in data.scripts) {
             let v = data.scripts[x];
-            $("." + x).html(`${v} (${this.lipyaH[x][2]})`);
+            $(`.lang option[value=${x}]`).html(`${v} (${this.lipyaH[x][2]})`);
             $("#link_" + x).html(`${v}`);
-        };
+        }
         app.app.set_interface_lang(app.lang_list[val][2]);
-        for (let y of $(".titles")) {
-            let el = $(y);
-            let val = data.title[el.attr("tlt")];
-            el.attr({
-                "title": val,
-                "alt": val
+        for (let x in data.title) {
+            let v = data.title[x];
+            $(`[tlt=${x}]`).attr({
+                "title": v,
+                "alt": v
             });
         }
-        for (let x in this.lipyaH) {
-            let val = data["scripts"][x];
-            $("#title_" + x).attr({
-                "title": val,
-                "alt": val
-            });
-        };
         if (this.html_init)
             this.resize();
     };
@@ -750,8 +740,6 @@ setTimeout(() => {
                             $("#main_section").show(); // showing the Application
                         }
                     }), 1);
-                    $("#bdy").children().hide();
-                    $(".redirect").addClass("titles");
                     $(".redirect").attr("tlt", "redirect_msg");
                     let ht = (x, y) => app.k.format(app.anya_html[x], [y]),
                         t = "";
@@ -780,11 +768,8 @@ setTimeout(() => {
                         }
                     }
                     //adding on off tooltip of img type 2
-                    t = $(".imgon2").addClass("titles");
-                    $(t).attr("tlt", "imgon");
-                    t = $(".imgoff2").addClass("titles");
-                    $(t).attr("tlt", "imgoff");
-
+                    $(".imgon2").attr("tlt", "imgon");
+                    $(".imgoff2").attr("tlt", "imgoff");
                     app.set_lang_text(s["app_lang"]);
                     on_loaded();
                 }
@@ -811,7 +796,7 @@ setTimeout(() => {
         else if (pg in bck)
             $(bck[pg]).trigger("click");
         else if (app.in(app.pages, app.current_page)) {
-            app.change_page("main");
+            app.change_page("gRham");
             hde();
         }
         app.time = app.k.time();
@@ -864,7 +849,7 @@ function on_loaded() {
         $("#lang2").val(s["to"]);
         $("#script_set").val(app.get_values("script"));
         if (s["page"] == 0)
-            $("#main").show();
+            $("#gRham").show();
         else if (s["page"] == 1) {
             app.current_page = "inter";
             $("#inter").show();
