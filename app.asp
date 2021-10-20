@@ -22,80 +22,80 @@
             </span>
             <button id="parivartak" tlt="parivartak" class="in-flex">
                 <span id="convert_img" class="imgs btn_img"></span>
-                <span id="lbl3" lipi="parivartak"></span>
+                <span id="lbl3" lkh="parivartak"></span>
             </button>
             <span tlt='usage_btnm' class='usage_btnm prayog_btn imgs' id='up_usage'></span>
         </div>
         <div id="parri" style="display:none;">
-                <p id="about_text" lipi="about_text" class="br-above"></p>
-                <p id="paricaya" class="br-above"></p>
-                <span class="flex br-above">
-                    <button id="lic" lipi="show_lic"></button>
-                    <a class='web_only dvayam-left' href='https://get.lipilekhika.com/source' target='_blank'>
-                        <span id='git' class='imgs git'></span>
-                    </a>
-                </span>
-                <p id="licence" class="br-above" style="display:none"></p>
+            <p id="about_text" lkh="about_text" class="br-above"></p>
+            <p id="paricaya" class="br-above"></p>
+            <span class="flex br-above">
+                <button id="lic" lkh="show_lic"></button>
+                <a class='web_only dvayam-left' href='https://get.lipilekhika.com/source' target='_blank'>
+                    <span id='git' class='imgs git'></span>
+                </a>
+            </span>
+            <p id="licence" class="br-above" style="display:none"></p>
         </div>
         <div id="gRham" style="display:none;">
-                <div class="flex">
-                    <span id="sa_mode" class="dvayam-right in-flex">
-                        <label class="in-flex" tlt="sa_0">
-                            <input type="radio" class="sa_radio" name="sa_mode" id="sa_04">
-                            <span id="sa_0" class="black-yeloow ajay"></span>
-                        </label>
-                        <label class="in-flex" tlt="sa_1">
-                            <input type="radio" class="sa_radio" name="sa_mode" id="sa_14">
-                            <span id="sa_1" class="black-yellow ajay"></span>
-                        </label>
-                    </span>
-                    <label class="checkbox_img in-flex">
-                        <input type="checkbox" id="sah_val">
-                        <span class="imgoff1 imgs lipi-off" tlt="imgoff1"></span>
-                        <span class="imgon1 imgs lipi-on" tlt="imgon1"></span>
-                        <span id="lekhan_sahayika" tlt="lekhan_sahayika" lipi="sahayika_text"></span>
+            <div class="flex">
+                <span id="sa_mode" class="dvayam-right in-flex">
+                    <label class="in-flex" tlt="sa_0">
+                        <input type="radio" class="sa_radio" name="sa_mode" id="sa_04">
+                        <span id="sa_0" class="black-yeloow ajay"></span>
                     </label>
-                </div>
-                <div id="dynamic"></div>
-                <button id="table_btn" class="in-flex prayog_btn">
-                    <span tlt="usage_btnm" class="usage_btnm imgs btn_img"></span>
-                    <span id="table" lipi="show_table"></span>
-                </button>
+                    <label class="in-flex" tlt="sa_1">
+                        <input type="radio" class="sa_radio" name="sa_mode" id="sa_14">
+                        <span id="sa_1" class="black-yellow ajay"></span>
+                    </label>
+                </span>
+                <label class="check_img in-flex">
+                    <input type="checkbox" t=kr id="sah_val">
+                    <span class="imgoff1 imgs" kr=off tlt="imgoff1"></span>
+                    <span class="imgon1 imgs" kr=on tlt="imgon1"></span>
+                    <span tlt="lekhan_sahayika" lkh="sahayika_text"></span>
+                </label>
+            </div>
+            <div id="dynamic"></div>
+            <button id="table_btn" class="in-flex prayog_btn">
+                <span tlt="usage_btnm" class="usage_btnm imgs btn_img"></span>
+                <span id="table" lkh="show_table"></span>
+            </button>
         </div>
         <div id="inter" style="display:none;">
-                <div class="in-flex">
-                    <select class="lang" id="lang1"></select>
-                    <button id="set_text2" class="set_text ekam-left"></button>
-                    <button id="cp2" class="cpy_btn ekam" tlt="cpy_btn"></button>
-                    <label class="checkbox_img">
-                        <input type="checkbox" class="img_inter1">
-                        <span class="imgoff2 imgs lipi-off"></span>
-                        <span class="imgon2 imgs lipi-on"></span>
-                    </label>
-                    <span class="imgs redirect inter_redirect web_only"></span>
-                    <span class="imgs anuvadak web_only" tlt="anuvadak" id="anu_main1"></span>
-                </div>
-                <textarea id="first" class="normal Lipi-LekhikA block" lipi-lekhika="off" spellcheck="false"
-                    autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
-                <div class="in-flex">
-                    <select class="lang" id="lang2"></select>
-                    <button id="set_text1" class="set_text ekam-left"></button>
-                    <button id="cp3" class="cpy_btn ekam-left" tlt="cpy_btn"></button>
-                    <span id="up_arrow_img" class="imgs cnvrt" style="margin:0 0 0 5px;"></span>
-                    <span id="down_arrow_img" class="imgs cnvrt" style="margin:0 -2px 0 -3.5px;"></span>
-                    <span id="auto_img" class="imgs ekam-right" style="margin-left:5px;"></span>
-                    <label class="checkbox_img">
-                        <input type="checkbox" class="img_inter2">
-                        <span class="imgoff2 imgs lipi-off"></span>
-                        <span class="imgon2 imgs lipi-on"></span>
-                    </label>
-                    <span class="imgs redirect inter_redirect web_only"></span>
-                </div>
-                <textarea id="second" class="normal Lipi-LekhikA block" lipi-lekhika="off" spellcheck="false"
-                    autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
-                <div>
-                    <span id='no_prvrtn' lipi='no_prvrtn'></span>
-                </div>
+            <div class="in-flex">
+                <select class="lang" id="lang1"></select>
+                <button id="set_text2" class="set_text ekam-left"></button>
+                <button id="cp2" class="cpy_btn ekam" tlt="cpy_btn"></button>
+                <label class="check_img">
+                    <input type="checkbox" t=kr class="img_inter1">
+                    <span class="imgoff2 imgs" kr=off></span>
+                    <span class="imgon2 imgs" kr=on></span>
+                </label>
+                <span class="imgs redirect inter_redirect web_only"></span>
+                <span class="imgs anuvadak web_only" tlt="anuvadak" id="anu_main1"></span>
+            </div>
+            <textarea id="first" class="normal Lipi-LekhikA block" lipi-lekhika="off" spellcheck="false"
+                autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
+            <div class="in-flex">
+                <select class="lang" id="lang2"></select>
+                <button id="set_text1" class="set_text ekam-left"></button>
+                <button id="cp3" class="cpy_btn ekam-left" tlt="cpy_btn"></button>
+                <span id="up_arrow_img" class="imgs cnvrt" style="margin:0 0 0 5px;"></span>
+                <span id="down_arrow_img" class="imgs cnvrt" style="margin:0 -2px 0 -3.5px;"></span>
+                <span id="auto_img" class="imgs ekam-right" style="margin-left:5px;"></span>
+                <label class="check_img">
+                    <input type="checkbox" t=kr class="img_inter2">
+                    <span class="imgoff2 imgs" kr=off></span>
+                    <span class="imgon2 imgs" kr=on></span>
+                </label>
+                <span class="imgs redirect inter_redirect web_only"></span>
+            </div>
+            <textarea id="second" class="normal Lipi-LekhikA block" lipi-lekhika="off" spellcheck="false"
+                autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
+            <div>
+                <span lkh='no_prvrtn'></span>
+            </div>
         </div>
     </div>
     <div class="vr-flex extra" id="prayog" style="display:none;">
@@ -105,27 +105,27 @@
                 <span id="close1" tlt="close_img" class="imgs close_img close_minus"></span>
             </div>
             <img id="image" class="block" tlt="image">
-            <p id="shoonyam" lipi="anya_nirdesh"></p>
+            <p id="shoonyam" lkh="anya_nirdesh"></p>
         </div>
         <div class="blocker"></div>
     </div>
     <div class="vr-flex extra" id="setting" style="display:none;">
         <div class="flex">
             <div class="in-extra" id="setting_in">
-                <div lipi="defal_msg" id="set_msg"></div>
+                <div lkh="defal_msg" id="set_msg"></div>
                 <div class="close_contain flex">
                     <span id="close2" tlt="close_img" class="imgs close_img close_minus"></span>
                 </div>
                 <div class="defal">
-                    <span tlt="lekhan_sahayika" lipi="sahayika_text" class="one"></span>
-                    <label class="checkbox_img">
-                        <input type="checkbox" id="sah_set_val">
-                        <span class="imgoff2 imgs lipi-off"></span>
-                        <span class="imgon2 imgs lipi-on"></span>
+                    <span tlt="lekhan_sahayika" lkh="sahayika_text" class="one"></span>
+                    <label class="check_img">
+                        <input type="checkbox" t=kr id="sah_set_val">
+                        <span class="imgoff2 imgs" kr=off></span>
+                        <span class="imgon2 imgs" kr=on></span>
                     </label>
                 </div>
                 <div class="defal">
-                    <span class="one" lipi="script_set"></span>
+                    <span class="one" lkh="script_set"></span>
                     <select id="script_set" class="lang script_set"></select>
                 </div>
             </div>
@@ -143,19 +143,19 @@
         </div>
         <div class="menu_items ekam-left flex menu_borders">
             <span id="about_button" class="imgs"></span>
-            <span id="about_msg" lipi="about_msg" class="menu_msg"></span>
+            <span id="about_msg" lkh="about_msg" class="menu_msg"></span>
         </div>
         <div id="info_links" class="web_only vr-flex">
             <a target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://rebrand.ly/lekhika">
-                <span class="imgs home_img"></span><span lipi="home_link" class="menu_msg"></span>
+                <span class="imgs home_img"></span><span lkh="home_link" class="menu_msg"></span>
             </a>
             <a target="_blank" class="menu_items menu_borders vr-flex no_under"
                 href="https://rebrand.ly/lekhikadownload">
-                <span class="imgs download_img"></span><span lipi="download_link" class="menu_msg"></span>
+                <span class="imgs download_img"></span><span lkh="download_link" class="menu_msg"></span>
             </a>
             <a target="_blank" class="menu_items menu_borders vr-flex no_under"
                 href="https://get.lipilekhika.com/androidsource">
-                <span class="imgs git"></span><span lipi="source_link" class="menu_msg"></span>
+                <span class="imgs git"></span><span lkh="source_link" class="menu_msg"></span>
             </a>
         </div>
         <div class='web_only vr-flex' id='bhAShA_sanchit'></div>
@@ -164,10 +164,10 @@
 </div>
 <div id="store_html" style="display:none;">
     <div nm="main_btn">
-        <label id="main_switch" class="checkbox_img">
-            <input type="checkbox" id="main_val" checked="true">
-            <span class="imgoff imgs lipi-off" tlt="imgoff"></span>
-            <span class="imgon imgs lipi-on" tlt="imgon"></span>
+        <label id="main_switch" class="check_img">
+            <input type="checkbox" t=kr id="main_val" checked="true">
+            <span class="imgoff imgs" kr=off></span>
+            <span class="imgon imgs" kr=on></span>
         </label>
         <button id="cp1" class="cpy_btn" tlt="cpy_btn"></button>
         <span class="imgs anuvadak web_only" tlt="anuvadak" id="anu_main"></span>
@@ -185,15 +185,17 @@
         <span class="app_lang" style="padding-left:4px;padding-right:4px;border-radius:5px;">{0}</span>
     </div>
     <div nm="main_set">
-        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts {0}"></span>
+        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts" value="{0}"></span>
     </div>
     <div nm="script_set">
-        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang script_set fonts {0}"></span>
+        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang script_set fonts"
+            value="{0}"></span>
     </div>
     <div nm="from_set">
-        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts {0}"></span>
+        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts" value="{0}"></span>
     </div>
     <div nm="to_set">
-        <span style="padding-left:4px;padding-right:4px;padding:2px;border-radius:5px;" class="lang fonts {0}"></span>
+        <span style="padding-left:4px;padding-right:4px;padding:2px;border-radius:5px;" class="lang fonts"
+            value="{0}"></span>
     </div>
 </div>

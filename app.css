@@ -115,7 +115,7 @@ option {
   justify-content: flex-end;
 }
 
-#no_prvrtn {
+[lkh=no_prvrtn] {
   font-size: 1.15em;
   color: purple;
   font-weight: bold;
@@ -370,7 +370,7 @@ option {
   background-color: yellow;
 }
 
-#lekhan_sahayika:hover {
+[lkh=sahayika_text]:hover {
   color: yellow;
   font-weight: bolder;
   background-color: black;
@@ -425,7 +425,7 @@ button {
   font-weight: bolder;
 }
 
-#lekhan_sahayika {
+[lkh=sahayika_text] {
   color: #8a2be2;
   font-weight: bolder;
   padding: 2.4px;
@@ -830,4 +830,9 @@ button {
 
 .note-btn-group {
   min-width: 176px;
+}
+
+.note-btn {
+  min-width: 36px;
+  min-height: 36px;
 }

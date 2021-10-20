@@ -281,7 +281,7 @@ class अनुप्रयोगः {
             for (let x in app.lipyaH) {
                 if (app.in(['Devanagari', "Normal"], x))
                     continue;
-                y += `<a class='bhAShAnyAH block dvayam-right-anya-bhAShA' href='/lang/${x}' target='_blank' id='title_${x}'>${app.lipyaH[x][0]} (<span class='bhAShAnyAH_name' id='link_${x}'></span>)</a>`;
+                y += `<a class='bhAShAnyAH block dvayam-right-anya-bhAShA' href='/lang/${x}' target='_blank'>${app.lipyaH[x][0]} (<span class='bhAShAnyAH_name' value='${x}'></span>)</a>`;
             }
             yuj("#bhAShA_sanchit", y);
             $("#redirect0").click(() => {
@@ -460,7 +460,7 @@ class अनुप्रयोगः {
             if (s.mode == 1 && !app.back_loaded) set_background();
         } else if (q == "inter-set") {
             $($(`#lang1, #lang2`).children()).show();
-            $(`#lang1 .${$("#lang2").val()}, #lang2 .${$("#lang1").val()}`).hide();
+            $(`#lang1 [value=${$("#lang2").val()}], #lang2 [value=${$("#lang1").val()}]`).hide();
         } else if (q == "set-lang-img") {
             let val = "";
             if (i == null)
@@ -565,12 +565,12 @@ class अनुप्रयोगः {
             let v = app.k.replace_all(data.lipi[x], "\n", "<br>");
             if (x == "about_text")
                 v = app.k.format(v, ["<a href='https://rebrand.ly/lekhika' target='_blank'>", "</a>"]);
-            $(`[lipi=${x}]`).html(v);
+            $(`[lkh=${x}]`).html(v);
         };
         for (let x in data.scripts) {
             let v = data.scripts[x];
-            $(`.lang option[value=${x}]`).html(`${v} (${this.lipyaH[x][2]})`);
-            $("#link_" + x).html(`${v}`);
+            $(`:not(.bhAShAnyAH) [value=${x}]`).html(`${v} (${this.lipyaH[x][2]})`);
+            $(`.bhAShAnyAH [value=${x}]`).html(`${v}`);
         }
         app.app.set_interface_lang(app.lang_list[val][2]);
         for (let x in data.title) {

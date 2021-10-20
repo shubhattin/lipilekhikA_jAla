@@ -164,21 +164,18 @@
 #auto_img:hover {
   fill: blue;
 }
-.checkbox_img input[type=checkbox] {
+
+.check_img [t=kr] {
   position: absolute;
   opacity: 0;
   height: 0;
   width: 0;
 }
 
-.checkbox_img .lipi-on {
+.check_img [t=kr]:not(:checked)~[kr=on] {
   display: none;
 }
 
-.checkbox_img input[type=checkbox]:checked ~ .lipi-on {
-  display: inline-block;
-}
-
-.checkbox_img input[type=checkbox]:checked ~ .lipi-off {
+.check_img [t=kr]:checked~[kr=off] {
   display: none;
 }
