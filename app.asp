@@ -58,7 +58,7 @@
             </div>
             <div class="vr-flex1">
                 <div class="typ_lang flex">
-                    <select class="lang" tlt="typ_lang" id="main_lang"></select>
+                    <select class="lang" tlt="typ_lang" id="main_lang" of="#dynamic"></select>
                     <span class="redirect web_only" chv="redirect" id="redirect0"></span>
                     <span id="set_img" class="set_img" chv="setting" tlt="setting"></span>
                     <label id="main_switch" class="check_img dvayam">
@@ -70,7 +70,7 @@
                     <span class="anuvadak web_only" chv="anuvadak" tlt="anuvadak" id="anu_main"></span>
                 </div>
             </div>
-            <div id="dynamic" tlt="mukhya_lekhan" class="Lipi-LekhikA no_checking" contenteditable="true"></div>
+            <textarea id="dynamic" tlt="mukhya_lekhan" class="Lipi-LekhikA no_checking block"></textarea>
             <button id="table_btn" class="in-flex prayog_btn">
                 <span tlt="usage_btnm" class="usage_btnm imgs btn_img"></span>
                 <span id="table" lkh="show_table"></span>
@@ -78,7 +78,7 @@
         </div>
         <div id="inter" style="display:none;">
             <div class="in-flex">
-                <select class="lang" id="lang1"></select>
+                <select class="lang" id="lang1" of="#first"></select>
                 <button id="set_text2" class="set_text ekam-left"></button>
                 <button id="cp2" chv="cpy_btn" class="cpy_btn ekam" tlt="cpy_btn"></button>
                 <label class="check_img">
@@ -91,7 +91,7 @@
             </div>
             <textarea id="first" class="normal Lipi-LekhikA block no_checking" lipi-lekhika="off"></textarea>
             <div class="in-flex">
-                <select class="lang" id="lang2"></select>
+                <select class="lang" id="lang2" of="#second"></select>
                 <button id="set_text1" class="set_text ekam-left"></button>
                 <button id="cp3" chv="cpy_btn" class="cpy_btn ekam-left" tlt="cpy_btn"></button>
                 <span id="up_arrow_img" chv="up_arrow" class="cnvrt" style="margin:0 0 0 5px;"></span>

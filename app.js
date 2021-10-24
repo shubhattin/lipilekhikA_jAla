@@ -10,7 +10,7 @@ class अनुप्रयोगः {
         this.loaded_display_lng = [];
         this.pages = ["inter", "parri"];
         this.lipyaH = {
-            Devanagari: ["", "", "अ", "auto"],
+            Devanagari: ["देवनागरी", "", "अ", "auto"],
             Hindi: ["हिन्दी", "अजय्", "अ", "hi"],
             Bengali: ["বাংলা", "অজয্", "অ", "bn"],
             Telugu: ["తెలుగు", "అజయ్", "అ", "te"],
@@ -35,7 +35,7 @@ class अनुप्रयोगः {
             Siddham: ["सिद्धम्", "𑖀𑖕𑖧𑖿", "𑖀", 0],
             Granth: ["கிரந்த", "𑌅𑌜𑌯𑍍", "𑌅", 0],
             Brahmi: ["ब्राह्मी", "𑀅𑀚𑀬𑁆", "𑀅", 0],
-            Normal: ["", "", "A", 0]
+            Normal: ["Normal", "", "A", 0]
         };
         this.lang_list = {
             "English": [0, "en", "English"],
@@ -70,9 +70,7 @@ class अनुप्रयोगः {
         this.in = (x, y) => this.k.in(x, y);
     };
     init_html() {
-        let yuj = app.yuj,
-            ht = app.anya_html,
-            t = 0;
+        let yuj = app.yuj;
         if (true) { //main
             let el = $("#back_btn").click(() => app.change_page("gRham"));
             el.css("display", "none");
@@ -88,7 +86,7 @@ class अनुप्रयोगः {
                 app.store_values("script", this.value)
             });
         }
-        if (true) { //base
+        if (true) { //menu
             let left = 230,
                 time = 210,
                 op = 0.43,
@@ -180,7 +178,7 @@ class अनुप्रयोगः {
                 });
             });
         }
-        if (true) { //main
+        if (true) { //base
             $("#sah_val").click(function () {
                 let sah = this.checked;
                 let elm = $("#dynamic"),
@@ -242,6 +240,7 @@ class अनुप्रयोगः {
                     }
                 };
                 app.app.set_lang_and_state($("#main_lang").val(), jkl);
+                app.kr("p-holder", "#main_lang");
             });
             $("#main_val").click(function () {
                 let kry = this.checked;
@@ -258,7 +257,7 @@ class अनुप्रयोगः {
                     elm.attr(msg, val[1]);
             });
             $("#cp1").click(() => {
-                app.copy_text("dynamic", 1);
+                app.copy_text("dynamic");
                 setTimeout(function () {
                     document.execCommand("copy");
                 }, 1);
@@ -277,7 +276,7 @@ class अनुप्रयोगः {
                     app.open_link(null, "/lang/" + $("#main_lang").val());
             });
             $("#anu_main").click(() => {
-                let v = app.k.get_Text_from_div($("#dynamic").html()),
+                let v = $("#dynamic").val(),
                     fr = app.lipyaH[$("#main_lang").val()][3];
                 app.translate(v, fr, "en")
             });
@@ -313,6 +312,7 @@ class अनुप्रयोगः {
                 $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
                 app.kr("inter-anuvadak");
                 app.kr("inter-set");
+                app.kr("p-holder", "#lang1");
             });
             $(".img_inter1").click(function () {
                 $("#first").attr("lipi-lekhika", {
@@ -339,6 +339,7 @@ class अनुप्रयोगः {
                 $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
                 app.kr("inter-anuvadak");
                 app.kr("inter-set");
+                app.kr("p-holder", "#lang2");
             });
             $("#cp3").click(() => app.copy_text("second"));
             $(".img_inter2").click(function () {
@@ -462,6 +463,15 @@ class अनुप्रयोगः {
                 title: v,
                 alt: v
             })
+        } else if (q == "p-holder") {
+            for (let x of ["#lang1", "#lang2", "#main_lang"]) {
+                if (i != null && x != i)
+                    continue;
+                let e = $(x);
+                let f = $(e.attr("of"));
+                let d = this.lang_texts[$("#app_lang").val()];
+                f.attr("placeholder", app.k.format(d.others.place, ["- " + this.lipyaH[e.val()][0]]));
+            }
         }
     };
     change_page(to, set = true) {
@@ -478,7 +488,7 @@ class अनुप्रयोगः {
                 $("#lang1").val(app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
             if (!("to" in s1))
                 $("#lang2").val("Romanized");
-            $("#first").val(app.k.get_Text_from_div($("#dynamic").html()));
+            $("#first").val($("#dynamic").val());
             $("#second").val(app.app.antarparivartan($("#first").val(), $("#lang1").val(), $("#lang2").val()));
             $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
             $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
@@ -506,33 +516,7 @@ class अनुप्रयोगः {
             app.current_page = to;
         app.pRShThedAnIm = to;
     };
-    copy_text(element, mode = 0) {
-        function selectText(id) {
-            var sel, range;
-            var el = document.getElementById(id); //get element id
-            if (window.getSelection && document.createRange) { //Browser compatibility
-                sel = window.getSelection();
-                if (sel.toString() == "") { //no text selection
-                    window.setTimeout(function () {
-                        range = document.createRange(); //range object
-                        range.selectNodeContents(el); //sets Range
-                        sel.removeAllRanges(); //remove all ranges from selection
-                        sel.addRange(range); //add Range to a Selection.
-                    }, 1);
-                }
-            } else if (document.selection) { //older ie
-                sel = document.selection.createRange();
-                if (sel.text == "") { //no text selection
-                    range = document.body.createTextRange(); //Creates TextRange object
-                    range.moveToElementText(el); //sets Range
-                    range.select(); //make selection.
-                }
-            }
-        };
-        if (mode == 1) {
-            selectText(element);
-            return;
-        }
+    copy_text(element) {
         var copyText = $("#" + element)[0];
         copyText.select();
         copyText.setSelectionRange(0, copyText.value.length + 2);
@@ -568,6 +552,7 @@ class अनुप्रयोगः {
         }
         if (this.html_init)
             this.resize();
+        this.kr("p-holder");
     };
     store_values(name, val, defal = false) {
         if (defal) {
@@ -742,7 +727,6 @@ setTimeout(() => {
                     //adding on off tooltip of img type 2
                     $(".imgon2").attr("tlt", "imgon");
                     $(".imgoff2").attr("tlt", "imgoff");
-                    app.set_lang_text(s["app_lang"]);
                     on_loaded();
                 }
             });
@@ -820,6 +804,7 @@ function on_loaded() {
         $("#xcv").val(s["main_lang"]);
         $("#lang2").val(s["to"]);
         $("#script_set").val(app.get_values("script"));
+        $("select").trigger("change");
         if (s["page"] == 0)
             $("#gRham").show();
         else if (s["page"] == 1) {
@@ -834,7 +819,6 @@ function on_loaded() {
     if (true) {
         let akl = $("#main_lang").val();
         app.app.karya = true;
-        $("select").trigger("change");
         if (app.in(["Urdu", "Romanized", "Kashmiri"], akl))
             $("#sa_mode").hide();
         app.kr("add-direction", $("#dynamic"), akl);

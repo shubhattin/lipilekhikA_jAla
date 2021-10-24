@@ -19,7 +19,8 @@
         "convert": "Convert",
         "page_title": "Lipi Lekhika Online | Type Indian Languages with full Speed and Accuracy",
         "title_lang": "{0} | Lipi Lekhika | Type {0} with full Speed and Accuracy",
-        "title_convert": "{0} to {1} | Lipi Parivartak | Lipi Lekhika | Convert Indian Scripts"
+        "title_convert": "{0} to {1} | Lipi Parivartak | Lipi Lekhika | Convert Indian Scripts",
+        "place": "Type Text Here {0}"
     },
     "scripts": {
         "Assamese": "Assamese",
