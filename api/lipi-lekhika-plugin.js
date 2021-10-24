@@ -19,7 +19,7 @@ class लिपिलेखिकासहायक {
         }
         this.alph = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"];
         this.pUrNasarve = this.alph[0] + this.alph[1] + "01234567890'$.#?";
-        this.re_arrange_num = (b) => b.replace(/[0-9]/g, '') + b.replace(/\D/g, '');
+        this.re_arrange_num = (b) => b.replace(/[0-9]/g, "") + b.replace(/\D/g, "");
         this.lang_in = (x) => this.in(this.loaded_scripts, x);
         let mobile_check = function () {
             let nav = (x) => navigator.userAgent.match(x),
@@ -923,13 +923,13 @@ class लिपिलेखिकालेखनसहायिका {
         ];
         let id = "లిಪಿலேഖിକା",
             c = "";
-        this.elm = jQuery(`<div id="${id}"></div>`).appendTo('body');
+        this.elm = jQuery(`<div id="${id}"></div>`).appendTo("body");
         let css = {
             "position": "absolute",
             "background-color": "white",
             "padding": "2.5px",
             "border": "2px solid black",
-            'border-radius': "4.5px",
+            "border-radius": "4.5px",
             "font-weight": "bold",
             "display": "none",
             "z-index": "1000000",
@@ -938,7 +938,7 @@ class लिपिलेखिकालेखनसहायिका {
             "background-color": "white",
             "min-width": "58px",
             "box-shadow": "0 4px 8.25px 0 #00000033, 0 6px 20px 0 #00000030",
-            "font-family": '"Nirmala UI","Calibri"'
+            "font-family": `"Nirmala UI","Calibri"`
         };
         for (let x in css)
             c += `${x}:${css[x]};`;
@@ -1045,8 +1045,8 @@ class लिपिलेखिकालेखनसहायिका {
             "background-image": `url(${लिपि.sanchit}/icon.png)`,
             "background-size": "20px 20px"
         });
-        let r = ['<svg style="enable-background:new 0 0 26 26;" height="26px" width="26px" class="निच्चैरुच्चैः" viewBox="0 0 512 512"><polygon points="396.6,',
-            '160 416,180.7 256,352 96,180.7 115.3,160 256,310.5', '352 416,331.3 256,160 96,331.3 115.3,352 256,201.5', '"/></svg>'
+        let r = [`<svg style="enable-background:new 0 0 26 26;" height="26px" width="26px" class="निच्चैरुच्चैः" viewBox="0 0 512 512"><polygon points="396.6,`,
+            `160 416,180.7 256,352 96,180.7 115.3,160 256,310.5`, `352 416,331.3 256,160 96,331.3 115.3,352 256,201.5`, `"/></svg>`
         ];
         img[1].innerHTML = `${r[0]+r[2]+r[3]}`;
         img[0].innerHTML = `${r[0]+r[1]+r[3]}`;
@@ -1284,7 +1284,7 @@ class लिपिलेखिकालेखनसहायिका {
         this.bhaNDAra[["pashchAta", "akShara"][type - 1]][x + 2].style.display = "none";
     };
     show_elm(type, x) {
-        this.bhaNDAra[["pashchAta", "akShara"][type - 1]][x + 2].style.removeProperty('display');
+        this.bhaNDAra[["pashchAta", "akShara"][type - 1]][x + 2].style.removeProperty("display");
     };
     set_labels(type, txt, index = -1) {
         if (index != -1 && (type == 3 || type == 2)) {

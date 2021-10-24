@@ -45,7 +45,7 @@ option {
 }
 
 .typ_lang {
-  margin-top: 7px;
+  margin-top: 14px;
 }
 
 #collection {
@@ -104,10 +104,14 @@ option {
   border-radius: 6px;
   padding-top: 2px;
   padding-left: 4px;
-  border: 2px solid blue;
+  border: 2.6px solid #4242ff;
   background-color: #e0e0cc;
   z-index: 9999;
   display: inline-block;
+}
+
+.in-extra:hover {
+  border-color: blue;
 }
 
 .close_contain {
@@ -145,7 +149,7 @@ option {
 
 #bhAShA_sanchit {
   max-width: 160px;
-  border: 2px solid green;
+  border: 2px solid #44a544b4;
   border-radius: 5px;
   padding: 2.5px;
   background-color: #ffffff;
@@ -280,6 +284,7 @@ select {
   margin-top: 8.4px;
   outline: none;
   border-radius: 7px;
+  padding: 4px;
 }
 
 
@@ -370,7 +375,7 @@ option {
   background-color: yellow;
 }
 
-[lkh=sahayika_text]:hover {
+#sahayika_text:hover {
   color: yellow;
   font-weight: bolder;
   background-color: black;
@@ -425,7 +430,7 @@ button {
   font-weight: bolder;
 }
 
-[lkh=sahayika_text] {
+#sahayika_text {
   color: #8a2be2;
   font-weight: bolder;
   padding: 2.4px;
@@ -458,10 +463,14 @@ button {
   font-weight: bolder;
   margin-bottom: 7px;
   margin-top: 7px;
+  border: 1px solid transparent;
+  padding: 1px;
+  border-radius: 3px;
 }
 
 .bhAShAnyAH:hover {
   color: black;
+  border-color: black;
 }
 
 .bhAShAnyAH:hover .bhAShAnyAH_name {
@@ -508,20 +517,9 @@ button {
   margin-right: 50px;
 }
 
-#main_switch {
-  position: absolute;
-  margin-top: 10px;
-  margin-left: 0px;
-  z-index: 100;
-}
-
 #lang_change_container {
   margin-top: 15px;
   margin-bottom: 10px;
-}
-
-.note-resizebar {
-  display: none;
 }
 
 #licence {
@@ -577,18 +575,14 @@ button {
   color: green;
 }
 
-#cp1 {
-  margin-left: 48px;
-  margin-top: 9px;
-  position: absolute;
-}
-
 .block {
   display: block;
 }
 
-.note-editor {
-  margin-top: 10px;
+#anu_main1 {
+  margin-left: 8px;
+  height: 24px;
+  width: 24px;
 }
 
 @media (max-width: 365px) {
@@ -636,7 +630,7 @@ button {
 
 #menu_body {
   font-weight: bold;
-  border: 2.5px solid black;
+  border: 2.5px solid #686767;
   background-color: #ffffe3;
   overflow-y: scroll;
   height: 100%;
@@ -663,6 +657,7 @@ button {
 
 #menu_body:hover {
   background-color: #f1f1f1;
+  border-color: black;
 }
 
 #menu_body {
@@ -681,7 +676,7 @@ button {
 #info_links {
   margin-top: 19px;
   background-color: white;
-  border: 2px solid brown;
+  border: 2px solid #9237379a;
   margin-right: 5px;
   margin-left: 5px;
   border-radius: 7px;
@@ -699,6 +694,7 @@ button {
   padding: 2px;
   text-align: center;
   padding-bottom: 1px;
+  border-radius: 3px;
 }
 
 #info_links .menu_msg {
@@ -715,18 +711,21 @@ button {
   margin: 2px;
   margin-left: 3px;
   margin-right: 3px;
+  border: 1px solid transparent;
+}
+
+.menu_items:hover {
+  border-color: black;
 }
 
 .menu_items:hover .menu_msg {
   color: yellow;
   background-color: black;
-  border-radius: 3px;
 }
 
 #info_links .menu_items:hover .menu_msg {
   color: yellow;
   background-color: black;
-  border-radius: 3px;
 }
 
 #menu_blocker {
@@ -778,14 +777,6 @@ button {
   white-space: pre;
 }
 
-@media (min-width:850px) {
-  .script {
-    position: absolute;
-    z-index: 12;
-    margin-left: 46%;
-  }
-}
-
 #set_img {
   margin-left: 6px;
   fill: #5a5a5a;
@@ -826,13 +817,4 @@ button {
   font-weight: bold;
   text-align: center;
   margin-right: 45px;
-}
-
-.note-btn-group {
-  min-width: 176px;
-}
-
-.note-btn {
-  min-width: 36px;
-  min-height: 36px;
 }

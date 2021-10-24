@@ -11,8 +11,8 @@
 }
 
 #about_button {
-  height: 32.5px;
-  width: 32.5px;
+  height: 25px;
+  width: 25px;
   fill: #00b8f5;
 }
 
@@ -112,18 +112,6 @@
 
 .anuvadak .अनु {
   fill: #518EF8;
-}
-
-#anu_main {
-  margin-left: 81px;
-  margin-top: 10px;
-  position: absolute;
-}
-
-#anu_main1 {
-  margin-left: 8px;
-  height: 24px;
-  width: 24px;
 }
 
 .imgoff2,

@@ -1,5 +1,5 @@
 {
-    "lipi": {
+    "lekhAH": {
         "about_msg": "About Lipi Lekhika",
         "about_text": "This is an Application to type Indian Languages with full speed and accuracy.\nFor more information refer to {0}App's Website{1}.",
         "anya_nirdesh": "Use .q (zero width joiner) to seperate consonant clusters.\nFor eg:- k.xyA(or kyA)➠क्या , k.x.qyA➠क्‌या\n .x is halant here, See Table Above.",
@@ -12,7 +12,8 @@
         "show_table": "View Usage Table",
         "source_link": "Veiw Lipi Lekhika's Source Code",
         "script_set": "Set Typing Language",
-        "defal_msg": "Set Default Options"
+        "defal_msg": "Set Default Options",
+        "setting": "Setting"
     },
     "others": {
         "convert": "Convert",
@@ -78,6 +79,7 @@
         "usage_btnm": "Lipi Lekhika Usage Instructions",
         "redirect_msg": "Go To More Appropriae Version of This Page",
         "setting": "Set Lipi Lekhik's Default Options",
-        "anuvadak": "Translate using Google Translate"
+        "anuvadak": "Translate using Google Translate",
+        "git": "View Lipi Lekhika's Source Code on Github"
     }
 }

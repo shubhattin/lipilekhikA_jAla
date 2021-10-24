@@ -31,8 +31,8 @@
             <p id="paricaya" class="br-above"></p>
             <span class="flex br-above">
                 <button id="lic" lkh="show_lic"></button>
-                <a class='web_only dvayam-left' href='https://get.lipilekhika.com/source' target='_blank'>
-                    <span id='git' class='imgs git'></span>
+                <a class='web_only dvayam-left' tlt="git" href='https://get.lipilekhika.com/source' target='_blank'>
+                    <span id='git' class='git' chv="git"></span>
                 </a>
             </span>
             <p id="licence" class="br-above" style="display:none"></p>
@@ -53,10 +53,24 @@
                     <input type="checkbox" t=kr id="sah_val">
                     <span class="imgoff1 imgs" kr=off tlt="imgoff1"></span>
                     <span class="imgon1 imgs" kr=on tlt="imgon1"></span>
-                    <span tlt="lekhan_sahayika" lkh="sahayika_text"></span>
+                    <span tlt="lekhan_sahayika" lkh="sahayika_text" id="sahayika_text"></span>
                 </label>
             </div>
-            <div id="dynamic"></div>
+            <div class="vr-flex1">
+                <div class="typ_lang flex">
+                    <select class="lang" tlt="typ_lang" id="main_lang"></select>
+                    <span class="redirect web_only" chv="redirect" id="redirect0"></span>
+                    <span id="set_img" class="set_img" chv="setting" tlt="setting"></span>
+                    <label id="main_switch" class="check_img dvayam">
+                        <input type="checkbox" t=kr id="main_val" checked="true">
+                        <span class="imgoff imgs" kr=off></span>
+                        <span class="imgon imgs" kr=on></span>
+                    </label>
+                    <button id="cp1" class="cpy_btn dvayam-right" chv="cpy_btn" tlt="cpy_btn"></button>
+                    <span class="anuvadak web_only" chv="anuvadak" tlt="anuvadak" id="anu_main"></span>
+                </div>
+            </div>
+            <div id="dynamic" tlt="mukhya_lekhan" class="Lipi-LekhikA no_checking" contenteditable="true"></div>
             <button id="table_btn" class="in-flex prayog_btn">
                 <span tlt="usage_btnm" class="usage_btnm imgs btn_img"></span>
                 <span id="table" lkh="show_table"></span>
@@ -66,33 +80,31 @@
             <div class="in-flex">
                 <select class="lang" id="lang1"></select>
                 <button id="set_text2" class="set_text ekam-left"></button>
-                <button id="cp2" class="cpy_btn ekam" tlt="cpy_btn"></button>
+                <button id="cp2" chv="cpy_btn" class="cpy_btn ekam" tlt="cpy_btn"></button>
                 <label class="check_img">
                     <input type="checkbox" t=kr class="img_inter1">
-                    <span class="imgoff2 imgs" kr=off></span>
-                    <span class="imgon2 imgs" kr=on></span>
+                    <span class="imgoff2" chv="imgoff2" kr=off></span>
+                    <span class="imgon2" chv="imgon2" kr=on></span>
                 </label>
-                <span class="imgs redirect inter_redirect web_only"></span>
-                <span class="imgs anuvadak web_only" tlt="anuvadak" id="anu_main1"></span>
+                <span class="redirect inter_redirect web_only" chv="redirect"></span>
+                <span class="anuvadak web_only" chv="anuvadak" tlt="anuvadak" id="anu_main1"></span>
             </div>
-            <textarea id="first" class="normal Lipi-LekhikA block" lipi-lekhika="off" spellcheck="false"
-                autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
+            <textarea id="first" class="normal Lipi-LekhikA block no_checking" lipi-lekhika="off"></textarea>
             <div class="in-flex">
                 <select class="lang" id="lang2"></select>
                 <button id="set_text1" class="set_text ekam-left"></button>
-                <button id="cp3" class="cpy_btn ekam-left" tlt="cpy_btn"></button>
-                <span id="up_arrow_img" class="imgs cnvrt" style="margin:0 0 0 5px;"></span>
-                <span id="down_arrow_img" class="imgs cnvrt" style="margin:0 -2px 0 -3.5px;"></span>
-                <span id="auto_img" class="imgs ekam-right" style="margin-left:5px;"></span>
+                <button id="cp3" chv="cpy_btn" class="cpy_btn ekam-left" tlt="cpy_btn"></button>
+                <span id="up_arrow_img" chv="up_arrow" class="cnvrt" style="margin:0 0 0 5px;"></span>
+                <span id="down_arrow_img" chv="down_arrow" class="cnvrt" style="margin:0 -2px 0 -3.5px;"></span>
+                <span id="auto_img" chv="auto" class="ekam-right" style="margin-left:5px;"></span>
                 <label class="check_img">
                     <input type="checkbox" t=kr class="img_inter2">
-                    <span class="imgoff2 imgs" kr=off></span>
-                    <span class="imgon2 imgs" kr=on></span>
+                    <span class="imgoff2" chv="imgoff2" kr=off></span>
+                    <span class="imgon2" chv="imgon2" kr=on></span>
                 </label>
-                <span class="imgs redirect inter_redirect web_only"></span>
+                <span class="redirect inter_redirect web_only" chv="redirect"></span>
             </div>
-            <textarea id="second" class="normal Lipi-LekhikA block" lipi-lekhika="off" spellcheck="false"
-                autocapitalize="none" autocomplete="off" autocorrect="off"></textarea>
+            <textarea id="second" class="normal Lipi-LekhikA block no_checking" lipi-lekhika="off"></textarea>
             <div>
                 <span lkh='no_prvrtn'></span>
             </div>
@@ -102,7 +114,7 @@
         <div class="in-extra">
             <select class="lang" id="xcv"></select>
             <div class="close_contain flex">
-                <span id="close1" tlt="close_img" class="imgs close_img close_minus"></span>
+                <span id="close1" tlt="close_img" chv="close_img" class="close_img close_minus"></span>
             </div>
             <img id="image" class="block" tlt="image">
             <p id="shoonyam" lkh="anya_nirdesh"></p>
@@ -114,14 +126,14 @@
             <div class="in-extra" id="setting_in">
                 <div lkh="defal_msg" id="set_msg"></div>
                 <div class="close_contain flex">
-                    <span id="close2" tlt="close_img" class="imgs close_img close_minus"></span>
+                    <span id="close2" tlt="close_img" chv="close_img" class="close_img close_minus"></span>
                 </div>
                 <div class="defal">
                     <span tlt="lekhan_sahayika" lkh="sahayika_text" class="one"></span>
                     <label class="check_img">
                         <input type="checkbox" t=kr id="sah_set_val">
-                        <span class="imgoff2 imgs" kr=off></span>
-                        <span class="imgon2 imgs" kr=on></span>
+                        <span class="imgoff2" chv="imgoff2" kr=off></span>
+                        <span class="imgon2" chv="imgon2" kr=on></span>
                     </label>
                 </div>
                 <div class="defal">
@@ -137,25 +149,36 @@
 <div id="menu_container" style="display:none;">
     <div id="menu_body">
         <div id="lang_change_container" class="in-flex">
-            <span id="lang_img" tlt="app_lang" class="imgs"></span>
+            <span id="lang_img" chv="lang" tlt="app_lang"></span>
             <select id="app_lang" tlt="app_lang" class="app_lang"></select>
-            <span class="imgs redirect web_only" id="redirect1"></span>
+            <span class="redirect web_only" chv="redirect" id="redirect1"></span>
         </div>
-        <div class="menu_items ekam-left flex menu_borders">
-            <span id="about_button" class="imgs"></span>
-            <span id="about_msg" lkh="about_msg" class="menu_msg"></span>
+        <div id="about_menu" class="menu_items ekam-left flex menu_borders">
+            <span id="about_button" chv="about"></span>
+            <span lkh="about_msg" class="menu_msg"></span>
+        </div>
+        <div id="setting_menu" class="menu_items ekam-left flex menu_borders">
+            <span class="set_img" chv="setting"></span>
+            <span lkh="setting" class="menu_msg"></span>
+        </div>
+        <div id="prayog_menu" class="menu_items ekam-left flex menu_borders">
+            <span class="usage_btnm imgs"></span>
+            <span lkh="show_table" class="menu_msg"></span>
         </div>
         <div id="info_links" class="web_only vr-flex">
             <a target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://rebrand.ly/lekhika">
-                <span class="imgs home_img"></span><span lkh="home_link" class="menu_msg"></span>
+                <span class="home_img imgs"></span>
+                <span lkh="home_link" class="menu_msg"></span>
             </a>
             <a target="_blank" class="menu_items menu_borders vr-flex no_under"
                 href="https://rebrand.ly/lekhikadownload">
-                <span class="imgs download_img"></span><span lkh="download_link" class="menu_msg"></span>
+                <span class="download_img" chv="download"></span>
+                <span lkh="download_link" class="menu_msg"></span>
             </a>
-            <a target="_blank" class="menu_items menu_borders vr-flex no_under"
+            <a target="_blank" class="menu_items menu_borders vr-flex no_under" tlt="git"
                 href="https://get.lipilekhika.com/androidsource">
-                <span class="imgs git"></span><span lkh="source_link" class="menu_msg"></span>
+                <span chv="git"></span>
+                <span lkh="source_link" class="menu_msg"></span>
             </a>
         </div>
         <div class='web_only vr-flex' id='bhAShA_sanchit'></div>
@@ -163,24 +186,6 @@
     <div id="menu_blocker"></div>
 </div>
 <div id="store_html" style="display:none;">
-    <div nm="main_btn">
-        <label id="main_switch" class="check_img">
-            <input type="checkbox" t=kr id="main_val" checked="true">
-            <span class="imgoff imgs" kr=off></span>
-            <span class="imgon imgs" kr=on></span>
-        </label>
-        <button id="cp1" class="cpy_btn" tlt="cpy_btn"></button>
-        <span class="imgs anuvadak web_only" tlt="anuvadak" id="anu_main"></span>
-    </div>
-    <div nm="main_lang">
-        <div class="vr-flex1 script">
-            <div class="flex typ_lang">
-                <select class="lang" tlt="typ_lang" id="main_lang"></select>
-                <span class="imgs redirect web_only" id="redirect0"></span>
-                <span id="set_img" tlt="setting" class="imgs"></span>
-            </div>
-        </div>
-    </div>
     <div nm="app_set">
         <span class="app_lang" style="padding-left:4px;padding-right:4px;border-radius:5px;">{0}</span>
     </div>
