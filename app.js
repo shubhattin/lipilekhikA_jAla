@@ -50,7 +50,7 @@ class अनुप्रयोगः {
             "ਪੰਜਾਬੀ": [0.5, "pa", "Punjabi"],
             "മലയാളം": [-0.3, "ml", "Malayalam"],
             "संस्कृतम्": [0.5, "sa", "Sanskrit"],
-            "اُردُو‎": [2.3, "ur", "Urdu"]
+            "اُردُو": [2.3, "ur", "Urdu"]
         };
         this.translate = (v, f, t) => {
             v = `https://translate.google.com/?sl=${f}&tl=${t}&text=${encodeURIComponent(v)}&op=translate`;
@@ -269,7 +269,7 @@ class अनुप्रयोगः {
             for (let x in app.lipyaH) {
                 if (app.in(["Devanagari", "Normal"], x))
                     continue;
-                y += `<a class="bhAShAnyAH block dvayam-right-anya-bhAShA" href="/lang/${x}" target="_blank">${app.lipyaH[x][0]} (<span class="bhAShAnyAH_name" value="${x}"></span>)</a>`;
+                y += `<a rel="noopener" class="bhAShAnyAH block dvayam-right-anya-bhAShA" href="/lang/${x}" target="_blank">${app.lipyaH[x][0]} (<span class="bhAShAnyAH_name" value="${x}"></span>)</a>`;
             }
             yuj("#bhAShA_sanchit", y);
             $("#redirect0").click(() => {
@@ -399,7 +399,7 @@ class अनुप्रयोगः {
                 app.yuj("#" + x, j);
             }
             app.yuj("#xcv", `<option id="Vedic" value="Vedic">Vedic Additions</option>`)
-            app.yuj("#paricaya", `<div class="br-above">भारते रचितः</div>E-mail : <a href="mailto:lipilekhika@gmail.com" class="mail">lipilekhika@gmail.com</a>`);
+            app.yuj("#paricaya", `<div class="br-above">भारते रचितः</div>E-mail : <a rel="noopener" href="mailto:lipilekhika@gmail.com" class="mail">lipilekhika@gmail.com</a>`);
         }
     };
     kr(q, i = null, lang = 0) {
@@ -533,7 +533,7 @@ class अनुप्रयोगः {
         for (let x in data.lekhAH) {
             let v = app.k.replace_all(data.lekhAH[x], "\n", "<br>");
             if (x == "about_text")
-                v = app.k.format(v, [`<a href="https://rebrand.ly/lekhika" target="_blank">`, "</a>"]);
+                v = app.k.format(v, [`<a rel="noopener" href="https://rebrand.ly/lekhika" target="_blank">`, "</a>"]);
             $(`[lkh=${x}]`).html(v);
         };
         for (let x in data.scripts) {
@@ -557,6 +557,7 @@ class अनुप्रयोगः {
             for (let x of $("a")) {
                 hj(x, "href");
                 hj(x, "target");
+                hj(x, "rel");
             }
         }
     };
@@ -689,6 +690,7 @@ setTimeout(() => {
                         app.anya_html[$(x).attr("nm")] = x.innerHTML;
                     $("#store_html").remove();
                     app.init_html();
+                    $("#main_val").check(true);
                     setTimeout(() => $.ajax({
                         url: app.k.substring(app.k.image_loca, 0, -5) + "/img.asp",
                         dataType: "text",

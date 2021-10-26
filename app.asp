@@ -31,7 +31,7 @@
             <p id="paricaya" class="br-above"></p>
             <span class="flex br-above">
                 <span id="lic" lkh="show_lic" class="button"></span>
-                <a class='web_only dvayam-left' tlt="git" href='https://get.lipilekhika.com/source' target='_blank'>
+                <a rel="noopener" class='web_only dvayam-left' tlt="git" href='https://get.lipilekhika.com/source' target='_blank'>
                     <span id='git' class='git' chv="git"></span>
                 </a>
             </span>
@@ -62,7 +62,7 @@
                     <span class="redirect web_only" chv="redirect" id="redirect0"></span>
                     <span id="set_img" class="set_img" chv="setting" tlt="setting"></span>
                     <label id="main_switch" class="check_img ekam" for="main_val">
-                        <input type="checkbox" t=kr id="main_val" checked="true">
+                        <input type="checkbox" t=kr id="main_val">
                         <span class="imgoff imgs" kr=off></span>
                         <span class="imgon imgs" kr=on></span>
                     </label>
@@ -164,16 +164,16 @@
             <span lkh="show_table" class="menu_msg"></span>
         </div>
         <div id="info_links" class="web_only vr-flex">
-            <a target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://rebrand.ly/lekhika">
+            <a rel="noopener" target="_blank" class="menu_items menu_borders vr-flex no_under" href="https://rebrand.ly/lekhika">
                 <span class="home_img imgs"></span>
                 <span lkh="home_link" class="menu_msg"></span>
             </a>
-            <a target="_blank" class="menu_items menu_borders vr-flex no_under"
+            <a rel="noopener" target="_blank" class="menu_items menu_borders vr-flex no_under"
                 href="https://rebrand.ly/lekhikadownload">
                 <span class="download_img" chv="download"></span>
                 <span lkh="download_link" class="menu_msg"></span>
             </a>
-            <a target="_blank" class="menu_items menu_borders vr-flex no_under" tlt="git"
+            <a rel="noopener" target="_blank" class="menu_items menu_borders vr-flex no_under" tlt="git"
                 href="https://get.lipilekhika.com/androidsource">
                 <span chv="git"></span>
                 <span lkh="source_link" class="menu_msg"></span>
