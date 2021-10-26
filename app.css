@@ -143,10 +143,6 @@ option {
   border-color: blue;
 }
 
-.set_text:hover {
-  background-color: brown;
-}
-
 #bhAShA_sanchit {
   max-width: 160px;
   border: 2px solid #44a544b4;
@@ -235,6 +231,10 @@ option {
   margin-bottom: 2px;
 }
 
+#lbl3 {
+  background-color: inherit;
+}
+
 #convert_img {
   background-color: black;
 }
@@ -249,6 +249,7 @@ option {
   font-size: 1.2em;
   background-color: black;
   font-weight: bolder;
+  border: 1px groove red;
 }
 
 .normal {
@@ -405,13 +406,12 @@ option {
   fill: #505050;
 }
 
-.set_text {
-  background-color: white;
-  display: none;
-}
-
-button {
+.button {
   border-radius: 5px;
+  padding-top: 1px;
+  padding-right: 6px;
+  padding-bottom: 1px;
+  padding-left: 6px;
 }
 
 #avAharaNam {
@@ -737,7 +737,9 @@ button {
 }
 
 .sa_radio {
-  margin-bottom: 3.25px;
+  margin-bottom: 4px;
+  height: 15px;
+  width: 15px;
 }
 
 #menu_btn {

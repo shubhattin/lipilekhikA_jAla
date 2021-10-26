@@ -23,7 +23,7 @@ class अनुप्रयोगः {
             Assamese: ["অসমীয়া", "অজয্", "অ", 0],
             Konkani: ["कोंकणी", "अजय्", "अ", 0],
             Sanskrit: ["संस्कृतम्", "अजय्", "अ", 0],
-            Punjabi: ["ਪੰਜਾਬੀ", "ਅਜਯ੍", "ਅ", "pn"],
+            Punjabi: ["ਪੰਜਾਬੀ", "ਅਜਯ੍", "ਅ", "pa"],
             Nepali: ["नेपाली", "अजय्", "अ", "ne"],
             Urdu: ["اُردُو", "اجَے ", "ب", "ur"],
             Kashmiri: ["كٲشُر", "اجَے ", "ب", 0],
@@ -46,8 +46,10 @@ class अनुप्रयोगः {
             "বাংলা": [0.5, "bn", "Bengali"],
             "मराठी": [0.5, "mr", "Marathi"],
             "ગુજરાતી": [0.5, "gu", "Gujarati"],
+            "ਪੰਜਾਬੀ": [0.5, "pa", "Punjabi"],
             "മലയാളം": [-0.3, "ml", "Malayalam"],
-            "संस्कृतम्": [0.5, "sa", "Sanskrit"]
+            "संस्कृतम्": [0.5, "sa", "Sanskrit"],
+            "اُردُو‎": [2.1, "ur", "Urdu"]
         };
         this.translate = (v, f, t) => {
             v = `https://translate.google.com/?sl=${f}&tl=${t}&text=${encodeURIComponent(v)}&op=translate`;
@@ -213,7 +215,6 @@ class अनुप्रयोगः {
                 spellcheck: "false",
                 autocapitalize: "none",
                 autocomplete: "off",
-                "aria-autocomplete": "off",
                 autocorrect: "off"
             });
             $("#main_lang").on("change", () => {
@@ -762,7 +763,7 @@ setTimeout(() => {
 
 function set_background() {
     let lc = `#body_img{background-image:url(${app.k.substring(app.k.image_loca, 0, -5)}/lipi-`;
-    let l2 = (x) => `@media(${["min", "max"][x] + "-width:630px){" + lc + ["pc", "an"][x]}.jpg);}}`;
+    let l2 = (x) => `@media(${["min", "max"][x] + "-width:630px){" + lc + ["pc", "an"][x]}.webp);}}`;
     app.yuj("body", `<style>${l2(0) + l2(1)}</style>`);
     app.back_loaded = true;
 }

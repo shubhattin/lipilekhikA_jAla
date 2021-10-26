@@ -20,17 +20,17 @@
                     </g>
                 </svg>
             </span>
-            <button id="parivartak" tlt="parivartak" class="in-flex">
+            <span id="parivartak" tlt="parivartak" class="in-flex button">
                 <span id="convert_img" class="imgs btn_img"></span>
                 <span id="lbl3" lkh="parivartak"></span>
-            </button>
+            </span>
             <span tlt='usage_btnm' class='usage_btnm prayog_btn imgs' id='up_usage'></span>
         </div>
         <div id="parri" style="display:none;">
             <p id="about_text" lkh="about_text" class="br-above"></p>
             <p id="paricaya" class="br-above"></p>
             <span class="flex br-above">
-                <button id="lic" lkh="show_lic"></button>
+                <span id="lic" lkh="show_lic" class="button"></span>
                 <a class='web_only dvayam-left' tlt="git" href='https://get.lipilekhika.com/source' target='_blank'>
                     <span id='git' class='git' chv="git"></span>
                 </a>
@@ -40,16 +40,16 @@
         <div id="gRham" style="display:none;">
             <div class="flex">
                 <span id="sa_mode" class="dvayam-right in-flex">
-                    <label class="in-flex" tlt="sa_0">
+                    <label class="in-flex" tlt="sa_0" for="sa_04">
                         <input type="radio" class="sa_radio" name="sa_mode" id="sa_04">
                         <span id="sa_0" class="black-yeloow ajay"></span>
                     </label>
-                    <label class="in-flex" tlt="sa_1">
+                    <label class="in-flex" tlt="sa_1" for="sa_14">
                         <input type="radio" class="sa_radio" name="sa_mode" id="sa_14">
                         <span id="sa_1" class="black-yellow ajay"></span>
                     </label>
                 </span>
-                <label class="check_img in-flex">
+                <label class="check_img in-flex" for="sah_val">
                     <input type="checkbox" t=kr id="sah_val">
                     <span class="imgoff1 imgs" kr=off tlt="imgoff1"></span>
                     <span class="imgon1 imgs" kr=on tlt="imgon1"></span>
@@ -61,28 +61,27 @@
                     <select class="lang" tlt="typ_lang" id="main_lang" of="#dynamic"></select>
                     <span class="redirect web_only" chv="redirect" id="redirect0"></span>
                     <span id="set_img" class="set_img" chv="setting" tlt="setting"></span>
-                    <label id="main_switch" class="check_img dvayam">
+                    <label id="main_switch" class="check_img dvayam" for="main_val">
                         <input type="checkbox" t=kr id="main_val" checked="true">
                         <span class="imgoff imgs" kr=off></span>
                         <span class="imgon imgs" kr=on></span>
                     </label>
-                    <button id="cp1" class="cpy_btn dvayam-right" chv="cpy_btn" tlt="cpy_btn"></button>
+                    <span id="cp1" class="cpy_btn dvayam-right" chv="cpy_btn" tlt="cpy_btn"></span>
                     <span class="anuvadak web_only" chv="anuvadak" tlt="anuvadak" id="anu_main"></span>
                 </div>
             </div>
             <textarea id="dynamic" tlt="mukhya_lekhan" class="Lipi-LekhikA no_checking block"></textarea>
-            <button id="table_btn" class="in-flex prayog_btn">
+            <span id="table_btn" class="in-flex prayog_btn button">
                 <span tlt="usage_btnm" class="usage_btnm imgs btn_img"></span>
                 <span id="table" lkh="show_table"></span>
-            </button>
+            </span>
         </div>
         <div id="inter" style="display:none;">
             <div class="in-flex">
                 <select class="lang" id="lang1" of="#first"></select>
-                <button id="set_text2" class="set_text ekam-left"></button>
-                <button id="cp2" chv="cpy_btn" class="cpy_btn ekam" tlt="cpy_btn"></button>
-                <label class="check_img">
-                    <input type="checkbox" t=kr class="img_inter1">
+                <span id="cp2" chv="cpy_btn" class="cpy_btn ekam" tlt="cpy_btn"></span>
+                <label class="check_img" for="img_inter1">
+                    <input type="checkbox" t=kr class="img_inter1" id="img_inter1">
                     <span class="imgoff2" chv="imgoff2" kr=off></span>
                     <span class="imgon2" chv="imgon2" kr=on></span>
                 </label>
@@ -92,13 +91,12 @@
             <textarea id="first" class="normal Lipi-LekhikA block no_checking" lipi-lekhika="off"></textarea>
             <div class="in-flex">
                 <select class="lang" id="lang2" of="#second"></select>
-                <button id="set_text1" class="set_text ekam-left"></button>
-                <button id="cp3" chv="cpy_btn" class="cpy_btn ekam-left" tlt="cpy_btn"></button>
+                <span id="cp3" chv="cpy_btn" class="cpy_btn ekam-left" tlt="cpy_btn"></span>
                 <span id="up_arrow_img" chv="up_arrow" class="cnvrt" style="margin:0 0 0 5px;"></span>
                 <span id="down_arrow_img" chv="down_arrow" class="cnvrt" style="margin:0 -2px 0 -3.5px;"></span>
                 <span id="auto_img" chv="auto" class="ekam-right" style="margin-left:5px;"></span>
-                <label class="check_img">
-                    <input type="checkbox" t=kr class="img_inter2">
+                <label class="check_img" for="img_inter2">
+                    <input type="checkbox" t=kr class="img_inter2" id="img_inter2">
                     <span class="imgoff2" chv="imgoff2" kr=off></span>
                     <span class="imgon2" chv="imgon2" kr=on></span>
                 </label>
@@ -130,7 +128,7 @@
                 </div>
                 <div class="defal">
                     <span tlt="lekhan_sahayika" lkh="sahayika_text" class="one"></span>
-                    <label class="check_img">
+                    <label class="check_img" for="sah_set_val">
                         <input type="checkbox" t=kr id="sah_set_val">
                         <span class="imgoff2" chv="imgoff2" kr=off></span>
                         <span class="imgon2" chv="imgon2" kr=on></span>
