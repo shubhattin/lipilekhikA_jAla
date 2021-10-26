@@ -61,12 +61,12 @@
                     <select class="lang" tlt="typ_lang" id="main_lang" of="#dynamic"></select>
                     <span class="redirect web_only" chv="redirect" id="redirect0"></span>
                     <span id="set_img" class="set_img" chv="setting" tlt="setting"></span>
-                    <label id="main_switch" class="check_img dvayam" for="main_val">
+                    <label id="main_switch" class="check_img ekam" for="main_val">
                         <input type="checkbox" t=kr id="main_val" checked="true">
                         <span class="imgoff imgs" kr=off></span>
                         <span class="imgon imgs" kr=on></span>
                     </label>
-                    <span id="cp1" class="cpy_btn dvayam-right" chv="cpy_btn" tlt="cpy_btn"></span>
+                    <span id="cp1" class="cpy_btn ekam-right" chv="cpy_btn" tlt="cpy_btn"></span>
                     <span class="anuvadak web_only" chv="anuvadak" tlt="anuvadak" id="anu_main"></span>
                 </div>
             </div>

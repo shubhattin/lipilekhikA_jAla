@@ -40,16 +40,17 @@ class अनुप्रयोगः {
         this.lang_list = {
             "English": [0, "en", "English"],
             "हिन्दी": [0.5, "hi", "Hindi"],
-            "தமிழ்": [-0.45, "ta", "Tamil"],
+            "தமிழ்": [0, "ta", "Tamil"],
             "తెలుగు": [0.5, "te", "Telugu"],
             "ಕನ್ನಡ": [0.5, "kn", "Kannada"],
             "বাংলা": [0.5, "bn", "Bengali"],
             "मराठी": [0.5, "mr", "Marathi"],
             "ગુજરાતી": [0.5, "gu", "Gujarati"],
+            "ଓଡ଼ିଆ": [0.5, "or", "Odia"],
             "ਪੰਜਾਬੀ": [0.5, "pa", "Punjabi"],
             "മലയാളം": [-0.3, "ml", "Malayalam"],
             "संस्कृतम्": [0.5, "sa", "Sanskrit"],
-            "اُردُو‎": [2.1, "ur", "Urdu"]
+            "اُردُو‎": [2.3, "ur", "Urdu"]
         };
         this.translate = (v, f, t) => {
             v = `https://translate.google.com/?sl=${f}&tl=${t}&text=${encodeURIComponent(v)}&op=translate`;
@@ -232,13 +233,14 @@ class अनुप्रयोगः {
                     if (!app.once_editded)
                         app.kr("add-direction", $("#first"), $("#main_lang").val());
                     let e = $("#anu_main");
-                    if (app.lipyaH[ak][3] == 0) {
-                        e.hide();
-                        $("#dynamic").attr("lang", "");
-                    } else {
-                        e.show();
-                        $("#dynamic").attr("lang", app.lipyaH[ak][3]);
-                    }
+                    if (s.mode == 0)
+                        if (app.lipyaH[ak][3] == 0) {
+                            e.hide();
+                            $("#dynamic").attr("lang", "");
+                        } else {
+                            e.show();
+                            $("#dynamic").attr("lang", app.lipyaH[ak][3]);
+                        }
                 };
                 app.app.set_lang_and_state($("#main_lang").val(), jkl);
                 app.kr("p-holder", "#main_lang");
@@ -380,13 +382,8 @@ class अनुप्रयोगः {
             });
         }
         if (true) { // adding lang options in select tags
-            if (s["mode"] == 1) {
+            if (s.mode == 1)
                 $(".web_only").hide();
-                app.app.only_web_status = false;
-                let e = (x) => $(app.app.sahayika.bhaNDAra.pashchAta[0]).children()[0].removeAttribute(x);
-                e("href");
-                e("target");
-            };
             for (let z of $(".lang")) {
                 let x = $(z).attr("id");
                 let j = "";
@@ -417,10 +414,11 @@ class अनुप्रयोगः {
                 i.attr("dir", "ltr");
         } else if (q == "inter-anuvadak") {
             let e = $("#anu_main1");
-            if (app.lipyaH[$("#lang1").val()][3] == 0 || app.lipyaH[$("#lang2").val()][3] == 0)
-                e.hide();
-            else
-                e.show();
+            if (s.mode == 0)
+                if (app.lipyaH[$("#lang1").val()][3] == 0 || app.lipyaH[$("#lang2").val()][3] == 0)
+                    e.hide();
+                else
+                    e.show();
         } else if (q == "edited")
             this.once_editded = true;
         else if (q == "convert-msg") {
@@ -554,6 +552,13 @@ class अनुप्रयोगः {
         if (this.html_init)
             this.resize();
         this.kr("p-holder");
+        if (s.mode == 1) {
+            let hj = (y, x) => y.removeAttribute(x)
+            for (let x of $("a")) {
+                hj(x, "href");
+                hj(x, "target");
+            }
+        }
     };
     store_values(name, val, defal = false) {
         if (defal) {
