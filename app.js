@@ -41,6 +41,7 @@ class अनुप्रयोगः {
             "English": [0, "en", "English"],
             "हिन्दी": [0.5, "hi", "Hindi"],
             "தமிழ்": [0, "ta", "Tamil"],
+            "संस्कृतम्": [0.5, "sa", "Sanskrit"],
             "తెలుగు": [0.5, "te", "Telugu"],
             "ಕನ್ನಡ": [0.5, "kn", "Kannada"],
             "বাংলা": [0.5, "bn", "Bengali"],
@@ -49,7 +50,6 @@ class अनुप्रयोगः {
             "ଓଡ଼ିଆ": [0.5, "or", "Odia"],
             "ਪੰਜਾਬੀ": [0.5, "pa", "Punjabi"],
             "മലയാളം": [-0.3, "ml", "Malayalam"],
-            "संस्कृतम्": [0.5, "sa", "Sanskrit"],
             "اُردُو": [2.3, "ur", "Urdu"]
         };
         this.translate = (v, f, t) => {

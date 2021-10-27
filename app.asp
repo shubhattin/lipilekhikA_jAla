@@ -40,16 +40,16 @@
         <div id="gRham" style="display:none;">
             <div class="flex">
                 <span id="sa_mode" class="dvayam-right in-flex">
-                    <label class="in-flex" tlt="sa_0" for="sa_04">
+                    <label class="in-flex" tlt="sa_0">
                         <input type="radio" class="sa_radio" name="sa_mode" id="sa_04">
                         <span id="sa_0" class="black-yeloow ajay"></span>
                     </label>
-                    <label class="in-flex" tlt="sa_1" for="sa_14">
+                    <label class="in-flex" tlt="sa_1">
                         <input type="radio" class="sa_radio" name="sa_mode" id="sa_14">
                         <span id="sa_1" class="black-yellow ajay"></span>
                     </label>
                 </span>
-                <label class="check_img in-flex" for="sah_val">
+                <label class="check_img in-flex">
                     <input type="checkbox" t=kr id="sah_val">
                     <span class="imgoff1 imgs" kr=off tlt="imgoff1"></span>
                     <span class="imgon1 imgs" kr=on tlt="imgon1"></span>
@@ -61,7 +61,7 @@
                     <select class="lang" tlt="typ_lang" id="main_lang" of="#dynamic"></select>
                     <span class="redirect web_only" chv="redirect" id="redirect0"></span>
                     <span id="set_img" class="set_img" chv="setting" tlt="setting"></span>
-                    <label id="main_switch" class="check_img ekam" for="main_val">
+                    <label id="main_switch" class="check_img ekam">
                         <input type="checkbox" t=kr id="main_val">
                         <span class="imgoff imgs" kr=off></span>
                         <span class="imgon imgs" kr=on></span>
@@ -80,8 +80,8 @@
             <div class="in-flex">
                 <select class="lang" id="lang1" of="#first"></select>
                 <span id="cp2" chv="cpy_btn" class="cpy_btn ekam" tlt="cpy_btn"></span>
-                <label class="check_img" for="img_inter1">
-                    <input type="checkbox" t=kr class="img_inter1" id="img_inter1">
+                <label class="check_img">
+                    <input type="checkbox" t=kr class="img_inter1">
                     <span class="imgoff2" chv="imgoff2" kr=off></span>
                     <span class="imgon2" chv="imgon2" kr=on></span>
                 </label>
@@ -95,8 +95,8 @@
                 <span id="up_arrow_img" chv="up_arrow" class="cnvrt" style="margin:0 0 0 5px;"></span>
                 <span id="down_arrow_img" chv="down_arrow" class="cnvrt" style="margin:0 -2px 0 -3.5px;"></span>
                 <span id="auto_img" chv="auto" class="ekam-right" style="margin-left:5px;"></span>
-                <label class="check_img" for="img_inter2">
-                    <input type="checkbox" t=kr class="img_inter2" id="img_inter2">
+                <label class="check_img">
+                    <input type="checkbox" t=kr class="img_inter2">
                     <span class="imgoff2" chv="imgoff2" kr=off></span>
                     <span class="imgon2" chv="imgon2" kr=on></span>
                 </label>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="defal">
                     <span tlt="lekhan_sahayika" lkh="sahayika_text" class="one"></span>
-                    <label class="check_img" for="sah_set_val">
+                    <label class="check_img">
                         <input type="checkbox" t=kr id="sah_set_val">
                         <span class="imgoff2" chv="imgoff2" kr=off></span>
                         <span class="imgon2" chv="imgon2" kr=on></span>

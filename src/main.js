@@ -39,8 +39,8 @@ class लिपिलेखिकासहायक {
                 success: (result) => {
                     this.akSharAH[lang] = result;
                     this.loaded_scripts.push(lang);
-                    LipiLekhikA.clear_all_val(true);
-                    LipiLekhikA.add_font(lang);
+                    this.k.clear_all_val(true);
+                    this.k.add_font(lang);
                     if (callback != null)
                         callback();
                     if (call != null)
@@ -1312,3 +1312,4 @@ class लिपिलेखिकालेखनसहायिका {
     };
 };
 let LipiLekhikA = new लिपिलेखिकापरिवर्तक();
+लिपि.k = LipiLekhikA;
