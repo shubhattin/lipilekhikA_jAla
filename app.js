@@ -66,10 +66,10 @@ class अनुप्रयोगः {
         this.up_lipyaH = ["Siddham", "Brahmi", "Sharada", "Modi", "Granth"];
         this.once_editded = false;
         this.auto = !false;
-        this.html_init = false;
         this.yuj = (x, y) => jQuery(y).appendTo(x);
         this.current_page = "gRham";
         this.back_loaded = false;
+        this.first_load = 0;
         this.in = (x, y) => this.k.in(x, y);
     };
     init_html() {
@@ -303,13 +303,10 @@ class अनुप्रयोगः {
                 app.translate(v, fr, to);
             });
             $("#lang1").on("change", () => {
-                if (app.auto) {
-                    function hjk() {
-                        $("#first").val(app.app.antarparivartan($("#second").val(), $("#lang2").val(), $("#lang1").val()));
-                    }
-                    app.k.load_lang($("#lang1").val(), hjk);
-                } else
-                    app.k.load_lang($("#lang1").val());
+                let func = console.log;
+                if (app.auto)
+                    func = () => $("#first").val(app.app.antarparivartan($("#second").val(), $("#lang2").val(), $("#lang1").val()));
+                app.k.load_lang($("#lang1").val(), func);
                 app.kr("add-direction", $("#first"), $("#lang1").val());
                 app.kr("convert-msg");
                 $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
@@ -330,13 +327,10 @@ class अनुप्रयोगः {
                     $("#second").val(app.app.antarparivartan(this.value, $("#lang1").val(), $("#lang2").val()));
             });
             $("#lang2").on("change", () => {
-                if (app.auto) {
-                    function jk() {
-                        $("#second").val(app.app.antarparivartan($("#first").val(), $("#lang1").val(), $("#lang2").val()));
-                    }
-                    app.k.load_lang($("#lang2").val(), jk);
-                } else
-                    app.k.load_lang($("#lang2").val());
+                let func = console.log;
+                if (app.auto)
+                    func = () => $("#second").val(app.app.antarparivartan($("#first").val(), $("#lang1").val(), $("#lang2").val()));
+                app.k.load_lang($("#lang2").val(), func);
                 app.kr("add-direction", $("#second"), $("#lang2").val());
                 app.kr("convert-msg");
                 $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
@@ -482,18 +476,23 @@ class अनुप्रयोगः {
             $("#parivartak").hide();
             $("#back_btn").show();
         }
-        if (to == "inter" && !app.once_editded) {
-            if (!("from" in s1))
-                $("#lang1").val(app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
-            if (!("to" in s1))
-                $("#lang2").val("Romanized");
-            $("#first").val($("#dynamic").val());
-            $("#second").val(app.app.antarparivartan($("#first").val(), $("#lang1").val(), $("#lang2").val()));
-            $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
-            $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
-            app.kr("inter-anuvadak");
-            $("#lang1, #lang2").trigger("change");
-        } else if (to == "gRham") {
+        if (to == "inter" && !app.once_editded)
+            app.k.load_lang($("#lang1").val(), () => {
+                app.k.load_lang($("#lang2").val(), () => {
+                    if (!("from" in s1))
+                        $("#lang1").val(app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
+                    if (!("to" in s1))
+                        $("#lang2").val("Romanized");
+                    $("#first").val($("#dynamic").val());
+                    $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
+                    $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
+                    app.kr("inter-anuvadak");
+                    for (let u of ["#lang1", "#lang2"])
+                        app.resize_one($(u));
+                    $("#second").val(app.app.antarparivartan($("#first").val(), $("#lang1").val(), $("#lang2").val()));
+                })
+            });
+        else if (to == "gRham") {
             $("#parivartak").show();
             $("#back_btn").hide();
         } else if (to == "prayog") {
@@ -549,16 +548,13 @@ class अनुप्रयोगः {
                 "alt": v
             });
         }
-        if (this.html_init)
-            this.resize();
+        this.resize();
         this.kr("p-holder");
         if (s.mode == 1) {
             let hj = (y, x) => y.removeAttribute(x)
-            for (let x of $("a")) {
-                hj(x, "href");
-                hj(x, "target");
-                hj(x, "rel");
-            }
+            for (let x of $("a"))
+                for (let g of ["href", "target", "rel"])
+                    hj(x, g);
         }
     };
     store_values(name, val, defal = false) {
@@ -730,6 +726,8 @@ setTimeout(() => {
                             t = $("#lang2").after(ht("to_set", s1["to"]));
                             t.hide();
                             app.sthAna.to = "/" + s1["to"];
+                            if (s1.page == 1)
+                                app.k.load_lang(s1.to);
                         }
                     }
                     //adding on off tooltip of img type 2
@@ -804,6 +802,7 @@ function on_loaded() {
     app.resize = () => $("select").each(function () {
         resize($(this))
     });
+    app.resize_one = resize;
     $("select").on("change", (e) => resize($(e.target)));
     if (true) {
         $("#app_lang").val(s["app_lang"]);
@@ -812,7 +811,8 @@ function on_loaded() {
         $("#xcv").val(s["main_lang"]);
         $("#lang2").val(s["to"]);
         $("#script_set").val(app.get_values("script"));
-        $("select").trigger("change");
+        $("#main_lang").trigger("change");
+        app.set_lang_text();
         if (s["page"] == 0)
             $("#gRham").show();
         else if (s["page"] == 1) {
@@ -842,7 +842,6 @@ function on_loaded() {
     $("select").each(function () {
         resize($(this))
     });
-    app.html_init = true;
     $.lipi_lekhika();
     for (let x of ["#dynamic", "#first", "#second"]) {
         let e = $(x);

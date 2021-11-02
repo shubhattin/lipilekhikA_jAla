@@ -31,12 +31,13 @@ class लिपिलेखिकासहायक {
         };
         this.is_mobile = mobile_check();
     }
-    load_lang(lang, callback = null, call = null) {
+    load_lang(lang, callback = null, call = null, block = false) {
         lang = lang == "Devanagari" ? "Sanskrit" : lang;
         if (!this.in(this.loaded_scripts, lang)) {
             return $.ajax({
                 url: this.sanchit + `/${lang}.json`,
                 dataType: "json",
+                'async': !block,
                 success: (result) => {
                     this.akSharAH[lang] = result;
                     this.loaded_scripts.push(lang);
@@ -721,17 +722,16 @@ class लिपिलेखिकापरिवर्तक {
             from = "Sanskrit";
         if (to == "Devanagari")
             to = "Sanskrit";
-        if (!लिपि.in(लिपि.loaded_scripts, from)) {
-            return `${from}'s  resourse is not loaded`;
-        } else if (!लिपि.in(लिपि.loaded_scripts, to)) {
-            return `${to}'s  resourse is not loaded`;
-        }
+        let l = लिपि;
+        for (let x of [from, to])
+            if (!l.lang_in(x))
+                l.load_lang(x, console.log, console.log, true);
         if (from != "Normal")
             val = this.anulekhana(val, from, html);
-        let c = (x) => लिपि.in(["Romanized", "Normal", "Tamil", "Telugu", "Malayalam", "Kannada"], x);
+        let c = (x) => l.in(["Romanized", "Normal", "Tamil", "Telugu", "Malayalam", "Kannada"], x);
         if (c(to) && !(c(from) || from == "Tamil-Extended")) {
-            val = लिपि.replace_all(val, "o", "O");
-            val = लिपि.replace_all(val, "e", "E");
+            val = l.replace_all(val, "o", "O");
+            val = l.replace_all(val, "e", "E");
         }
         val = this.prakriyA(val, 0, to, 0, null, html);
         return val;
@@ -947,7 +947,7 @@ class लिपिलेखिकालेखनसहायिका {
         let row1 = "",
             row2 = "";
         row1 += `<td><span></span><span></span></td>`;
-        row2 += `<td><a href="https://www.lipilekhika.com" target="_blank"><span></span></a></td>`;
+        row2 += `<td><a rel="noopener" href="https://www.lipilekhika.com" target="_blank"><span></span></a></td>`;
         row1 += `<td></td>`;
         row2 += `<td></td>`;
         for (let x = 0; x <= 60; x++) {
