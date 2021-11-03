@@ -197,9 +197,9 @@ class अनुप्रयोगः {
                 else
                     elm.attr(msg, vl);
             });
-            $("#lekhan_sahayika").click(function () {
-                $("#lekhan_sahayika").css("color", "white")
-                setTimeout(() => $("#lekhan_sahayika").css("color", ""), 250);
+            $("#sahayika_text").click(function () {
+                $(this).css("color", "white")
+                setTimeout(() => $(this).css("color", ""), 250);
             });
             $("#sah_val").check({
                 "off": false,
@@ -677,7 +677,7 @@ setTimeout(() => {
         success: (r) => {
             app.lang_texts[s["app_lang"]] = r;
             $.ajax({
-                url: app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.asp",
+                url: app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.html",
                 dataType: "text",
                 success: (result) => {
                     $("body").append(result);
@@ -688,7 +688,7 @@ setTimeout(() => {
                     app.init_html();
                     $("#main_val").check(true);
                     setTimeout(() => $.ajax({
-                        url: app.k.substring(app.k.image_loca, 0, -5) + "/img.asp",
+                        url: app.k.substring(app.k.image_loca, 0, -5) + "/img.html",
                         dataType: "text",
                         success: (r) => {
                             let e1 = app.yuj("body", r);
