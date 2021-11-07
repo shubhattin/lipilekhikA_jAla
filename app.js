@@ -94,15 +94,15 @@ class अनुप्रयोगः {
             let time = 210,
                 cl = ["#38383871", "transparent"];
             let cl_st = (x, y, v) => `@keyframes black_color${v}{from{background-color:${cl[x]}}to{background-color:${cl[y]}}}`;
-            let anm = (x, y) => $("#menu_blocker").css({
+            let anm = (x, y, z) => $("#menu_blocker").css({
                 "animation-name": `black_color${x}`,
                 "animation-duration": `${y}ms`,
-                "animation-fill-mode": "forwards"
+                "background-color": cl[z]
             });
             yuj("#menu_body", `<style>${cl_st(1,0,1)+cl_st(0,1,2)}</style>`);
             $("#menu_btn").click(() => {
                 $("#menu_container").show();
-                anm(1, time - 15);
+                anm(1, time - 15, 0);
                 $("#menu_body").animate({
                     left: "0px"
                 }, time);
@@ -113,12 +113,11 @@ class अनुप्रयोगः {
                 $("#menu_body").animate({
                     "left": "-" + $("#menu_body").css("width")
                 }, time + 7, "linear", () => $("#menu_container").hide(), time + 12);
-                if (!app.menu_btn_clicked)
-                    anm(2, time + 7);
-                else {
+                if (app.menu_btn_clicked) {
                     $("#menu_blocker").css("background-color", cl[1]);
                     app.menu_btn_clicked = false;
-                }
+                } else
+                    anm(2, time + 7, 1);
             });
             for (let p in app.lang_list)
                 yuj("#app_lang", `<option tlt="${app.lang_list[p][1]}-in" value="${p}" class="langsw">${p}</option>`)
