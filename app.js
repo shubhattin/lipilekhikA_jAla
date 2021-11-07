@@ -66,6 +66,7 @@ class अनुप्रयोगः {
         this.up_lipyaH = ["Siddham", "Brahmi", "Sharada", "Modi", "Granth"];
         this.once_editded = false;
         this.auto = !false;
+        this.menu_btn_clicked = false;
         this.yuj = (x, y) => jQuery(y).appendTo(x);
         this.current_page = "gRham";
         this.back_loaded = false;
@@ -90,45 +91,37 @@ class अनुप्रयोगः {
             });
         }
         if (true) { //menu
-            let left = 230,
-                time = 210,
-                op = 0.43,
-                cl = "#00000017";
-            yuj("#menu_body", `<style>@keyframes block_color1{from{background-color:transparent}to{background-color:${cl}}}@keyframes block_color2{to{background-color:transparent}from{background-color:${cl}}}</style>`)
-            $("#menu_body").css("left", `-${left}px`)
+            let time = 210,
+                cl = ["#38383871", "transparent"];
+            let cl_st = (x, y, v) => `@keyframes black_color${v}{from{background-color:${cl[x]}}to{background-color:${cl[y]}}}`;
+            let anm = (x, y) => $("#menu_blocker").css({
+                "animation-name": `black_color${x}`,
+                "animation-duration": `${y}ms`,
+                "animation-fill-mode": "forwards"
+            });
+            yuj("#menu_body", `<style>${cl_st(1,0,1)+cl_st(0,1,2)}</style>`);
             $("#menu_btn").click(() => {
                 $("#menu_container").show();
-                $("#menu_blocker").css({
-                    "animation-name": "block_color1",
-                    "animation-duration": `${time - 40}ms`,
-                    "background-color": cl
-                });
+                anm(1, time - 15);
                 $("#menu_body").animate({
                     left: "0px"
                 }, time);
-                $("#main_section").animate({
-                    opacity: op
-                }, time - 40);
                 app.pRShThedAnIm = "menu";
             });
             $("#menu_blocker").click(() => {
                 app.pRShThedAnIm = "";
                 $("#menu_body").animate({
-                    "left": -left + "px"
-                }, time + 12);
-                $("#main_section").animate({
-                    opacity: 1
-                }, time - 40);
-                $("#menu_blocker").css({
-                    "animation-name": "block_color2",
-                    "animation-duration": `${time - 40}ms`,
-                    "background-color": "transparent"
-                });
-                setTimeout(() => $("#menu_container").hide(), time + 12);
+                    "left": "-" + $("#menu_body").css("width")
+                }, time + 7, "linear", () => $("#menu_container").hide(), time + 12);
+                if (!app.menu_btn_clicked)
+                    anm(2, time + 7);
+                else {
+                    $("#menu_blocker").css("background-color", cl[1]);
+                    app.menu_btn_clicked = false;
+                }
             });
-            for (let p in app.lang_list) {
+            for (let p in app.lang_list)
                 yuj("#app_lang", `<option tlt="${app.lang_list[p][1]}-in" value="${p}" class="langsw">${p}</option>`)
-            };
             $("#app_lang").on("change", function () {
                 let v = $("#app_lang").val();
                 let exec = () => {
@@ -155,10 +148,12 @@ class अनुप्रयोगः {
             });
             $("#setting_menu").click(() => {
                 app.change_page("setting", false);
+                app.menu_btn_clicked = true;
                 $("#menu_blocker").trigger("click");
             });
             $("#prayog_menu").click(() => {
                 app.change_page("prayog", false);
+                app.menu_btn_clicked = true;
                 $("#menu_blocker").trigger("click");
             });
             $("#redirect1").click(() => {
@@ -499,16 +494,12 @@ class अनुप्रयोगः {
             $("#xcv").val($("#main_lang").val());
             $("#xcv").trigger("change");
             $("#prayog").show();
-            $("#base").addClass("prayog_hide");
         } else if (to == "mA_prayog") {
             $("#prayog").hide();
-            $("#base").removeClass("prayog_hide");
         } else if (to == "setting") {
             $("#setting").show();
-            $("#base").addClass("prayog_hide");
         } else if (to == "mA_setting") {
             $("#setting").hide();
-            $("#base").removeClass("prayog_hide");
         }
         if (set)
             app.current_page = to;
@@ -627,7 +618,7 @@ class अनुप्रयोगः {
                 main = app.sthAna.from + app.sthAna.to;
             else
                 main = app.sthAna.main;
-        window.open(lang + main, "_blank");
+        window.open("https://app.lipilekhika.com" + lang + main, "_blank");
     };
 };
 jQuery.fn.check = function (k = null) {
@@ -731,8 +722,8 @@ setTimeout(() => {
                         }
                     }
                     //adding on off tooltip of img type 2
-                    $(".imgon2").attr("tlt", "imgon");
-                    $(".imgoff2").attr("tlt", "imgoff");
+                    $("[chv=imgon2]").attr("tlt", "imgon");
+                    $("[chv=imgoff2]").attr("tlt", "imgoff");
                     on_loaded();
                 }
             });
@@ -794,7 +785,7 @@ function on_loaded() {
         o = app.k.replace_all(o, i, "");
         o = app.k.replace_all(o, "id=", "idk=");
         o = app.yuj("body", o);
-        o.html(`<option>${e.find("option:selected").html()}</option>`).text();
+        o.html(`<option>${e.find("option:checked").html()}</option>`).text();
         let f = o.width();
         o.remove();
         e.css("width", `${f + 7}px`);
@@ -803,7 +794,6 @@ function on_loaded() {
         resize($(this))
     });
     app.resize_one = resize;
-    $("select").on("change", (e) => resize($(e.target)));
     if (true) {
         $("#app_lang").val(s["app_lang"]);
         $("#main_lang").val(s["main_lang"]);
@@ -812,6 +802,7 @@ function on_loaded() {
         $("#lang2").val(s["to"]);
         $("#script_set").val(app.get_values("script"));
         $("#main_lang").trigger("change");
+        $("select").on("change", (e) => resize($(e.target)));
         app.set_lang_text();
         if (s["page"] == 0)
             $("#gRham").show();
@@ -842,11 +833,16 @@ function on_loaded() {
     $("select").each(function () {
         resize($(this))
     });
-    $.lipi_lekhika();
     for (let x of ["#dynamic", "#first", "#second"]) {
         let e = $(x);
         e.css("height", e.css("height"));
     }
     for (let x of ["select", ".ajay", "#dynamic", ".normal"])
         $(x).addClass("fonts");
+    // Setting Location of the Menu
+    $("#menu_container").show();
+    $("#menu_body").css("left", "-" + $("#menu_body").css("width"));
+    $("#menu_container").hide();
+
+    $.lipi_lekhika();
 };

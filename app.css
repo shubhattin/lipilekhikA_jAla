@@ -36,6 +36,15 @@ option {
   color: orangered;
   font-weight: bolder;
   font-size: 1.3em;
+  text-align: center;
+}
+
+select option:checked {
+  color: #800000;
+}
+
+#app_lang option:checked {
+  color: #aef348;
 }
 
 .langsw {
@@ -81,7 +90,7 @@ option {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #00000063;
+  background-color: #1616166f;
 }
 
 @media (max-width:560px) {
@@ -187,7 +196,7 @@ option {
 
 @keyframes parivartak {
   from {
-    background-color: whitesmoke;
+    background-color: white;
     color: brown;
     border-color: blue;
   }
@@ -201,7 +210,7 @@ option {
 
 #parivartak:hover {
   animation-name: parivartak;
-  animation-duration: 775ms;
+  animation-duration: 640ms;
   background-color: black;
   color: yellow;
   border-color: brown;
@@ -217,7 +226,7 @@ option {
   }
 }
 
-#parivartak:hover #convert_img {
+#parivartak:hover [chv=convert] {
   background-color: blue;
   animation-name: convert_img;
   animation-duration: 620ms;
@@ -231,11 +240,8 @@ option {
   margin-bottom: 2px;
 }
 
-#lbl3 {
-  background-color: inherit;
-}
 
-#convert_img {
+[chv=convert] {
   background-color: black;
 }
 
@@ -345,10 +351,6 @@ p {
   padding: 2px;
 }
 
-option {
-  text-align: center;
-}
-
 .app_lang:hover {
   background-color: white;
   color: red;
@@ -450,10 +452,6 @@ option {
 .close_minus {
   position: absolute;
   margin: -14px 1px 14px 9px;
-}
-
-.prayog_hide {
-  opacity: 0.55;
 }
 
 .bhAShAnyAH {

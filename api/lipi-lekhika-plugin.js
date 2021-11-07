@@ -1088,10 +1088,10 @@ class लिपिलेखिकालेखनसहायिका {
                 sah = true;
                 let el = o.adhar;
                 for (let x of event.value) {
-                    // if (लिपि.in(["input", "textarea"], el[0].tagName.toLowerCase())) {
-                    obj.from_click = true;
-                    obj.prakriyA(x, 1, obj.script, obj.sa_lang, el);
-                    // }
+                    if (लिपि.in(["input", "textarea"], el[0].tagName.toLowerCase())) {
+                        obj.from_click = true;
+                        obj.prakriyA(x, 1, obj.script, obj.sa_lang, el);
+                    }
                 };
             }
             if (!sah)

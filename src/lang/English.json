@@ -74,6 +74,8 @@
         "imgoff1": "Turn Lekhan Sahayika On",
         "imgon": "Turn Off",
         "imgon1": "Turn Lekhan Sahayika Off",
+        "imgonlipi": "Turn Lipi Lekhika On",
+        "imgofflipi": "Turn Lipi Lekhika Off",
         "lekhan_sahayika": "Typing Helper",
         "mukhya_lekhan": "Lipi Lekhika Type Indian Languages with Full Speed and Accuracy",
         "parivartak": "Script Converter",
@@ -84,6 +86,7 @@
         "redirect_msg": "Go To More Appropriae Version of This Page",
         "setting": "Set Lipi Lekhik's Default Options",
         "anuvadak": "Translate using Google Translate",
-        "git": "View Lipi Lekhika's Source Code on Github"
+        "git": "View Lipi Lekhika's Source Code on Github",
+        "menu": "Lipi Lekhika's App Menu"
     }
 }
