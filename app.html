@@ -11,7 +11,7 @@
                     </g>
                 </svg>
             </span>
-            <span tlt="back" class="back imgs" id="back_btn">
+            <span tlt="back" class="back imgs pointer" id="back_btn">
                 <svg viewBox="0 0 32 32">
                     <g>
                         <path
@@ -43,11 +43,11 @@
                 <span id="sa_mode" class="dvayam-right in-flex">
                     <label class="in-flex" tlt="sa_0">
                         <input type="radio" class="sa_radio" name="sa_mode" id="sa_04">
-                        <span id="sa_0" class="black-yeloow ajay"></span>
+                        <span id="sa_0" class="ajay"></span>
                     </label>
                     <label class="in-flex" tlt="sa_1">
                         <input type="radio" class="sa_radio" name="sa_mode" id="sa_14">
-                        <span id="sa_1" class="black-yellow ajay"></span>
+                        <span id="sa_1" class="ajay"></span>
                     </label>
                 </span>
                 <label class="check_img in-flex">
@@ -61,21 +61,21 @@
                 <div class="typ_lang flex">
                     <select class="lang" tlt="typ_lang" id="main_lang" of="#dynamic"></select>
                     <span class="redirect web_only" chv="redirect" id="redirect0"></span>
-                    <span id="set_img" class="set_img" chv="setting" tlt="setting"></span>
+                    <span id="set_img" class="set_img pointer" chv="setting" tlt="setting"></span>
                     <label id="main_switch" class="check_img ekam">
                         <input type="checkbox" t=kr id="main_val">
                         <span chv="imgoff" class="imgs" kr=off tlt=imgofflipi></span>
                         <span chv="imgon" class="imgs" kr=on tlt=imgonlipi></span>
                     </label>
                     <span id="cp1" class="cpy_btn ekam-right" chv="cpy_btn" tlt="cpy_btn"></span>
-                    <span class="anuvadak web_only" chv="anuvadak" tlt="anuvadak" id="anu_main"></span>
+                    <span class="anuvadak web_only pointer" chv="anuvadak" tlt="anuvadak" id="anu_main"></span>
                 </div>
             </div>
             <textarea id="dynamic" tlt="mukhya_lekhan" class="Lipi-LekhikA no_checking block"></textarea>
-            <span id="table_btn" class="in-flex prayog_btn button">
+            <div id="table_btn" class="in-flex prayog_btn button">
                 <span tlt="usage_btnm" chv="usage_btn" class="imgs btn_img"></span>
                 <span id="table" lkh="show_table"></span>
-            </span>
+            </div>
         </div>
         <div id="inter" style="display:none;">
             <div class="in-flex">
@@ -87,7 +87,7 @@
                     <span chv="imgon2" kr=on></span>
                 </label>
                 <span class="redirect inter_redirect web_only" chv="redirect"></span>
-                <span class="anuvadak web_only" chv="anuvadak" tlt="anuvadak" id="anu_main1"></span>
+                <span class="anuvadak pointer web_only" chv="anuvadak" tlt="anuvadak" id="anu_main1"></span>
             </div>
             <textarea id="first" class="normal Lipi-LekhikA block no_checking" lipi-lekhika="off"></textarea>
             <div class="in-flex">
@@ -111,12 +111,17 @@
     </div>
     <div class="vr-flex extra" id="prayog" style="display:none;">
         <div class="in-extra">
-            <select class="lang" id="xcv"></select>
+            <div class="in-flex">
+                <select class="lang" id="xcv"></select>
+                <div id="download" class="pointer" tlt="img_download" chv="img_download"></div>
+            </div>
             <div class="close_contain flex">
                 <span id="close1" tlt="close_img" chv="close_img" class="close_img close_minus"></span>
             </div>
-            <img id="image" class="block" tlt="image">
-            <p id="shoonyam" lkh="anya_nirdesh"></p>
+            <div class="vr-flex">
+                <img id="image" class="block" tlt="image">
+                <div id="shoonyam" lkh="anya_nirdesh"></div>
+            </div>
         </div>
         <div class="blocker"></div>
     </div>
@@ -187,20 +192,19 @@
 </div>
 <div id="store_html" style="display:none;">
     <div nm="app_set">
-        <span class="app_lang" style="padding-left:4px;padding-right:4px;border-radius:5px;">{0}</span>
+        <span class="app_lang" style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;">{0}</span>
     </div>
     <div nm="main_set">
-        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts" value="{0}"></span>
+        <span style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;" class="lang fonts" value="{0}"></span>
     </div>
     <div nm="script_set">
-        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang script_set fonts"
+        <span style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;" class="lang script_set fonts"
             value="{0}"></span>
     </div>
     <div nm="from_set">
-        <span style="padding-left:4px;padding-right:4px;border-radius:5px;" class="lang fonts" value="{0}"></span>
+        <span style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;" class="lang fonts" value="{0}"></span>
     </div>
     <div nm="to_set">
-        <span style="padding-left:4px;padding-right:4px;padding:2px;border-radius:5px;" class="lang fonts"
-            value="{0}"></span>
+        <span style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;" class="lang fonts" value="{0}"></span>
     </div>
 </div>

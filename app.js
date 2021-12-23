@@ -26,8 +26,7 @@ class अनुप्रयोगः {
             Punjabi: ["ਪੰਜਾਬੀ", "ਅਜਯ੍", "ਅ", "pa"],
             Nepali: ["नेपाली", "अजय्", "अ", "ne"],
             Urdu: ["اُردُو", "اجَے ", "ب", "ur"],
-            Kashmiri: ["كٲشُر", "اجَے ", "ب", 0],
-            Romanized: ["Romanized", "ajay ", "ā", 0],
+            Romanized: ["Romanized", "ajay ", "ā", "en"],
             Sinhala: ["සිංහල", "අජය්", "අ", "si"],
             "Tamil-Extended": ["தமிழ்-Extended", "அஜய்", "அ", 0],
             Sharada: ["शारदा", "𑆃𑆘𑆪𑇀", "𑆃", 0],
@@ -35,7 +34,7 @@ class अनुप्रयोगः {
             Siddham: ["सिद्धम्", "𑖀𑖕𑖧𑖿", "𑖀", 0],
             Granth: ["கிரந்த", "𑌅𑌜𑌯𑍍", "𑌅", 0],
             Brahmi: ["ब्राह्मी", "𑀅𑀚𑀬𑁆", "𑀅", 0],
-            Normal: ["Normal", "", "A", 0]
+            Normal: ["Normal", "", "A", "en"]
         };
         this.lang_list = {
             "English": [0, "en", "English"],
@@ -216,7 +215,7 @@ class अनुप्रयोगः {
                 let jkl = () => {
                     let ak = $("#main_lang").val();
                     app.app.script = ak;
-                    if (app.in(["Urdu", "Romanized", "Kashmiri"], ak))
+                    if (app.in(["Urdu", "Romanized"], ak))
                         $("#sa_mode").hide();
                     else
                         $("#sa_mode").show();
@@ -282,6 +281,10 @@ class अनुप्रयोगः {
             let t = $("#close1").click(() => app.change_page("mA_prayog", false));
             $("#prayog .blocker").click(() => t.trigger("click"));
             $("#xcv").on("change", () => app.kr("set-lang-img"));
+            $("#download").click(() => {
+                let e = $("#image");
+                app.download(e.attr("src"), `${e.attr("title").split(" - ")[0]}.png`)
+            });
         }
         if (true) { //setting
             $("#set_img").click(() => app.change_page("setting", false));
@@ -380,8 +383,6 @@ class अनुप्रयोगः {
                         continue;
                     if (y == "Normal" && app.in(["main_lang", "xcv", "script_set"], x))
                         continue;
-                    if (app.in(["lang1", "lang2"], x) && app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], y))
-                        continue;
                     j += `<option value="${y}"></option>`;
                 }
                 app.yuj("#" + x, j);
@@ -396,7 +397,7 @@ class अनुप्रयोगः {
             $("body").css("font-size", `${10 + x}px`);
             $("html").attr("lang", app.lang_list[$("#app_lang").val()][1]);
         } else if (q == "add-direction") {
-            if (app.in(["Urdu", "Kashmiri"], lang))
+            if (lang == "Urdu")
                 i.attr("dir", "rtl");
             else
                 i.attr("dir", "ltr");
@@ -474,7 +475,7 @@ class अनुप्रयोगः {
             app.k.load_lang($("#lang1").val(), () => {
                 app.k.load_lang($("#lang2").val(), () => {
                     if (!("from" in s1))
-                        $("#lang1").val(app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], app.app.script) ? "Devanagari" : app.app.script);
+                        $("#lang1").val($("#main_lang").val());
                     if (!("to" in s1))
                         $("#lang2").val("Romanized");
                     $("#first").val($("#dynamic").val());
@@ -520,7 +521,11 @@ class अनुप्रयोगः {
             tlt = app.k.format(data.others.title_convert, [t1[s1["from"]], t1[s1["to"]]]);
         $("title").html(tlt);
         for (let x in data.lekhAH) {
-            let v = app.k.replace_all(data.lekhAH[x], "\n", "<br>");
+            let v = "";
+            if (x == "anya_nirdesh")
+                v = app.k.text_to_html(data.lekhAH[x], "li");
+            else
+                v = app.k.replace_all(data.lekhAH[x], "\n", "<br>");
             if (x == "about_text")
                 v = app.k.format(v, [`<a rel="noopener" href="https://rebrand.ly/lekhika" target="_blank">`, "</a>"]);
             $(`[lkh=${x}]`).html(v);
@@ -619,6 +624,14 @@ class अनुप्रयोगः {
                 main = app.sthAna.main;
         window.open("https://app.lipilekhika.com" + lang + main, "_blank");
     };
+    download(url, nm = "") {
+        let e = $(this.yuj("#main_section", '<a></a>'));
+        e.attr({
+            href: url,
+            download: nm
+        })[0].click();
+        e.remove();
+    }
 };
 jQuery.fn.check = function (k = null) {
     if (k == null)
@@ -633,16 +646,13 @@ let storage = window.localStorage;
 let s1 = {};
 setTimeout(() => {
     if (true) { //pre settings
-        let devan_sthiti = (s) => app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], s)
         if ("main_lang" in s)
             s["from"] = s["main_lang"];
         if ("from" in s) {
             s["main_lang"] = s["from"] == "Devanagari" ? "Sanskrit" : s["from"];
-            s["from"] = devan_sthiti(s["from"]) ? "Devanagari" : s["from"];
+            s["from"] = s["from"];
         }
         s1 = JSON.parse(JSON.stringify(s));
-        if ("to" in s)
-            s["to"] = devan_sthiti(s["to"]) ? "Devanagari" : s["to"];
     }
     if (true) { //setting values
         if (!("app_lang" in s))
@@ -650,7 +660,7 @@ setTimeout(() => {
         if (!("main_lang" in s))
             s["main_lang"] = app.get_values("script");
         if (!("from" in s))
-            s["from"] = app.in(["Hindi", "Sanskrit", "Marathi", "Konkani", "Nepali"], s["main_lang"]) ? "Devanagari" : s["main_lang"];
+            s["from"] = s["main_lang"];
         if (!("to" in s))
             s["to"] = "Romanized";
         if (!("vitroTanam" in s))
@@ -817,7 +827,7 @@ function on_loaded() {
     if (true) {
         let akl = $("#main_lang").val();
         app.app.karya = true;
-        if (app.in(["Urdu", "Romanized", "Kashmiri"], akl))
+        if (app.in(["Urdu", "Romanized"], akl))
             $("#sa_mode").hide();
         app.kr("add-direction", $("#dynamic"), akl);
         app.kr("add-direction", $("#first"), $("#lang1").val());

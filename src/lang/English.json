@@ -31,7 +31,6 @@
         "Gujarati": "Gujarati",
         "Hindi": "Hindi",
         "Kannada": "Kannada",
-        "Kashmiri": "Kashmiri",
         "Konkani": "Konkani",
         "Malayalam": "Malayalam",
         "Marathi": "Marathi",
@@ -87,6 +86,7 @@
         "setting": "Set Lipi Lekhik's Default Options",
         "anuvadak": "Translate using Google Translate",
         "git": "View Lipi Lekhika's Source Code on Github",
-        "menu": "Lipi Lekhika's App Menu"
+        "menu": "Lipi Lekhika's App Menu",
+        "img_download": "Download Usage Table Image"
     }
 }
