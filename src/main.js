@@ -32,7 +32,7 @@ class लिपिलेखिकासहायक {
     load_lang(lang, callback = null, call = null, block = false) {
         lang = lang == "Devanagari" ? "Sanskrit" : lang;
         if (!(lang in this.akSharAH)) {
-            return $.ajax({
+            return $.get({
                 url: this.sanchit + `/${lang}.json`,
                 dataType: "json",
                 'async': !block,
@@ -1293,7 +1293,7 @@ class लिपिलेखिकालेखनसहायिका {
                 this.set_labels(1, this.ins_msg);
         };
         if (!(l in this.display)) {
-            $.ajax({
+            $.get({
                 url: `${लिपि.sanchit}/sahayika/${l}.json`,
                 dataType: "json",
                 success: (result) => {

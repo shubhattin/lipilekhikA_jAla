@@ -130,7 +130,7 @@ class अनुप्रयोगः {
                 };
                 if (!app.in(app.loaded_display_lng, v)) {
                     app.loaded_display_lng.push(v);
-                    $.ajax({
+                    $.get({
                         url: app.pratyaya_sanchit + `/lang/${v}.json`,
                         dataType: "json",
                         success: (result) => {
@@ -163,7 +163,7 @@ class अनुप्रयोगः {
         }
         if (true) { //about
             $("#lic").click(() => {
-                $.ajax({
+                $.get({
                     url: app.pratyaya_sanchit + `/LICENCE.txt`,
                     dataType: "text",
                     success: (result) => {
@@ -671,12 +671,12 @@ setTimeout(() => {
             s["mode"] = 0;
     }
     if (s["mode"] == 0) set_background();
-    $.ajax({
+    $.get({
         url: app.pratyaya_sanchit + `/lang/${s["app_lang"]}.json`,
         dataType: "json",
         success: (r) => {
             app.lang_texts[s["app_lang"]] = r;
-            $.ajax({
+            $.get({
                 url: app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.html",
                 dataType: "text",
                 success: (result) => {
@@ -687,7 +687,7 @@ setTimeout(() => {
                     $("#store_html").remove();
                     app.init_html();
                     $("#main_val").check(true);
-                    setTimeout(() => $.ajax({
+                    setTimeout(() => $.get({
                         url: app.k.substring(app.k.image_loca, 0, -5) + "/img.html",
                         dataType: "text",
                         success: (r) => {
