@@ -12,6 +12,7 @@ class अनुप्रयोगः {
         this.lipyaH = {
             Devanagari: ["देवनागरी", "", "अ", "auto"],
             Hindi: ["हिन्दी", "अजय्", "अ", "hi"],
+            "Purna-Devanagari": ["पूर्ण-देवनागरी", "अजय्", "अ", "auto"],
             Bengali: ["বাংলা", "অজয্", "অ", "bn"],
             Telugu: ["తెలుగు", "అజయ్", "అ", "te"],
             Tamil: ["தமிழ்", "அஜய்", "அ", "ta"],
@@ -177,7 +178,7 @@ class अनुप्रयोगः {
         if (true) { //base
             $("#sah_val").click(function () {
                 let sah = this.checked;
-                let elm = $("#dynamic"),
+                let elm = $("#main"),
                     msg = "lekhan-sahayika";
                 let val = [
                     ["off1", "on1"],
@@ -198,13 +199,9 @@ class अनुप्रयोगः {
                 "off": false,
                 "on": true
             } [app.get_values("sahayika")]);
-            $("#sa_04").click(() => {
-                app.app.sa_lang = 0;
-            });
-            $("#sa_14").click(() => {
-                app.app.sa_lang = 1;
-            });
-            $("#dynamic").attr("lekhan-sahayika", app.get_values("sahayika"));
+            $("#sa_04").click(() => $("#main").attr("lipi-mode", 0));
+            $("#sa_14").click(() => $("#main").attr("lipi-mode", 1));
+            $("#main").attr("lekhan-sahayika", app.get_values("sahayika"));
             $(".no_checking").attr({
                 spellcheck: "false",
                 autocapitalize: "none",
@@ -214,33 +211,31 @@ class अनुप्रयोगः {
             $("#main_lang").on("change", () => {
                 let jkl = () => {
                     let ak = $("#main_lang").val();
-                    app.app.script = ak;
+                    $("#main").attr("lipi-lang", ak)
                     if (app.in(["Urdu", "Romanized"], ak))
                         $("#sa_mode").hide();
                     else
                         $("#sa_mode").show();
                     app.kr("sa-val");
-                    app.app.akSharANi = app.k.akSharAH[ak];
-                    app.app.sa_lang = app.app.akSharANi["く"];
-                    app.kr("add-direction", $("#dynamic"), $("#main_lang").val());
+                    app.kr("add-direction", $("#main"), $("#main_lang").val());
                     if (!app.once_editded)
                         app.kr("add-direction", $("#first"), $("#main_lang").val());
                     let e = $("#anu_main");
                     if (s.mode == 0)
                         if (app.lipyaH[ak][3] == 0) {
                             e.hide();
-                            $("#dynamic").attr("lang", "");
+                            $("#main").attr("lang", "");
                         } else {
                             e.show();
-                            $("#dynamic").attr("lang", app.lipyaH[ak][3]);
+                            $("#main").attr("lang", app.lipyaH[ak][3]);
                         }
                 };
-                app.app.set_lang_and_state($("#main_lang").val(), jkl);
+                $.load_lekhika_lang($("#main_lang").val(), jkl);
                 app.kr("p-holder", "#main_lang");
             });
             $("#main_val").click(function () {
                 let kry = this.checked;
-                let elm = $("#dynamic"),
+                let elm = $("#main"),
                     msg = "lipi-lekhika";
                 let val = [
                     ["off", "on"],
@@ -253,7 +248,7 @@ class अनुप्रयोगः {
                     elm.attr(msg, val[1]);
             });
             $("#cp1").click(() => {
-                app.copy_text("dynamic");
+                app.copy_text("#main");
                 setTimeout(function () {
                     document.execCommand("copy");
                 }, 1);
@@ -272,7 +267,7 @@ class अनुप्रयोगः {
                     app.open_link(null, "/lang/" + $("#main_lang").val());
             });
             $("#anu_main").click(() => {
-                let v = $("#dynamic").val(),
+                let v = $("#main").val(),
                     fr = app.lipyaH[$("#main_lang").val()][3];
                 app.translate(v, fr, "en")
             });
@@ -300,10 +295,12 @@ class अनुप्रयोगः {
                 app.translate(v, fr, to);
             });
             $("#lang1").on("change", () => {
-                let func = console.log;
-                if (app.auto)
-                    func = () => $("#first").val(app.app.antarparivartan($("#second").val(), $("#lang2").val(), $("#lang1").val()));
-                app.k.load_lang($("#lang1").val(), func);
+                $.load_lekhika_lang($("#lang1").val(), () => {
+                    if (app.auto)
+                        $("#first").val(app.app.antarparivartan($("#second").val(), $("#lang2").val(), $("#lang1").val()))
+                    let n = app.k.akSharAH[$("#lang1").val()]["く"];
+                    $("#first").attr("lipi-mode", n);
+                });
                 app.kr("add-direction", $("#first"), $("#lang1").val());
                 app.kr("convert-msg");
                 $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
@@ -317,17 +314,19 @@ class अनुप्रयोगः {
                     false: "off"
                 } [this.checked]);
             });
-            $("#cp2").click(() => app.copy_text("first"));
+            $("#cp2").click(() => app.copy_text("#first"));
             $("#first").on("input", function () {
                 app.kr("edited");
                 if (app.auto)
                     $("#second").val(app.app.antarparivartan(this.value, $("#lang1").val(), $("#lang2").val()));
             });
             $("#lang2").on("change", () => {
-                let func = console.log;
-                if (app.auto)
-                    func = () => $("#second").val(app.app.antarparivartan($("#first").val(), $("#lang1").val(), $("#lang2").val()));
-                app.k.load_lang($("#lang2").val(), func);
+                $.load_lekhika_lang($("#lang2").val(), () => {
+                    if (app.auto)
+                        $("#second").val(app.app.antarparivartan($("#first").val(), $("#lang1").val(), $("#lang2").val()));
+                    let n = app.k.akSharAH[$("#lang2").val()]["く"];
+                    $("#second").attr("lipi-mode", n);
+                });
                 app.kr("add-direction", $("#second"), $("#lang2").val());
                 app.kr("convert-msg");
                 $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
@@ -335,7 +334,7 @@ class अनुप्रयोगः {
                 app.kr("inter-set");
                 app.kr("p-holder", "#lang2");
             });
-            $("#cp3").click(() => app.copy_text("second"));
+            $("#cp3").click(() => app.copy_text("#second"));
             $(".img_inter2").click(function () {
                 $("#second").attr("lipi-lekhika", {
                     true: "on",
@@ -423,7 +422,9 @@ class अनुप्रयोगः {
         } else if (q == "sa-val") {
             let src = $("#main_lang").val();
             let val = app.lipyaH[src][1];
-            $(`#sa_${app.k.akSharAH[src]["く"]}4`).check(true);
+            let sa = app.k.akSharAH[src]["く"];
+            $(`#sa_${sa}4`).check(true);
+            $("#main").attr("lipi-mode", sa);
             if (app.in(["Romanized", "Normal", "Urdu"], src))
                 val += " ";
             let extra = 0;
@@ -472,19 +473,24 @@ class अनुप्रयोगः {
             $("#back_btn").show();
         }
         if (to == "inter" && !app.once_editded)
-            app.k.load_lang($("#lang1").val(), () => {
-                app.k.load_lang($("#lang2").val(), () => {
+            $.load_lekhika_lang($("#lang1").val(), () => {
+                $.load_lekhika_lang($("#lang2").val(), () => {
                     if (!("from" in s1))
                         $("#lang1").val($("#main_lang").val());
                     if (!("to" in s1))
                         $("#lang2").val("Romanized");
-                    $("#first").val($("#dynamic").val());
+                    $("#first").val($("#main").val());
                     $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
                     $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
+                    let n = app.k.akSharAH[$("#lang1").val()]["く"];
+                    $("#first").attr("lipi-mode", n);
+                    n = app.k.akSharAH[$("#lang2").val()]["く"];
+                    $("#second").attr("lipi-mode", n);
                     app.kr("inter-anuvadak");
                     for (let u of ["#lang1", "#lang2"])
                         app.resize_one($(u));
                     $("#second").val(app.app.antarparivartan($("#first").val(), $("#lang1").val(), $("#lang2").val()));
+                    app.kr("inter-set");
                 })
             });
         else if (to == "gRham") {
@@ -505,8 +511,8 @@ class अनुप्रयोगः {
             app.current_page = to;
         app.pRShThedAnIm = to;
     };
-    copy_text(element) {
-        var copyText = $("#" + element)[0];
+    copy_text(query) {
+        var copyText = $(query)[0];
         copyText.select();
         copyText.setSelectionRange(0, copyText.value.length + 2);
         document.execCommand("copy");
@@ -727,7 +733,7 @@ setTimeout(() => {
                             t.hide();
                             app.sthAna.to = "/" + s1["to"];
                             if (s1.page == 1)
-                                app.k.load_lang(s1.to);
+                                $.load_lekhika_lang(s1.to);
                         }
                     }
                     //adding on off tooltip of img type 2
@@ -782,6 +788,7 @@ function add_icon() {
 add_icon();
 
 function on_loaded() {
+    $.lipi_lekhika(); // initializing lipi lekhika core tool
     $("#sah_set_val").check($("#sah_val").check({
         "on": true,
         "off": false
@@ -826,10 +833,9 @@ function on_loaded() {
     }
     if (true) {
         let akl = $("#main_lang").val();
-        app.app.karya = true;
         if (app.in(["Urdu", "Romanized"], akl))
             $("#sa_mode").hide();
-        app.kr("add-direction", $("#dynamic"), akl);
+        app.kr("add-direction", $("#main"), akl);
         app.kr("add-direction", $("#first"), $("#lang1").val());
         app.kr("add-direction", $("#second"), $("#lang2").val());
         app.kr("convert-msg");
@@ -842,16 +848,14 @@ function on_loaded() {
     $("select").each(function () {
         resize($(this))
     });
-    for (let x of ["#dynamic", "#first", "#second"]) {
+    for (let x of ["#main", "#first", "#second"]) {
         let e = $(x);
         e.css("height", e.css("height"));
     }
-    for (let x of ["select", ".ajay", "#dynamic", ".normal"])
+    for (let x of ["select", ".ajay", "#main", ".normal"])
         $(x).addClass("fonts");
     // Setting Location of the Menu
     $("#menu_container").show();
     $("#menu_body").css("left", "-" + $("#menu_body").css("width"));
     $("#menu_container").hide();
-
-    $.lipi_lekhika();
 };

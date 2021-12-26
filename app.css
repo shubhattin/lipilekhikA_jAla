@@ -255,7 +255,7 @@ select {
   outline: none;
 }
 
-#dynamic {
+#main {
   font-size: 1.2rem;
   border: 3px solid black;
   word-wrap: break-word;
@@ -278,7 +278,7 @@ select {
   fill: black;
 }
 
-#dynamic:focus {
+#main:focus {
   box-shadow: 0 4px 8.25px 0 #00000033, 0 6px 20px 0 #00000030;
   border-color: blue;
 }
@@ -367,6 +367,7 @@ p {
   padding-right: 4.2px;
   padding-bottom: 1px;
   padding-top: 1px;
+  transition: 300ms;
 }
 
 #sa_0:hover,
