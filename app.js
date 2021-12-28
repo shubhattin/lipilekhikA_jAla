@@ -298,7 +298,7 @@ class अनुप्रयोगः {
                 $.load_lekhika_lang($("#lang1").val(), () => {
                     if (app.auto)
                         $("#first").val(app.app.antarparivartan($("#second").val(), $("#lang2").val(), $("#lang1").val()))
-                    let n = app.k.akSharAH[$("#lang1").val()]["く"];
+                    let n = app.k.akSharAH[$("#lang1").val()].sa;
                     $("#first").attr("lipi-mode", n);
                 });
                 app.kr("add-direction", $("#first"), $("#lang1").val());
@@ -324,7 +324,7 @@ class अनुप्रयोगः {
                 $.load_lekhika_lang($("#lang2").val(), () => {
                     if (app.auto)
                         $("#second").val(app.app.antarparivartan($("#first").val(), $("#lang1").val(), $("#lang2").val()));
-                    let n = app.k.akSharAH[$("#lang2").val()]["く"];
+                    let n = app.k.akSharAH[$("#lang2").val()].sa;
                     $("#second").attr("lipi-mode", n);
                 });
                 app.kr("add-direction", $("#second"), $("#lang2").val());
@@ -422,7 +422,7 @@ class अनुप्रयोगः {
         } else if (q == "sa-val") {
             let src = $("#main_lang").val();
             let val = app.lipyaH[src][1];
-            let sa = app.k.akSharAH[src]["く"];
+            let sa = app.k.akSharAH[src].sa;
             $(`#sa_${sa}4`).check(true);
             $("#main").attr("lipi-mode", sa);
             if (app.in(["Romanized", "Normal", "Urdu"], src))
@@ -482,9 +482,9 @@ class अनुप्रयोगः {
                     $("#first").val($("#main").val());
                     $("#second").attr("lipi-lang", $("#lang2").val() != "Devanagari" ? $("#lang2").val() : "Sanskrit");
                     $("#first").attr("lipi-lang", $("#lang1").val() != "Devanagari" ? $("#lang1").val() : "Sanskrit");
-                    let n = app.k.akSharAH[$("#lang1").val()]["く"];
+                    let n = app.k.akSharAH[$("#lang1").val()].sa;
                     $("#first").attr("lipi-mode", n);
-                    n = app.k.akSharAH[$("#lang2").val()]["く"];
+                    n = app.k.akSharAH[$("#lang2").val()].sa;
                     $("#second").attr("lipi-mode", n);
                     app.kr("inter-anuvadak");
                     for (let u of ["#lang1", "#lang2"])

@@ -7,16 +7,7 @@ class लिपिलेखिकासहायक {
         this.k = null;
         this.font_loca = this.substring(this.sanchit, 0, -8) + "fonts";
         this.image_loca = this.substring(this.sanchit, 0, -12) + "img/lang";
-        let sarve = new Set();
         this.elms = [];
-        for (let lang in this.akSharAH) {
-            let x = this.akSharAH[lang];
-            for (let ak in x) {
-                if (ak == "く")
-                    continue;
-                sarve.add(ak);
-            }
-        }
         this.alph = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"];
         this.pUrNasarve = this.alph[0] + this.alph[1] + "01234567890'$.#?";
         this.re_arrange_num = (b) => b.replace(/[0-9]/g, "") + b.replace(/\D/g, "");
@@ -198,7 +189,7 @@ class लिपिलेखिकापरिवर्तक {
                 text: e,
                 typing: 1,
                 lang: lng,
-                mode: elmt.attr("lipi-mode") == undefined ? this.k.akSharAH[lng]["く"] : elmt.attr("lipi-mode"),
+                mode: elmt.attr("lipi-mode") == undefined ? this.k.akSharAH[lng].sa : elmt.attr("lipi-mode"),
                 element: elmt
             })
         } else
@@ -1112,7 +1103,7 @@ class लिपिलेखिकालेखनसहायिका {
                             text: x,
                             typing: 1,
                             lang: lng,
-                            mode: el.attr("lipi-mode") == undefined ? this.k.akSharAH[lng]["く"] : el.attr("lipi-mode"),
+                            mode: el.attr("lipi-mode") == undefined ? this.k.akSharAH[lng].sa : el.attr("lipi-mode"),
                             element: el
                         })
                     }
