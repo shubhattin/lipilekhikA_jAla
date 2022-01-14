@@ -868,7 +868,7 @@ class लिपिलेखिकापरिवर्तक {
         this.added_fonts.push(lang);
     };
 };
-jQuery.fn.lipi_lekhika_add = function (attri = false) {
+jQuery.fn.lipi_lekhika_add = (attri = false) => {
     let k = LipiLekhikA;
     let m = k.k;
     if (m.elms.indexOf(this) != -1)
@@ -887,7 +887,7 @@ jQuery.fn.lipi_lekhika_add = function (attri = false) {
         this.attr("onkeydown", "लिपि.clear(event);");
     }
 };
-jQuery.lipi_lekhika = function (time = 60) {
+jQuery.lipi_lekhika = (time = 60) => {
     let k = LipiLekhikA;
     let m = k.k;
     if (k.init)
@@ -929,10 +929,10 @@ jQuery.lipi_lekhika = function (time = 60) {
         k.init = true;
     return k;
 };
-jQuery.load_lekhika_lang = function (lang, call = console.log) {
+jQuery.load_lekhika_lang = (lang, call = null) => {
     LipiLekhikA.k.load_lang(lang, call);
 };
-jQuery.lekhika_convert = function (text, from, to) {
+jQuery.lekhika_convert = (text, from, to) => {
     return LipiLekhikA.antarparivartan(text, from, to);
 };
 class लिपिलेखिकालेखनसहायिका {

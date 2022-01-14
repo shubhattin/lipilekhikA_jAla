@@ -1,25 +1,8 @@
-<div id="body_img"></div>
 <div id="main_section" style="display:none;">
     <div id="base">
         <div class="in-flex">
-            <span id="menu_btn" class="imgs" tlt="menu">
-                <svg width="35px" height="35px" viewBox="0 0 512 512">
-                    <g>
-                        <path d="M441.13,166.52h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z" />
-                        <path d="M441.13,279.72h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z" />
-                        <path d="M441.13,392.92h-372a15,15,0,1,1,0-30h372a15,15,0,0,1,0,30Z" />
-                    </g>
-                </svg>
-            </span>
-            <span tlt="back" class="back imgs pointer" id="back_btn">
-                <svg viewBox="0 0 32 32">
-                    <g>
-                        <path
-                            d="M13,26a1,1,0,0,1-.71-.29l-9-9a1,1,0,0,1,0-1.42l9-9a1,1,0,1,1,1.42,1.42L5.41,16l8.3,8.29a1,1,0,0,1,0,1.42A1,1,0,0,1,13,26Z" />
-                        <path d="M28,17H4a1,1,0,0,1,0-2H28a1,1,0,0,1,0,2Z" />
-                    </g>
-                </svg>
-            </span>
+            <span id="menu_btn" chv="menu_btn" tlt="menu"></span>
+            <span tlt="back" chv="back_btn" class="back pointer" id="back_btn"></span>
             <span id="parivartak" tlt="parivartak" class="in-flex button">
                 <span chv="convert" class="imgs btn_img"></span>
                 <span lkh="parivartak"></span>
@@ -30,8 +13,8 @@
             <p id="about_text" lkh="about_text" class="br-above"></p>
             <p id="paricaya" class="br-above"></p>
             <span class="flex br-above">
-                <span id="lic" lkh="show_lic" class="button"></span>
-                <a rel="noopener" class='web_only dvayam-left' tlt="git"
+                <span id="licence_btn" lkh="show_lic" class="button"></span>
+                <a rel="noopener" class='web_only1 dvayam-left' tlt="git"
                     href='https://get.lipilekhika.com/androidsource' target='_blank'>
                     <span id='git' class='git' chv="git"></span>
                 </a>
@@ -60,7 +43,7 @@
             <div class="vr-flex1">
                 <div class="typ_lang flex">
                     <select class="lang" tlt="typ_lang" id="main_lang" of=#main></select>
-                    <span class="redirect web_only" chv="redirect" id="redirect0"></span>
+                    <span class="redirect web_only1" chv="redirect" id="redirect0"></span>
                     <span id="set_img" class="set_img pointer" chv="setting" tlt="setting"></span>
                     <label id="main_switch" class="check_img ekam">
                         <input type="checkbox" t=kr id="main_val">
@@ -68,7 +51,7 @@
                         <span chv="imgon" class="imgs" kr=on tlt=imgonlipi></span>
                     </label>
                     <span id="cp1" class="cpy_btn ekam-right" chv="cpy_btn" tlt="cpy_btn"></span>
-                    <span class="anuvadak web_only pointer" chv="anuvadak" tlt="anuvadak" id="anu_main"></span>
+                    <span class="anuvadak web_only1 pointer" chv="anuvadak" tlt="anuvadak" id="anu_main"></span>
                 </div>
             </div>
             <textarea id="main" tlt="mukhya_lekhan" class="Lipi-LekhikA no_checking block"></textarea>
@@ -86,8 +69,8 @@
                     <span chv="imgoff2" kr=off></span>
                     <span chv="imgon2" kr=on></span>
                 </label>
-                <span class="redirect inter_redirect web_only" chv="redirect"></span>
-                <span class="anuvadak pointer web_only" chv="anuvadak" tlt="anuvadak" id="anu_main1"></span>
+                <span class="redirect inter_redirect web_only1" chv="redirect"></span>
+                <span class="anuvadak pointer web_only1" chv="anuvadak" tlt="anuvadak" id="anu_main1"></span>
             </div>
             <textarea id="first" class="normal Lipi-LekhikA block no_checking" lipi-lekhika="off"></textarea>
             <div class="in-flex">
@@ -101,7 +84,7 @@
                     <span chv="imgoff2" kr=off></span>
                     <span chv="imgon2" kr=on></span>
                 </label>
-                <span class="redirect inter_redirect web_only" chv="redirect"></span>
+                <span class="redirect inter_redirect web_only1" chv="redirect"></span>
             </div>
             <textarea id="second" class="normal Lipi-LekhikA block no_checking" lipi-lekhika="off"></textarea>
             <div>
@@ -155,7 +138,7 @@
         <div id="lang_change_container" class="in-flex">
             <span id="lang_img" chv="lang" tlt="app_lang"></span>
             <select id="app_lang" tlt="app_lang" class="app_lang"></select>
-            <span class="redirect web_only" chv="redirect" id="redirect1"></span>
+            <span class="redirect web_only1" chv="redirect" id="redirect1"></span>
         </div>
         <div id="about_menu" class="menu_items ekam-left flex menu_borders">
             <span id="about_button" chv="about"></span>
@@ -169,7 +152,7 @@
             <span chv="usage_btn" class="imgs"></span>
             <span lkh="show_table" class="menu_msg"></span>
         </div>
-        <div id="info_links" class="web_only vr-flex">
+        <div id="info_links" class="web_only1 vr-flex">
             <a rel="noopener" target="_blank" class="menu_items menu_borders vr-flex no_under"
                 href="https://rebrand.ly/lekhika">
                 <span class="home_img imgs"></span>
@@ -186,7 +169,7 @@
                 <span lkh="source_link" class="menu_msg"></span>
             </a>
         </div>
-        <div class='web_only vr-flex' id='bhAShA_sanchit'></div>
+        <div class='web_only1 vr-flex' id='bhAShA_sanchit'></div>
     </div>
     <div id="menu_blocker"></div>
 </div>
