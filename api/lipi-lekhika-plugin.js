@@ -182,7 +182,7 @@ class लिपिलेखिकापरिवर्तक {
         }
         e = e.substring(e.length - 1);
         let elf = this.elphased_time() < 15.0;
-        if (लिपि.in(लिपि.pUrNasarve, e)) {
+        if (this.k.in(this.k.pUrNasarve, e)) {
             if (!elf)
                 this.clear_all_val(true);
             let lng = elmt.attr("lipi-lang") == undefined ? this.script : elmt.attr("lipi-lang");
@@ -198,7 +198,7 @@ class लिपिलेखिकापरिवर्तक {
     };
     elphased_time() {
         let t = this.time,
-            c = लिपि.time();
+            c = this.k.time();
         let t1 = c - t;
         this.time = c;
         return t1;
@@ -208,7 +208,8 @@ class लिपिलेखिकापरिवर्तक {
             mode = 0,
             lang = "",
             elm = null,
-            html = false;
+            html = false,
+            l = this.k;
         if (this.k.in([undefined, null, ""], args.text))
             return "";
         else
@@ -220,8 +221,8 @@ class लिपिलेखिकापरिवर्तक {
             html = true;
         if (args.element != undefined)
             elm = args.element;
-        this.akSharANi = लिपि.akSharAH[lang];
-        this.halant = !लिपि.in(["Normal", "Romanized", "Urdu"], lang) ? this.akSharANi["."][".x"][0] : "";
+        this.akSharANi = l.akSharAH[lang];
+        this.halant = !l.in(["Normal", "Romanized", "Urdu"], lang) ? this.akSharANi["."][".x"][0] : "";
         let sa = (args.mode == 0 && mode == 1) ? 0 : 1;
         this.dev_text = [];
         html = mode == 0 && html ? true : false;
@@ -235,7 +236,7 @@ class लिपिलेखिकापरिवर्तक {
                 "<br />": "\n"
             };
             for (let x in vl)
-                t = लिपि.replace_all(t, x, vl[x]);
+                t = l.replace_all(t, x, vl[x]);
             code = t;
         }
         let html_st = false,
@@ -271,21 +272,14 @@ class लिपिलेखिकापरिवर्तक {
             }
             this.dev_text = this.dev_text.join("");
             this.dev_text = this.dev_text.split("");
-            if (key == "て") {
-                k++;
-                key = code[k];
-                this.dev_text.push(key);
-                this.clear_all_val(true);
-                continue;
-            }
             if (this.next_chars == "" && key in this.akSharANi) {
                 this.varna[2] = "";
                 this.vitaraNa(key, mode, sa, elm, lang);
-            } else if (this.next_chars == "" && लिपि.is_upper(key) && लिपि.to_lower(key) in this.akSharANi) {
+            } else if (this.next_chars == "" && l.is_upper(key) && l.to_lower(key) in this.akSharANi) {
                 this.varna[2] = "";
-                this.vitaraNa(लिपि.to_lower(key), mode, sa, elm, lang);
+                this.vitaraNa(l.to_lower(key), mode, sa, elm, lang);
             } else if (this.next_chars != "") {
-                if (लिपि.in(this.next_chars, key)) {
+                if (l.in(this.next_chars, key)) {
                     if (this.d) {
                         this.halant_add_status = true;
                         this.d = false;
@@ -305,9 +299,9 @@ class लिपिलेखिकापरिवर्तक {
                     if (this.store_last_of_3 != "" && this.pUrva_lekhit[4][1] != 0 && lang == "Tamil-Extended" && key == "#")
                         this.clear_all_val(true)
                     this.vitaraNa(key, mode, sa, elm, lang);
-                } else if (लिपि.is_upper(key) && लिपि.to_lower(key) in this.akSharANi) {
+                } else if (l.is_upper(key) && l.to_lower(key) in this.akSharANi) {
                     this.clear_all_val();
-                    this.vitaraNa(लिपि.to_lower(key), mode, sa, elm, lang);
+                    this.vitaraNa(l.to_lower(key), mode, sa, elm, lang);
                 } else {
                     this.dev_text.push(key);
                     this.clear_all_val(true);
@@ -317,29 +311,32 @@ class लिपिलेखिकापरिवर्तक {
                 this.clear_all_val(true);
             }
         }
-        this.dev_text = this.dev_text.join("");
-        if (mode == 0)
-            return this.dev_text;
+        if (mode == 0) {
+            let vl = this.dev_text.join("");
+            this.dev_text = [];
+            return vl;
+        }
     };
     vitaraNa(key, mode, sa, elm, lang) {
+        let l = this.k;
         let cap_0_from_1 = [false, ["", -1]];
         let data = this.akSharANi[key[0]];
         let current = data[key];
         let prev_temp = this.pUrva_lekhit[3][1];
         let temp = this.pUrva_lekhit[4][1];
-        let varna_sthiti = लिपि.last(current);
+        let varna_sthiti = l.last(current);
         if (this.capital[0] == 2 && mode == 1) {
             if (key == this.capital[1]) {
-                if (लिपि.time() - this.capital[4] <= 4.0) {
-                    key = लिपि.to_upper(key);
+                if (l.time() - this.capital[4] <= 4.0) {
+                    key = l.to_upper(key);
                     data = this.akSharANi[key];
                     current = data[key];
                     temp = this.capital[3];
-                    varna_sthiti = लिपि.last(current);
+                    varna_sthiti = l.last(current);
                     this.back_space += 2 * this.capital[5];
-                    if (varna_sthiti == 0 && लिपि.in([1, 3], this.pUrva_lekhit[2][1]))
+                    if (varna_sthiti == 0 && l.in([1, 3], this.pUrva_lekhit[2][1]))
                         cap_0_from_1 = [true, this.pUrva_lekhit[2]];
-                    if (लिपि.in(["Brahmi", "Modi", "Sharada", "Siddham", "Granth"], lang)) {
+                    if (l.in(["Brahmi", "Modi", "Sharada", "Siddham", "Granth"], lang)) {
                         this.back_space++;
                         if (temp == 1) {
                             this.back_space++;
@@ -383,15 +380,15 @@ class लिपिलेखिकापरिवर्तक {
             } else
                 this.capital = [0, "", -1, -1, 0, 0, false];
         }
-        if (this.mAtrA_sthiti && लिपि.in([1, 2], varna_sthiti)) {
+        if (this.mAtrA_sthiti && l.in([1, 2], varna_sthiti)) {
             this.clear_all_val(true);
-            this.vitaraNa(लिपि.last(key), mode, sa, elm, lang);
+            this.vitaraNa(l.last(key), mode, sa, elm, lang);
             return;
         }
         this.varna[0] = key;
         this.varna[1] = current[0];
         if (temp == 1 || temp == 3) {
-            if (varna_sthiti == 1 && !लिपि.in(this.next_chars, लिपि.last(key)) && sa == 0) {
+            if (varna_sthiti == 1 && !l.in(this.next_chars, l.last(key)) && sa == 0) {
                 this.halant_add_status = true;
                 if (temp == 3) {
                     this.back_space++;
@@ -403,13 +400,13 @@ class लिपिलेखिकापरिवर्तक {
         if (this.capital[0] == 1 && mode == 1) {
             if (key == this.capital[1]) {
                 this.capital[0] = 2;
-                this.second_cap_time = लिपि.time();
-            } else if (लिपि.last(key) == this.capital[1] && this.akSharANi[लिपि.to_upper(this.capital[1])][लिपि.to_upper(this.capital[1])][0] != this.varna[1]) {
+                this.second_cap_time = l.time();
+            } else if (l.last(key) == this.capital[1] && this.akSharANi[l.to_upper(this.capital[1])][l.to_upper(this.capital[1])][0] != this.varna[1]) {
                 this.capital[6] = true;
                 this.capital[0] = 2;
                 this.capital[2] = varna_sthiti;
                 this.capital[5] = this.varna[1].length;
-                this.second_cap_time = लिपि.time();
+                this.second_cap_time = l.time();
             } else
                 this.capital = [0, "", -1, -1, 0, 0];
         }
@@ -418,7 +415,7 @@ class लिपिलेखिकापरिवर्तक {
                 this.mAtrA_sthiti = false;
             else if (sa == 0)
                 this.back_space++;
-            if (लिपि.in(["Modi", "Sharada"], lang)) {
+            if (l.in(["Modi", "Sharada"], lang)) {
                 this.back_space++;
             }
         }
@@ -462,7 +459,7 @@ class लिपिलेखिकापरिवर्तक {
             this.varna[1] += this.store_last_of_3;
             this.back_space++;
         }
-        if (lang == "Tamil-Extended" && लिपि.in(["#an", "#s"], key)) {
+        if (lang == "Tamil-Extended" && l.in(["#an", "#s"], key)) {
             if (key == "#an" && (
                     (
                         this.pUrva_lekhit[1][1] == 3 ||
@@ -484,20 +481,20 @@ class लिपिलेखिकापरिवर्तक {
             }
         }
         if (lang == "Tamil" && key == "R" && temp == 1 && varna_sthiti == 2) this.back_space++;
-        if (lang == "Tamil-Extended" && लिपि.in(["#ss", "#sss"], key) && this.special_ved_s)
+        if (lang == "Tamil-Extended" && l.in(["#ss", "#sss"], key) && this.special_ved_s)
             this.varna[1] += this.store_last_of_3;
         if (temp == 1 && varna_sthiti == 2 && key.length == 1 && Object.keys(data).length > 1 && sa == 0) {
-            for (let v of लिपि.last(current, -2)) {
+            for (let v of l.last(current, -2)) {
                 if (key + v in data) {
-                    if (लिपि.last(data[key + v]) == 1)
+                    if (l.last(data[key + v]) == 1)
                         this.d = true;
                     break;
                 }
             }
         }
         if (
-            (लिपि.in(lang, "Tamil") || lang == "Punjabi") &&
-            लिपि.in(["R", "LR", "LRR", "RR"], key) &&
+            (l.in(lang, "Tamil") || lang == "Punjabi") &&
+            l.in(["R", "LR", "LRR", "RR"], key) &&
             varna_sthiti == 1
         )
             varna_sthiti = 2;
@@ -505,7 +502,7 @@ class लिपिलेखिकापरिवर्तक {
             if (varna_sthiti == 1)
                 this.varna[1] += this.halant;
             else if (varna_sthiti == 3)
-                this.varna[1] = लिपि.substring(this.varna[1], 0, -1) + this.halant + लिपि.last(this.varna[1]);
+                this.varna[1] = l.substring(this.varna[1], 0, -1) + this.halant + l.last(this.varna[1]);
         }
         let val = this.likha(this.varna[1], this.varna[2], this.back_space, this.halant_add_status);
         if (mode == 0) {
@@ -515,7 +512,7 @@ class लिपिलेखिकापरिवर्तक {
         }
         else if (mode == 1) {
             let is_input = false;
-            if (लिपि.in(["input", "textarea"], elm[0].tagName.toLowerCase()))
+            if (l.in(["input", "textarea"], elm[0].tagName.toLowerCase()))
                 is_input = true;
             if (is_input) {
                 let dyn = elm.val();
@@ -558,8 +555,8 @@ class लिपिलेखिकापरिवर्तक {
                 let st = false;
                 let rs = [],
                     x1 = 0;
-                dyn = लिपि.replace_all(dyn, "&nbsp;", "<费费费费>");
-                dyn = लिपि.replace_all(dyn, "&amp;", "<费费费>");
+                dyn = l.replace_all(dyn, "&nbsp;", "<费费费费>");
+                dyn = l.replace_all(dyn, "&amp;", "<费费费>");
                 let record = true,
                     recorder = 0,
                     t_rec = 0,
@@ -600,14 +597,14 @@ class लिपिलेखिकापरिवर्तक {
                 };
                 // console.log(rs)
                 rs = rs.join("");
-                rs = लिपि.replace_all(rs, "<费费费费>", "&nbsp;");
-                rs = लिपि.replace_all(rs, "<费费费>", "&amp;");
+                rs = l.replace_all(rs, "<费费费费>", "&nbsp;");
+                rs = l.replace_all(rs, "<费费费>", "&amp;");
                 rs = rs.split("梵");
                 let pre_part = rs[0];
                 let a = 0;
                 if (this.madhye) {
                     this.madhye = false;
-                    pre_part = लिपि.substring(pre_part, 0, -1);
+                    pre_part = l.substring(pre_part, 0, -1);
                     a = 1;
                 }
                 let changing_part = val[0];
@@ -629,11 +626,11 @@ class लिपिलेखिकापरिवर्तक {
         }
         if (this.capital[0] == 3)
             this.capital = [0, "", -1, -1, 0, 0, false];
-        if (key.length == 1 && लिपि.is_lower(key) && लिपि.to_upper(key) in this.akSharANi && this.capital[0] == 0 && mode == 1) {
+        if (key.length == 1 && l.is_lower(key) && l.to_upper(key) in this.akSharANi && this.capital[0] == 0 && mode == 1) {
             let a = [0, "", -1, -1, 0, 0, false];
-            let b = [1, key, varna_sthiti, temp, लिपि.time(), this.varna[1].length, false];
+            let b = [1, key, varna_sthiti, temp, l.time(), this.varna[1].length, false];
             if ((key + key) in data) {
-                if (this.akSharANi[लिपि.to_upper(key)][लिपि.to_upper(key)][0] != data[key + key][0])
+                if (this.akSharANi[l.to_upper(key)][l.to_upper(key)][0] != data[key + key][0])
                     this.capital = b;
                 else
                     this.capital = a;
@@ -656,7 +653,7 @@ class लिपिलेखिकापरिवर्तक {
             this.sahayika.show(a);
         }
         if (varna_sthiti == 3)
-            this.store_last_of_3 = लिपि.last(this.varna[1]);
+            this.store_last_of_3 = l.last(this.varna[1]);
         if (this.next_chars == "")
             this.clear_all_val();
         this.pUrva_lekhit[0] = this.pUrva_lekhit[1];
@@ -718,15 +715,74 @@ class लिपिलेखिकापरिवर्तक {
             this.hide();
         }
     };
+    likha(b, a, bk, hal) {
+        // a = what is currently on screen
+        // b = it is that to which a has to be replaced
+        let back = 0;
+        let lekha = "";
+        if (a == "" || b == "") {
+            lekha = b;
+            back = a.length;
+        } else if (b[0] != a[0]) {
+            lekha = b;
+            back = a.length;
+        } else {
+            let x = 0;
+            for (let n in a) {
+                let v = a[n];
+                if (b.length == x)
+                    break;
+                if (b[x] != a[x])
+                    break;
+                x++;
+            }
+            lekha = b.substring(x);
+            back = a.length - x;
+        }
+        back += bk;
+        if (hal)
+            lekha = this.halant + lekha;
+        this.back_space = 0;
+        this.halant_add_status = false;
+        return [lekha, back];
+    };
+    clear_all_val(spl) {
+        this.next_chars = "";
+        this.varna = ["", "", ""];
+        this.mAtrA_sthiti = false;
+        this.last_of_3_status_for_mAtrA = false;
+        this.special_ved_s = false;
+        this.back_space = 0;
+        if (spl) {
+            this.pUrva_lekhit = [
+                ["", -1],
+                ["", -1],
+                ["", -1],
+                ["", -1],
+                ["", -1]
+            ];
+            this.store_last_of_3 = "";
+            this.capital = [0, "", -1, -1, 0, 0, false];
+            this.madhye = false;
+            this.sahayika.pUrvavarNa = [("", "", -1), ""]
+            this.hide();
+        }
+    };
     parivartak(val, from, to, html = false) {
         if (from == "Devanagari")
             from = "Sanskrit";
         if (to == "Devanagari")
             to = "Sanskrit";
+        if (from == to)
+            return val;
         var l = लिपि;
         for (let x of [from, to])
             if (!l.lang_in(x))
                 l.load_lang(x, null, true);
+        var convert = (ln, t) => this.prakriyA({
+            lang: ln,
+            text: t
+        });
         if (from == "Normal")
             return convert(to, val);
         var get_antar_kram = (ln, type = 0) => {
@@ -772,8 +828,16 @@ class लिपिलेखिकापरिवर्तक {
                 to: get_nukta(to)
             };
         var gt = (v) => { // get value for scannded text
-            if (l.in(["Normal", "Romanized", "Urdu"], to) || l.in(["Romanized", "Urdu"], from)) {
-                let vl = db[v][0];
+            if (l.in(["Romanized", "Urdu"], from) || l.in(["Normal", "Romanized", "Urdu"], to)) {
+                let vl = db[v][0],
+                    rom = [
+                        ["o", "e"],
+                        ["O", "E"]
+                    ];
+                if (to != "Urdu" && l.in(rom[0], vl))
+                    if (!l.in(["Tamil", "Telugu", "Kannada", "Malayalam", "Sinhala", "Purna-Devanagari"], from))
+                        // ^ scripts in which there is differnce of dirgha and hrasva 'e' and 'o'
+                        vl = rom[1][rom[0].indexOf(vl)]
                 if (v == hal.from)
                     vl = "";
                 return vl
@@ -793,6 +857,9 @@ class लिपिलेखिकापरिवर्तक {
                 }
                 return r;
             }
+            if (pUrva[0][0].length == 1 && l.in([1, 3], pUrva[1][2]) && pUrva[0][2] == 0) {
+                this.pUrva_lekhit[4] = [pUrva[1][1], pUrva[1][2]];
+            }
             let vl = convert(to, db[v][0]);
             if (l.in([1, 3], pUrva[0][2]))
                 if (vl[0] in db2)
@@ -800,14 +867,11 @@ class लिपिलेखिकापरिवर्तक {
                         vl = hal.to + vl;
             return vl == 1 ? "" : vl;
         };
-        var convert = (ln, t) => {
-            let vl = this.prakriyA({
-                lang: ln,
-                text: t
-            });
-            return vl;
-        };
-        var loop = (x, i, last = false) => {
+        var loop = (x, i, last = false, no_more = false) => {
+            if (!no_more && l.in(["\ud805", "\ud804"], x) &&
+                l.in(["Modi", "Sharada", "Brahmi", "Siddham", "Granth"], from))
+                // ^ also adding support for the above languages through a simple fix
+                return 1;
             let done = false,
                 sthiti = -1,
                 continued = false;
@@ -875,8 +939,10 @@ class लिपिलेखिकापरिवर्तक {
         }
         if (from == "Tamil-Extended")
             val = tamil_ex(val, "from");
-        for (let i = 0; i < val.length; i++)
-            loop(val[i], i);
+        for (let i = 0; i < val.length; i++) {
+            if (1 == loop(val[i], i))
+                loop(val[i] + val[i + 1], ++i);
+        }
         loop(" ", val.length, true);
         if (to == "Tamil-Extended")
             return tamil_ex(res, "to");
@@ -1100,7 +1166,7 @@ class लिपिलेखिकालेखनसहायिका {
             "position": "absolute",
             "left": "4px",
             "top": "10px",
-            "background-image": `url(${लिपि.sanchit}/icon.png)`,
+            "background-image": `url(${this.k.sanchit}/icon.png)`,
             "background-size": "20px 20px"
         });
         let r = [`<svg style="enable-background:new 0 0 26 26;" height="18px" width="18px" class="निच्चैरुच्चैः" viewBox="96 160 320 192"><polygon points="396.6,`,
@@ -1124,12 +1190,12 @@ class लिपिलेखिकालेखनसहायिका {
             let p = $(trgt).parents();
             let sah = p.index(o.elm[0]) != -1; // seeing if the click is inside lekhan sahayika
             p = $(trgt).parent()[0];
-            if (लिपि.in(bh.tbody, p) && !लिपि.in([bh.key1, bh.key2], event)) {
+            if (this.k.in(bh.tbody, p) && !this.k.in([bh.key1, bh.key2], event)) {
                 // above -> checking if a varna has been clicked
                 sah = true;
                 let el = o.adhar;
                 for (let x of trgt.value) {
-                    if (लिपि.in(["input", "textarea"], el[0].tagName.toLowerCase())) {
+                    if (this.k.in(["input", "textarea"], el[0].tagName.toLowerCase())) {
                         obj.from_click = true;
                         let lng = el.attr("lipi-lang") == undefined ? this.k.k.script : el.attr("lipi-lang");
                         obj.prakriyA({
@@ -1177,6 +1243,7 @@ class लिपिलेखिकालेखनसहायिका {
         if (v["elm"].attr("lekhan-sahayika") != "on")
             return;
         this.reset_capital_status = false;
+        let l = this.k;
 
         function reset_capital(k) {
             let elm = LipiLekhikA.sahayika;
@@ -1203,7 +1270,7 @@ class लिपिलेखिकालेखनसहायिका {
         if (extra_cap[0])
             this.pUrvavarNa = [
                 [
-                    लिपि.akSharAH[lang][extra_cap[1][0]][extra_cap[1][0]][0],
+                    l.akSharAH[lang][extra_cap[1][0]][extra_cap[1][0]][0],
                     "",
                     extra_cap[1][1],
                 ],
@@ -1214,7 +1281,7 @@ class लिपिलेखिकालेखनसहायिका {
         let top = cordinate.top,
             hieght = cordinate.height,
             left = cordinate.left;
-        if (लिपि.in(["input", "textarea"], v.elm[0].tagName.toLowerCase())) {
+        if (l.in(["input", "textarea"], v.elm[0].tagName.toLowerCase())) {
             this.abhisthAnam = v.elm.selectionStart + 1;
         } else {
             let caret = new VanillaCaret(v.elm[0]);
@@ -1223,15 +1290,15 @@ class लिपिलेखिकालेखनसहायिका {
         this.elm[0].style.top = `${top + hieght}px`;
         this.elm[0].style.left = `${left + 8}px`;
         let halant = ["", false];
-        if (!लिपि.in(["Urdu", "Romanized", "Normal"], lang))
-            halant = [लिपि.akSharAH[lang]["."][".x"][0], sa == 1];
+        if (!l.in(["Urdu", "Romanized", "Normal"], lang))
+            halant = [l.akSharAH[lang]["."][".x"][0], sa == 1];
         let a = new Map(),
-            b = लिपि.akSharAH[lang][key[0]],
+            b = l.akSharAH[lang][key[0]],
             count = 0;
         for (let x of next) {
             if ((key + x) in b) {
                 a.set(x, b[key + x]);
-                for (let y of लिपि.last(b[key + x], -2))
+                for (let y of l.last(b[key + x], -2))
                     if ((key + x + y) in b) {
                         a.set(x + y, b[key + x + y]);
                         count++;
@@ -1243,14 +1310,14 @@ class लिपिलेखिकालेखनसहायिका {
             cap_count = [0, 0];
         if ("cap" in v) {
             cap_count[0] = count;
-            let tmp = लिपि.to_upper(key);
-            let b1 = लिपि.akSharAH[lang][tmp];
+            let tmp = l.to_upper(key);
+            let b1 = l.akSharAH[lang][tmp];
             a.set(key + key, b1[tmp]);
-            let next = लिपि.last(a.get(key + key), -2);
+            let next = l.last(a.get(key + key), -2);
             for (let x of next)
                 if ((tmp + x) in b1) {
                     a.set(key + key + x, b1[tmp + x]);
-                    for (let y of लिपि.last(b1[tmp + x], -2))
+                    for (let y of l.last(b1[tmp + x], -2))
                         if ((tmp + x + y) in b1) {
                             a.set(key + key + x + y, b1[tmp + x + y]);
                             count++;
@@ -1259,40 +1326,40 @@ class लिपिलेखिकालेखनसहायिका {
                 }
             cap_count[1] = count + 1;
         }
-        if ((लिपि.in([1, 3], लिपि.last(this.pUrvavarNa[0])) || matra) && लिपि.last(b[key]) == 0) {
+        if ((l.in([1, 3], l.last(this.pUrvavarNa[0])) || matra) && l.last(b[key]) == 0) {
             let k12 = this.pUrvavarNa[0][0] + b[key][1];
-            if (लिपि.last(this.pUrvavarNa[0]) == 3 && key != "a")
-                k12 = लिपि.substring(k12, 0, -2) + लिपि.last(k12) + लिपि.last(k12, -2);
-            else if (लिपि.last(this.pUrvavarNa[0]) == 3 && key == "a")
-                k12 = लिपि.last(k12, 0, -1) + लिपि.last(k12);
+            if (l.last(this.pUrvavarNa[0]) == 3 && key != "a")
+                k12 = l.substring(k12, 0, -2) + l.last(k12) + l.last(k12, -2);
+            else if (l.last(this.pUrvavarNa[0]) == 3 && key == "a")
+                k12 = l.last(k12, 0, -1) + l.last(k12);
             this.set_labels(4, this.pUrvavarNa[1] + key);
             this.set_labels(5, k12);
         } else {
             this.set_labels(4, key);
-            let l12 = b[key][0] + (लिपि.in([1, 3], लिपि.last(b[key])) ? halant[0] : "");
-            if (लिपि.last(b[key]) == 3)
-                l12 = लिपि.substring(l12, 0, -2) + लिपि.last(l12) + लिपि.last(l12, -2);
+            let l12 = b[key][0] + (l.in([1, 3], l.last(b[key])) ? halant[0] : "");
+            if (l.last(b[key]) == 3)
+                l12 = l.substring(l12, 0, -2) + l.last(l12) + l.last(l12, -2);
             this.set_labels(5, l12);
         }
         let extra = 0;
         for (let x of a.keys()) {
-            if (matra && लिपि.in([1, 2], लिपि.last(a.get(x)))) {
+            if (matra && l.in([1, 2], l.last(a.get(x)))) {
                 extra++;
                 continue;
             }
             this.set_labels(2, x, c);
             let k = a.get(x)[0];
-            if (लिपि.last(a.get(x)) == 0 && लिपि.in([1, 3], लिपि.last(this.pUrvavarNa[0])))
+            if (l.last(a.get(x)) == 0 && l.in([1, 3], l.last(this.pUrvavarNa[0])))
                 k = a.get(x)[1];
-            if (लिपि.in([1, 3], लिपि.last(a.get(x))) && halant[1]) {
+            if (l.in([1, 3], l.last(a.get(x))) && halant[1]) {
                 k += halant[0];
-                if (लिपि.last(a.get(x)) == 3)
-                    k = लिपि.substring(k, 0, -2) + लिपि.last(k) + लिपि.last(k, -2);
+                if (l.last(a.get(x)) == 3)
+                    k = l.substring(k, 0, -2) + l.last(k) + l.last(k, -2);
             }
-            if ((लिपि.in([1, 3], लिपि.last(this.pUrvavarNa[0])) || matra) && लिपि.last(a.get(x)) == 0) {
+            if ((l.in([1, 3], l.last(this.pUrvavarNa[0])) || matra) && l.last(a.get(x)) == 0) {
                 k = this.pUrvavarNa[0][0] + k;
-                if (लिपि.last(this.pUrvavarNa[0]) == 3)
-                    k = लिपि.substring(k, 0, -2) + लिपि.last(k) + लिपि.last(k, -2);
+                if (l.last(this.pUrvavarNa[0]) == 3)
+                    k = l.substring(k, 0, -2) + l.last(k) + l.last(k, -2);
             }
             this.set_labels(3, k, c);
             c++;
@@ -1353,7 +1420,7 @@ class लिपिलेखिकालेखनसहायिका {
     set_lang(l) {
         let gh = () => {
             let data = this.display[l];
-            this.ins_msg = लिपि.text_to_html(data["ins"], "li");
+            this.ins_msg = this.k.text_to_html(data["ins"], "li");
             this.elm.attr("title", data["title"]);
             for (let x in this.objs)
                 this.objs[x].attr("title", data[x]);
@@ -1362,7 +1429,7 @@ class लिपिलेखिकालेखनसहायिका {
         };
         if (!(l in this.display)) {
             $.get({
-                url: `${लिपि.sanchit}/sahayika/${l}.json`,
+                url: `${this.k.sanchit}/sahayika/${l}.json`,
                 dataType: "json",
                 success: (result) => {
                     this.display[l] = result;

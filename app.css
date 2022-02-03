@@ -251,6 +251,7 @@ select option:checked {
   overflow: scroll;
   margin-bottom: 4px;
   outline: none;
+  transition: 0.2s;
 }
 
 select {
@@ -272,6 +273,7 @@ select {
   outline: none;
   border-radius: 7px;
   padding: 4px;
+  transition: 0.2s;
 }
 
 
