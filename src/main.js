@@ -717,138 +717,170 @@ class लिपिलेखिकापरिवर्तक {
             this.hide();
         }
     };
-    antarparivartan(val, from, to, html = false) {
+    parivartak(val, from, to, html = false) {
         if (from == "Devanagari")
             from = "Sanskrit";
         if (to == "Devanagari")
             to = "Sanskrit";
-        let l = लिपि;
+        var l = लिपि;
         for (let x of [from, to])
             if (!l.lang_in(x))
                 l.load_lang(x, null, true);
-        if (from != "Normal")
-            val = this.anulekhana(val, from, html);
-        let c = (x) => l.in(["Romanized", "Normal", "Tamil", "Telugu", "Malayalam", "Kannada", "Purna-Devanagari"], x);
-        if (c(to) && !(c(from) || from == "Tamil-Extended")) {
-            val = l.replace_all(val, "o", "O");
-            val = l.replace_all(val, "e", "E");
+        if (from == "Normal")
+            return convert(to, val);
+        var get_antar_kram = (ln, type = 0) => {
+            let or = ["antar", "kram"];
+            if (!(or[type] in l.akSharAH[ln]))
+                return [{},
+                    []
+                ][type];
+            return l.akSharAH[ln][or[type]];
         }
-        val = this.prakriyA({
-            text: val,
-            lang: to,
-            html: html
-        })
-        return val;
-    };
-    anulekhana(val, lang, html) {
-        let res = [];
-        let ak = लिपि.akSharAH[lang];
-        let lang_data = ak.antar;
-        val = val.split("");
-        let pUrva_lekhit = ["", "", ""];
-        let pUrva = ["", "", ""];
-        let html_st = false,
-            ignore_st = false,
-            sp = 0,
-            sp1 = 0;
-        for (let x = 0; x < val.length; x++) {
-            let s = val[x];
-            if (s == "<" && html) {
-                html_st = true;
-                res.push(s);
-                continue;
+        var pUrva = [
+                ["", "", -1],
+                ["", "", -1],
+                ["", "", -1],
+                ["", "", -1],
+                ["", "", -1],
+            ], //5 purva varna references
+            db = get_antar_kram(from),
+            db2 = get_antar_kram(to),
+            ord1 = get_antar_kram(from, 1),
+            ord2 = get_antar_kram(to, 1),
+            res = "",
+            next = "",
+            chr = "";
+
+        var get_hal = (d) => {
+            if (!l.in(["Normal", "Romanized", "Urdu"], d))
+                return l.akSharAH[d]["."][".x"][0];
+            return "";
+        };
+        var get_nukta = (d) => {
+            if ("." in l.akSharAH[d])
+                if (".z" in l.akSharAH[d]["."])
+                    return l.akSharAH[d]["."][".z"][0];
+            return "";
+        };
+        var hal = {
+                from: get_hal(from),
+                to: get_hal(to)
+            },
+            nukta = {
+                from: get_nukta(from),
+                to: get_nukta(to)
+            };
+        var gt = (v) => { // get value for scannded text
+            if (l.in(["Normal", "Romanized", "Urdu"], to) || l.in(["Romanized", "Urdu"], from)) {
+                let vl = db[v][0];
+                if (v == hal.from)
+                    vl = "";
+                return vl
             }
-            if (html_st) {
-                if (s == ">")
-                    html_st = false;
-                res.push(s);
-                continue;
+            if (l.in(ord1, v)) {
+                let vl = ord2[ord1.indexOf(v)];
+                return vl == 1 ? "" : vl;
+            } else if (db[v].length == 4) {
+                let vl = ord2[db[v][3]];
+                return vl == 1 ? "" : vl;
             }
-            if (s == "#" && val[x + 1] == "^" && !ignore_st) {
-                ignore_st = true;
-                x++;
-                res.push("#^");
-                continue;
-            }
-            if (ignore_st) {
-                if (s == "^" && val[x + 1] == "#") {
-                    ignore_st = false;
-                    x++;
-                    res.push("^#");
-                    continue;
+            if (l.in([0.1, 2.1, 1.1], db[v][1])) {
+                let r = "";
+                for (let x of v) {
+                    let vl = ord2[ord1.indexOf(x)]
+                    r += vl == 1 ? "" : vl;
                 }
-                res.push(s);
-                continue;
+                return r;
             }
-            if (लिपि.in(["\ud805", "\ud804"], s) && लिपि.in(["Modi", "Sharada", "Brahmi", "Siddham", "Granth"], lang)) {
-                x++;
-                s += val[x];
-            }
-            if ((pUrva_lekhit[1] + s) in lang_data && लिपि.last(lang_data[pUrva_lekhit[1] + s]) == "百" && pUrva_lekhit[1] != "")
-                res[res.length - 2] = lang_data[pUrva_lekhit[1] + s];
-            else if ((pUrva_lekhit[0] + s) in lang_data && लिपि.last(lang_data[pUrva_lekhit[0] + s]) == "百" && pUrva_lekhit[0] != "")
-                res[res.length - 3] = lang_data[pUrva_lekhit[0] + s];
-            else if ((pUrva_lekhit[1] + pUrva_lekhit[2] + s) in lang_data && (pUrva_lekhit[2] != "" && pUrva_lekhit[1] != "")) {
-                res[res.length - 1] = lang_data[pUrva_lekhit[1] + pUrva_lekhit[2] + s];
-                if (sp != 2)
-                    res[res.length - 2] = "";
-            } else if ((pUrva_lekhit[2] + s) in lang_data && pUrva_lekhit[2] != "") {
-                res[res.length - 1] = lang_data[pUrva_lekhit[2] + s];
-                sp++;
-            } else if (s in lang_data && s != " ")
-                res.push(lang_data[s]);
-            else {
-                if ((लिपि.in(["Romanized", "Normal"], lang) && लिपि.in(लिपि.pUrNasarve.split(""), s)) || लिपि.in("\n; .'#$1234567890".split(""), s))
-                    res.push(s);
-                else
-                    res.push("て" + s);
-            }
-            if (!लिपि.is_null(ak[pUrva[1].substring(0, 1)]) && pUrva[2] == "基" && (लिपि.last(pUrva[1]) == "百" || लिपि.last(pUrva[1]) == "此")) {
-                let v1 = ak[pUrva[1].substring(0, 1)];
-                if (!लिपि.is_null(v1[लिपि.substring(pUrva[1], 0, -1) + लिपि.substring(लिपि.last(res), 0, -1)])) {
-                    let v2 = v1[लिपि.substring(pUrva[1], 0, -1) + लिपि.substring(लिपि.last(res), 0, -1)][0];
-                    if (v2 != (pUrva_lekhit[1] + s)) {
-                        res[res.length - 1] = ";" + res[res.length - 1];
-                    }
-                }
-            } else if (!लिपि.is_null(ak[pUrva[2].substring(0, 1)])) {
-                let v1 = ak[pUrva[2].substring(0, 1)];
-                if (!लिपि.is_null(v1[pUrva[2] + लिपि.last(res)])) {
-                    let v2 = v1[pUrva[2] + लिपि.last(res)][0];
-                    if (v2 != (pUrva_lekhit[2] + s)) {
-                        res[res.length - 1] = ";" + res[res.length - 1];
-                    }
+            let vl = convert(to, db[v][0]);
+            if (l.in([1, 3], pUrva[0][2]))
+                if (vl[0] in db2)
+                    if (l.in([1, 3], Math.floor(db2[v][1])))
+                        vl = hal.to + vl;
+            return vl == 1 ? "" : vl;
+        };
+        var convert = (ln, t) => {
+            let vl = this.prakriyA({
+                lang: ln,
+                text: t
+            });
+            return vl;
+        };
+        var loop = (x, i, last = false) => {
+            let done = false,
+                sthiti = -1,
+                continued = false;
+            if (next != "") {
+                if (!last && l.in(next, x)) {
+                    chr += x;
+                    let dt = db[chr];
+                    next = dt.length == 2 ? "" : dt[2];
+                    sthiti = Math.floor(dt[1]);
+                    done = true;
+                    continued = true;
+                } else {
+                    let vl = gt(chr);
+                    pUrva[0][1] = vl;
+                    res += vl;
                 }
             }
-            if (sp != 0) {
-                sp++;
-                if (sp == 3)
-                    sp = 0;
+            if (!last && !done && x in db) {
+                let dt = db[x];
+                next = dt.length == 2 ? "" : dt[2]
+                sthiti = Math.floor(dt[1]);
+                chr = x;
+                done = true;
             }
-            pUrva_lekhit[0] = pUrva_lekhit[1];
-            pUrva_lekhit[1] = pUrva_lekhit[2];
-            pUrva_lekhit[2] = s;
-            pUrva[0] = pUrva[1];
-            pUrva[1] = pUrva[2];
-            pUrva[2] = लिपि.last(res);
+            if (!continued && l.in(["Normal", "Romanized", "Urdu"], to) &&
+                (pUrva[0][2] == 1 && sthiti != 0 && !l.in([hal.from, nukta.from], x))) // condition if vyanjana is not follwed by svar matra
+                res += "a";
+            if (!last && !done) {
+                res += x;
+                chr = "";
+                next = "";
+                sthiti = -1
+            }
+            if (!last) {
+                if (!continued)
+                    for (let j = 4; j >= 1; j--)
+                        pUrva[j] = pUrva[j - 1];
+                pUrva[0] = ["", "", -1];
+                pUrva[0][0] = chr;
+                pUrva[0][2] = sthiti;
+            }
+            if (done && next == "") {
+                let vl = gt(chr);
+                pUrva[0][1] = vl;
+                res += vl;
+            }
+        };
+        let tamil_ex = (v1, type) => { // Preparing text for conversions in Tamil Extended
+            let x1 = type == "to" ? 2 : 1,
+                x2 = type == "to" ? 1 : 2,
+                d1 = type == "to" ? db2 : db;
+            let r1 = v1.split("");
+            for (let x = 0; x < v1.length - 2; x++) {
+                if (v1[x] in d1 && v1[x + 1] in d1 && v1[x + 2] in d1) {
+                    let k = [v1[x], v1[x + 1], v1[x + 2]];
+                    let k1 = [d1[k[0]], d1[k[1]], d1[k[2]]];
+                    if ((k1[x1][1] == 0 || k[x1] == hal[type]) && k1[0].length > 2)
+                        if (l.in(k1[0][2], k[x2]) && l.in("²³⁴₂₃₄", k[x2])) {
+                            r1[x + 1] = k[2];
+                            r1[x + 2] = k[1];
+                        }
+                }
+            }
+            return r1.join("");
         }
-        res = res.join("");
-        if (!लिपि.in(["Normal", "Romanized", "Urdu"], lang)) {
-            for (let x of ["A", "i", "I", "u", "U", "e", "E", "o", "O", "ai", "au", "R", "RR", "LR", "LRR"]) {
-                res = लिपि.replace_all(res, "此." + x, x);
-                res = लिपि.replace_all(res, "百." + x, x);
-            }
-            pUrva = ["", "", "", ""];
-            for (let u of ["a", "i", "u"]) {
-                res = लिपि.replace_all(res, "此" + u, "a;" + u);
-                res = लिपि.replace_all(res, "百" + u, "a;" + u);
-            }
-            res = लिपि.replace_all(res, "此基", "");
-            res = लिपि.replace_all(res, "百基", "");
-            res = लिपि.replace_all(res, "此", "a");
-            res = लिपि.replace_all(res, "百", "a");
-            res = लिपि.replace_all(res, "基", ".x");
-        }
+        if (from == "Tamil-Extended")
+            val = tamil_ex(val, "from");
+        for (let i = 0; i < val.length; i++)
+            loop(val[i], i);
+        loop(" ", val.length, true);
+        if (to == "Tamil-Extended")
+            return tamil_ex(res, "to");
+        else if (l.in([from, to], "Urdu") || l.in([from, to], "Romanized"))
+            return convert(to, res);
         return res;
     };
     add_font(lang) {
@@ -932,7 +964,7 @@ jQuery.load_lekhika_lang = (lang, call = null) => {
     LipiLekhikA.k.load_lang(lang, call);
 };
 jQuery.lekhika_convert = (text, from, to) => {
-    return LipiLekhikA.antarparivartan(text, from, to);
+    return LipiLekhikA.parivartak(text, from, to);
 };
 class लिपिलेखिकालेखनसहायिका {
     constructor() {
