@@ -196,6 +196,7 @@ select option:checked {
   background-color: white;
   border-radius: 5px;
   transition: 640ms;
+  box-shadow: 0px 0px 9px -6px #00000033, 0 6px 20px 0 #00000030
 }
 
 #parivartak:hover {
@@ -333,13 +334,13 @@ p {
   background-color: black;
   margin-left: 3px;
   padding: 1px;
+  padding-bottom: 2px;
 }
 
 .app_lang:hover {
   background-color: white;
   color: red;
   border-color: blue;
-  font-weight: bolder;
 }
 
 .sa_radio {
@@ -810,6 +811,11 @@ p {
   font-size: 1.5em;
 }
 
+.fixed_select {
+  padding: 1.5px 5.5px 1px 5.5px;
+  border-radius: 5px;
+}
+
 .script_set {
   margin-right: 10px;
   margin-left: -12px;
@@ -828,4 +834,19 @@ p {
 
 .trans {
   transition: 500ms;
+}
+
+[lkh=issue] {
+  color: red;
+  margin-left: 4px;
+}
+
+#issue {
+  background-color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1.2em;
+  border: 2px ridge green;
+  padding: 0 4px 0 2px;
+  box-shadow: 0px 0px 9px 2px #00000033, 0 6px 20px 0 #00000030
 }

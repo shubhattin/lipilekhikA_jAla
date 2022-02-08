@@ -64,7 +64,7 @@ class अनुप्रयोगः {
         };
         this.pRShThedAnIm = "";
         this.up_lipyaH = ["Siddham", "Brahmi", "Sharada", "Modi", "Granth"];
-        this.once_editded = false;
+        this.once_edited = false;
         this.auto = !false;
         this.menu_btn_clicked = false;
         this.yuj = (x, y) => jQuery(y).appendTo(x);
@@ -212,7 +212,7 @@ class अनुप्रयोगः {
                     $("#sa_mode").show();
                 app.kr("sa-val");
                 app.kr("add-direction", $("#main"), $("#main_lang").val());
-                if (!app.once_editded)
+                if (!app.once_edited)
                     app.kr("add-direction", $("#first"), $("#main_lang").val());
                 let e = $("#anu_main");
                 if (s.mode == 0)
@@ -405,7 +405,7 @@ class अनुप्रयोगः {
                 else
                     e.show();
         } else if (q == "edited")
-            this.once_editded = true;
+            this.once_edited = true;
         else if (q == "convert-msg") {
             let db = app.lang_texts[$("#app_lang").val()];
             let data = db.scripts;
@@ -476,7 +476,7 @@ class अनुप्रयोगः {
             $("#parivartak").hide();
             $("#back_btn").show();
         }
-        if (to == "inter" && !app.once_editded)
+        if (to == "inter" && !app.once_edited)
             $.load_lekhika_lang($("#lang1").val(), () => {
                 $.load_lekhika_lang($("#lang2").val(), () => {
                     if (!("from" in s1))
@@ -739,6 +739,18 @@ setTimeout(async () => {
             if (s1.page == 1)
                 $.load_lekhika_lang(s1.to);
         }
+        $(".fixed_select").on("dblclick", function () {
+            let e = $(this).attr("ukku");
+            if (e == undefined)
+                return;
+            e = e.split(",");
+            for (let x of e) {
+                $(x).show();
+                $(x + "+span.fixed_select").remove();
+            }
+            for (let x of $(this).attr("adi").split(","))
+                delete s1[x];
+        })
     }
     //adding on off tooltip of img type 2
     $("[chv=imgon2]").attr("tlt", "imgon");
@@ -846,7 +858,7 @@ function on_loaded() {
         let e = $(x);
         e.css("height", e.css("height"));
     }
-    for (let x of ["select", ".ajay", "#main", ".normal"])
+    for (let x of ["select:not(#app_lang)", ".ajay", "#main", ".normal"])
         $(x).addClass("fonts");
     // Setting Location of the Menu
     $("#menu_container").show();

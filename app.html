@@ -12,9 +12,13 @@
         <div id="parri" style="display:none;">
             <p id="about_text" lkh="about_text" class="br-above"></p>
             <p id="paricaya" class="br-above"></p>
-            <span class="flex br-above">
+            <div class="flex br-above web_only1">
+                <a id="issue" class="flex dvayam-right no_under" rel="noopener" href="https://github.com/shubhattin/lipilekhikA_jAla_saMskaraNa_srotam/issues" target="_blank">
+                    <span chv="git"></span>
+                    <span lkh="issue"></span>
+                </a>
                 <span id="licence_btn" lkh="show_lic" class="button"></span>
-            </span>
+            </div>
             <p id="licence" class="br-above" style="display:none"></p>
         </div>
         <div id="gRham" style="display:none;">
@@ -171,18 +175,18 @@
 </div>
 <div id="store_html" style="display:none;">
     <div nm="app_set">
-        <span class="app_lang" style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;">{0}</span>
+        <span class="app_lang fixed_select" adi="app_lang" ukku="#app_lang">{0}</span>
     </div>
     <div nm="main_set">
-        <span style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;" class="lang fonts" value="{0}"></span>
-    </div>
-    <div nm="script_set">
-        <span style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;" class="lang script_set fonts" value="{0}"></span>
+        <span class="lang fonts fixed_select" adi="main_lang,from" ukku="#main_lang,#lang1" value="{0}"></span>
     </div>
     <div nm="from_set">
-        <span style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;" class="lang fonts" value="{0}"></span>
+        <span class="lang fonts fixed_select" adi="from,main_lang" ukku="#lang1,#main_lang" value="{0}"></span>
     </div>
     <div nm="to_set">
-        <span style="padding:1.5px 5.5px 1px 5.5px;border-radius:5px;" class="lang fonts" value="{0}"></span>
+        <span class="lang fonts" adi="to" ukku="#lang2" value="{0}"></span>
+    </div>
+    <div nm="script_set">
+        <span class="lang fixed_select script_set fonts" value="{0}"></span>
     </div>
 </div>
