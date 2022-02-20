@@ -642,7 +642,7 @@ class अनुप्रयोगः {
         e.attr({
             href: url,
             download: nm
-        })[0].on("click", );
+        })[0].click();
         e.remove();
     }
 };

@@ -3,8 +3,8 @@ class लिपिलेखिकासहायक {
         this.akSharAH = {
             "Normal": {}
         };
-        this.sanchit = "src/dattAMsh";
         this.k = null;
+        this.sanchit = "src/dattAMsh";
         this.font_loca = this.substring(this.sanchit, 0, -8) + "fonts";
         this.image_loca = this.substring(this.sanchit, 0, -12) + "img/lang";
         this.alph = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"];
@@ -38,6 +38,7 @@ class लिपिलेखिकासहायक {
             });
         } else if (callback != null)
             callback();
+        return new Promise(r => r("loaded"));
     } in (val, in_what) {
         return val.indexOf(in_what) != -1;
     }
