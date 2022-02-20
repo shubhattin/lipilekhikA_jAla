@@ -653,7 +653,7 @@ jQuery.fn.check = function (k = null) {
         this[0].checked = k;
         return k;
     }
-}; 
+};
 var app = new अनुप्रयोगः();
 var storage = window.localStorage;
 var s1 = {};
