@@ -42,6 +42,13 @@ class लिपिलेखिकासहायक {
     } in (val, in_what) {
         return val.indexOf(in_what) != -1;
     }
+    reg_index(str, pattern) {
+        let ind = [],
+            mtch = 0;
+        while ((mtch = pattern.exec(str)) != null)
+            ind.push([mtch.index, mtch[0]]);
+        return ind;
+    }
     is_lower(b) {
         return this.in(this.alph[1], b);
     }
@@ -707,9 +714,6 @@ class लिपिलेखिकापरिवर्तक {
         if (from == to)
             return val;
         var l = लिपि;
-        for (let x of [from, to])
-            if (!l.lang_in(x))
-                l.load_lang(x, null, true);
         var convert = (ln, t) => this.prakriyA({
             lang: ln,
             text: t
@@ -738,7 +742,6 @@ class लिपिलेखिकापरिवर्तक {
             res = "",
             next = "",
             chr = "";
-
         var get_hal = (d) => {
             if (!l.in(["Normal", "Romanized", "Urdu"], d))
                 return l.akSharAH[d]["."][".x"][0];
@@ -827,7 +830,7 @@ class लिपिलेखिकापरिवर्तक {
                 done = true;
             }
             if (!continued && l.in(["Normal", "Romanized", "Urdu"], to) &&
-                (pUrva[0][2] == 1 && sthiti != 0 && !l.in([hal.from, nukta.from], x))) // condition if vyanjana is not follwed by svar matra
+                (l.in([1, 3], pUrva[0][2]) && sthiti != 0 && !l.in([hal.from, nukta.from], x))) // condition if vyanjana is not follwed by svar matra
                 res += "a";
             if (!last && !done) {
                 res += x;
@@ -850,19 +853,26 @@ class लिपिलेखिकापरिवर्तक {
             }
         };
         let tamil_ex = (v1, type) => { // Preparing text for conversions in Tamil Extended
-            let x1 = type == "to" ? 2 : 1,
+            let mtr = "ாிீுூெேைொோௌ்", // all matras and halant
+                num = ["²³⁴", "₂₃₄"],
+                sva_anu = "॒॑᳚᳛", // anudAttA followed by three svarits
+                tml = "கசஜடதப",
+                reg = type == "to" ? `[${tml}][${num[0]}][${mtr}]` : `[${tml}][${mtr}][${num[0]+num[1]}]`,
                 x2 = type == "to" ? 1 : 2,
                 d1 = type == "to" ? db2 : db;
             let r1 = v1.split("");
-            for (let x = 0; x < v1.length - 2; x++) {
-                if (v1[x] in d1 && v1[x + 1] in d1 && v1[x + 2] in d1) {
-                    let k = [v1[x], v1[x + 1], v1[x + 2]];
-                    let k1 = [d1[k[0]], d1[k[1]], d1[k[2]]];
-                    if ((k1[x1][1] == 0 || k[x1] == hal[type]) && k1[0].length > 2)
-                        if (l.in(k1[0][2], k[x2]) && l.in("²³⁴₂₃₄", k[x2])) {
-                            r1[x + 1] = k[2];
-                            r1[x + 2] = k[1];
-                        }
+            for (let x1 of l.reg_index(v1, new RegExp(reg, "gm"))) {
+                let x = x1[0],
+                    k = d1[r1[x]];
+                if (k.length > 2) {
+                    let k1 = r1[x + x2];
+                    if (l.in(num[1], k1)) // if subscript nums then make it superscript
+                        k1 = (r1[x + x2] = num[0][num[1].indexOf(k1)]);
+                    if (l.in(k[2], k1)) {
+                        let tmp = r1[x + 1];
+                        r1[x + 1] = r1[x + 2];
+                        r1[x + 2] = tmp;
+                    }
                 }
             }
             return r1.join("");
@@ -1000,7 +1010,7 @@ class लिपिलेखिकालेखनसहायिका {
         let row1 = "",
             row2 = "";
         row1 += `<td><span></span><span></span></td>`;
-        row2 += `<td><a rel="noopener" href="https://www.lipilekhika.com" target="_blank"><span></span></a></td>`;
+        row2 += `<td><a rel="noopener" href="https://rebrand.ly/lekhika" target="_blank"><span></span></a></td>`;
         row1 += `<td></td>`;
         row2 += `<td></td>`;
         for (let x = 0; x <= 60; x++) {
