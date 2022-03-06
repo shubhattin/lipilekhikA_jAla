@@ -58,11 +58,9 @@ class लिपिलेखिकासहायक {
     is_upper(b) {
         return this.in(this.alph[0], b);
     }
-
     to_lower(b) {
         return this.alph[1][this.alph[0].indexOf(b)];
     }
-
     to_upper(b) {
         return this.alph[0][this.alph[1].indexOf(b)];
     }

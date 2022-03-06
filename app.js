@@ -50,6 +50,7 @@ class अनुप्रयोगः {
             "ଓଡ଼ିଆ": [0.5, "or", "Odia"],
             "ਪੰਜਾਬੀ": [0.5, "pa", "Punjabi"],
             "മലയാളം": [-0.3, "ml", "Malayalam"],
+            "অসমীয়া": [0.5, "as", "Assamese"],
             "اُردُو": [2.3, "ur", "Urdu"]
         };
         this.translate = (v, f, t) => {
@@ -125,10 +126,7 @@ class अनुप्रयोगः {
                 let v = $("#app_lang").val();
                 if (!app.in(app.loaded_display_lng, v)) {
                     app.loaded_display_lng.push(v);
-                    app.lang_texts[v] = await $.get({
-                        url: app.pratyaya_sanchit + `/display/${v}.json`,
-                        dataType: "json"
-                    });
+                    app.lang_texts[v] = await (await fetch(app.pratyaya_sanchit + `/display/${v}.json`)).json();
                 }
                 app.store_values("app_lang", $("#app_lang").val());
                 app.set_lang_text();
@@ -158,15 +156,11 @@ class अनुप्रयोगः {
         }
         if (true) { //about
             $("#licence_btn").on("click", () => {
-                $.get({
-                    url: app.pratyaya_sanchit + `/LICENCE.txt`,
-                    dataType: "text",
-                    success: (result) => {
-                        $("#licence").html(app.k.replace_all(result, "\n", "<br>"));
-                        $("#licence").show();
-                        $("#licence_btn").hide();
-                    }
-                });
+                fetch(app.pratyaya_sanchit + '/LICENCE.txt').then(r => r.text()).then(v => {
+                    $("#licence").html(app.k.replace_all(v, "\n", "<br>"));
+                    $("#licence").show();
+                    $("#licence_btn").hide();
+                })
             });
         }
         if (true) { //base
@@ -528,7 +522,8 @@ class अनुप्रयोगः {
         if ("main_lang" in s1)
             tlt = app.k.format(data.others.title_lang, [t1[s1["main_lang"]]]);
         if ("to" in s1)
-            tlt = app.k.format(data.others.title_convert, [t1[s1["from"]], t1[s1["to"]]]);
+            tlt = app.k.format(data.others.title_convert,
+                [app.k.format(data.others.from, [t1[s1["from"]], t1[s1["to"]]])]);
         $("title").html(tlt);
         for (let x in data.lekhAH) {
             let v = "";
@@ -684,14 +679,8 @@ setTimeout(async () => {
             s["mode"] = 0;
     }
     let v = s["app_lang"];
-    app.lang_texts[v] = await $.get({
-        url: app.pratyaya_sanchit + `/display/${s["app_lang"]}.json`,
-        dataType: "json"
-    });
-    $("body").append(await $.get({
-        url: app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.html",
-        dataType: "text"
-    }));
+    app.lang_texts[v] = await (await fetch(app.pratyaya_sanchit + `/display/${s["app_lang"]}.json`)).json();
+    $("body").append(await (await fetch(app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.html")).text());
     let e = $("#store_html").children();
     for (let x of e)
         app.anya_html[$(x).attr("nm")] = x.innerHTML;
@@ -699,10 +688,7 @@ setTimeout(async () => {
     app.init_html();
     $("#main_val").check(true);
     setTimeout(async () => { // waiting for main process to complete
-        let e1 = app.yuj("body", await $.get({
-            url: app.k.substring(app.k.image_loca, 0, -5) + "/img.html",
-            dataType: "text"
-        }));
+        let e1 = app.yuj("body", await (await fetch(app.k.substring(app.k.image_loca, 0, -5) + "/img.html")).text());
         let e = $(e1).children();
         for (let x of e) {
             let elm = $(`[chv=${$(x).attr("nm")}]`).html($(x).html());;

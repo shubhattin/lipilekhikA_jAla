@@ -2,7 +2,7 @@
     "lekhAH": {
         "about_msg": "About Lipi Lekhika",
         "about_text": "This is an Application to type Indian Languages with full speed and accuracy.\nFor more information refer to {0}App's Website{1}.",
-        "anya_nirdesh": "Use .q (zero width joiner) to seperate consonant clusters.\nFor eg:- k.xyA(or kyA)➠क्या , k.x.qyA➠क्‌या\n .x is halant here, See Table Above.",
+        "anya_nirdesh": "Use .q (zero width joiner) to seperate consonant clusters.",
         "download_link": "Download Lipi Lekhika",
         "home_link": "Go to Lipi Lekhika's Home Page",
         "no_prvrtn": "Write Between #^ and ^# to prevent Transliteration.",
@@ -20,8 +20,9 @@
         "convert": "Convert",
         "page_title": "Lipi Lekhika Online | Type Indian Languages with full Speed and Accuracy",
         "title_lang": "{0} - Lipi Lekhika | Type {0} with full Speed and Accuracy",
-        "title_convert": "{0} to {1} - Lipi Parivartak | Lipi Lekhika | Convert Indian Scripts",
-        "place": "Type Text Here {0}"
+        "title_convert": "{0} - Lipi Parivartak | Lipi Lekhika | Convert Indian Scripts",
+        "place": "Type Text Here {0}",
+        "from": "{0} to {1}"
     },
     "scripts": {
         "Assamese": "Assamese",
@@ -70,6 +71,7 @@
         "ur-in": "Urdu",
         "pa-in": "Punjabi",
         "or-in": "Odia",
+        "as-in": "Assamese",
         "hide_warning": "Hide Warning",
         "image": "Usage Table",
         "imgoff": "Turn On",
