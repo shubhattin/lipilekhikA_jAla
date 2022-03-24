@@ -4,4 +4,4 @@
 
 **Lipi Lekhika Web Site For More Information** : [lipilekhika.com](https://rebrand.ly/lekhika)
 
-**Run this Online** : [Here](https://combinatronics.com/shubhattin/lipilekhikA_jAla/main/index.html)
+**Run this Online** : [Here](https://shubhattin.github.io/lipilekhikA_jAla/)
