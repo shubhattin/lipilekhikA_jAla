@@ -126,7 +126,7 @@ class अनुप्रयोगः {
                 let v = $("#app_lang").val();
                 if (!app.in(app.loaded_display_lng, v)) {
                     app.loaded_display_lng.push(v);
-                    app.lang_texts[v] = await (await fetch(app.pratyaya_sanchit + `/display/${v}.json`)).json();
+                    app.lang_texts[v] = await $.get(app.pratyaya_sanchit + `/display/${v}.json`);
                 }
                 app.store_values("app_lang", $("#app_lang").val());
                 app.set_lang_text();
@@ -156,7 +156,7 @@ class अनुप्रयोगः {
         }
         if (true) { //about
             $("#licence_btn").on("click", () => {
-                fetch(app.pratyaya_sanchit + '/LICENCE.txt').then(r => r.text()).then(v => {
+                $.get(app.pratyaya_sanchit + '/LICENCE.txt').then(v => {
                     $("#licence").html(app.k.replace_all(v, "\n", "<br>"));
                     $("#licence").show();
                     $("#licence_btn").hide();
@@ -630,7 +630,7 @@ class अनुप्रयोगः {
                 main = app.sthAna.from + app.sthAna.to;
             else
                 main = app.sthAna.main;
-        window.open("https://app.lipilekhika.com" + lang + main, "_blank");
+        window.open(window.location.origin + lang + main, "_blank");
     };
     download(url, nm = "") {
         let e = $(this.yuj("#main_section", '<a></a>'));
@@ -679,8 +679,8 @@ setTimeout(async () => {
             s["mode"] = 0;
     }
     let v = s["app_lang"];
-    app.lang_texts[v] = await (await fetch(app.pratyaya_sanchit + `/display/${s["app_lang"]}.json`)).json();
-    $("body").append(await (await fetch(app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.html")).text());
+    app.lang_texts[v] = await $.get(app.pratyaya_sanchit + `/display/${s["app_lang"]}.json`);
+    $("body").append(await $.get(app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.html"));
     let e = $("#store_html").children();
     for (let x of e)
         app.anya_html[$(x).attr("nm")] = x.innerHTML;
@@ -688,7 +688,7 @@ setTimeout(async () => {
     app.init_html();
     $("#main_val").check(true);
     setTimeout(async () => { // waiting for main process to complete
-        let e1 = app.yuj("body", await (await fetch(app.k.substring(app.k.image_loca, 0, -5) + "/img.html")).text());
+        let e1 = app.yuj("body", await $.get(app.k.substring(app.k.image_loca, 0, -5) + "/img.html"));
         let e = $(e1).children();
         for (let x of e) {
             let elm = $(`[chv=${$(x).attr("nm")}]`).html($(x).html());;
