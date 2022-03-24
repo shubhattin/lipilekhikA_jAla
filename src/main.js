@@ -11,7 +11,6 @@ class लिपिलेखिकासहायक {
         this.lang_in = (x) => x in this.akSharAH;
         this.elms = [];
         this.pUrNasarve = this.alph[0] + this.alph[1] + "01234567890'$.#?";
-        this.git = (x) =>;
         this.init = false;
         let mobile_check = function () {
             let nav = (x) => navigator.userAgent.match(x),
