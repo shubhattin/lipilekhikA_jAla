@@ -71,7 +71,7 @@ class अनुप्रयोगः {
         this.yuj = (x, y) => $l(x).append(y);
         this.current_page = "gRham";
         this.back_loaded = false;
-        this.first_load = 0;
+        this.first_load = true;
         this.in = (x, y) => this.k.in(x, y);
     };
     init_html() {
@@ -484,7 +484,7 @@ class अनुप्रयोगः {
                     $l("#second").attr("lipi-mode", n);
                     app.kr("inter-anuvadak");
                     for (let u of ["#lang1", "#lang2"])
-                        app.resize_one($l(u)[0]);
+                        $l(u).resize();
                     $l("#second").val(app.app.parivartak($l("#first").val(), $l("#lang1").val(), $l("#lang2").val()));
                     app.kr("inter-set");
                 })
@@ -549,7 +549,10 @@ class अनुप्रयोगः {
                 "alt": v
             });
         }
-        this.resize();
+        if (!this.first_load)
+            $l("select").resize();
+        else
+            this.first_load = false;
         this.kr("p-holder");
         if (s.mode == 1) {
             let hj = (y, x) => y.removeAttribute(x)
@@ -669,7 +672,9 @@ setTimeout(async () => {
     }
     let v = s["app_lang"];
     app.lang_texts[v] = await $lf.get(app.pratyaya_sanchit + `/display/${s["app_lang"]}.json`);
-    $l("body").append(await $lf.get(app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.html"));
+    $l("body").append(await $lf.get(app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.asp", {
+        dataType: "text"
+    }));
     let e = $l("#store_html").children();
     for (let x of e)
         app.anya_html[x.getAttribute("nm")] = x.innerHTML;
@@ -677,7 +682,9 @@ setTimeout(async () => {
     app.init_html();
     $l("#main_val").check(true);
     setTimeout(async () => { // waiting for main process to complete
-        let el = $lf.make(await $lf.get(app.k.substring(app.k.image_loca, 0, -5) + "/img.html"));
+        let el = $lf.make(await $lf.get(app.k.substring(app.k.image_loca, 0, -5) + "/img.asp", {
+            dataType: "text"
+        }));
         for (let x of el.children) {
             let elm = $l(`[chv=${x.getAttribute("nm")}]`).html(x.innerHTML);
             elm.addClass("imgs");
@@ -774,24 +781,6 @@ function on_loaded() {
         "off": false
     } [app.get_values("sahayika")]));
 
-    function resize(e) {
-        let e1 = $l(e)
-        e.style.width = "";
-        let i = e.innerHTML,
-            o = e.outerHTML;
-        o = app.k.replace_all(o, i, "");
-        o = app.k.replace_all(o, "id=", "idk=");
-        o = $l("body").appendHTML(o);
-        o.html(`<option>${e1.find("option:checked").html()}</option>`);
-        let f = o.width();
-        o.remove();
-        e.style.width = `${f + 7}px`;
-    };
-    app.resize = () => {
-        for (let x of $l("select").elm)
-            resize(x);
-    };
-    app.resize_one = resize;
     if (true) {
         $l("#app_lang").val(s["app_lang"]);
         $l("#main_lang").val(s["main_lang"]);
@@ -800,7 +789,6 @@ function on_loaded() {
         $l("#lang2").val(s["to"]);
         $l("#script_set").val(app.get_values("script"));
         $l("#main_lang").trigger("change");
-        $l("select").on("change", (e) => resize(e.target));
         app.set_lang_text();
         if (s["page"] == 0)
             $l("#gRham").show();
@@ -827,7 +815,6 @@ function on_loaded() {
     if (s.vitroTanam)
         window.onbeforeunload = () => "Do you really want to Leave";
     $l("#lipi_icon").remove();
-    app.resize();
     for (let x of ["#main", "#first", "#second"]) {
         let e = $l(x);
         e.css("height", e.css("height"));
@@ -838,4 +825,5 @@ function on_loaded() {
     $l("#menu_container").show();
     $l("#menu_body").css("left", "-" + $l("#menu_body").css("width"));
     $l("#menu_container").hide();
+    $l("select").resize().on("change", (e) => $l(e.target).resize());
 };
