@@ -24,9 +24,7 @@ class लिपिलेखिकासहायक {
     load_lang(lang, callback = null, block = false) {
         lang = lang == "Devanagari" ? "Sanskrit" : lang;
         if (!(lang in this.akSharAH)) {
-            return $.get({
-                url: this.sanchit + `/${lang}.json`,
-                dataType: "json",
+            return $lf.get(this.sanchit + `/${lang}.json`, {
                 'async': !block,
                 success: (result) => {
                     this.akSharAH[lang] = result;
@@ -225,58 +223,29 @@ class लिपिलेखिकापरिवर्तक {
             elm = args.element;
         this.akSharANi = l.akSharAH[lang];
         this.halant = !l.in(["Normal", "Romanized", "Urdu"], lang) ? this.akSharANi["."][".x"][0] : "";
-        let sa = (args.mode == 0 && mode == 1) ? 0 : 1;
+        let sa = (args.mode == 0 && mode == 1) ? 0 : 1,
+            ignr = [];
         this.dev_text = [];
         html = mode == 0 && html ? true : false;
-        if (html) {
-            let t = code;
-            let vl = {
-                "&nbsp;": " ",
-                "&amp;": "",
-                "<br>": "\n",
-                "<br/>": "\n",
-                "<br />": "\n"
-            };
-            for (let x in vl)
-                t = l.replace_all(t, x, vl[x]);
-            code = t;
-        }
+        if (html)
+            for (let x of l.reg_index(code, new RegExp("(?<=<).+?(?=>)", "g")))
+                ignr.push([x[0] - 1, x[1].length + 2]);
         var add_dev = (v) => {
             if (mode == 0)
                 for (let x of v)
                     this.dev_text.push(x);
         }
-        let html_st = false,
-            ignore_st = false;
         for (let k = 0; k < code.length; k++) {
+            if (html)
+                if (ignr.length > 0)
+                    if (k == ignr[0][0]) {
+                        let ln = ignr[0][1];
+                        ignr.splice(0, 1);
+                        add_dev(code.substring(k, k + ln));
+                        k += ln - 1;
+                        continue;
+                    }
             let key = code[k];
-            if (key == "<" && html) {
-                html_st = true;
-                add_dev(key)
-                this.clear_all_val(true);
-                continue;
-            }
-            if (html_st) {
-                if (key == ">")
-                    html_st = false;
-                add_dev(key)
-                continue;
-            }
-            if (key == "#" && code[k + 1] == "^" && mode == 0 && !ignore_st) {
-                ignore_st = true;
-                this.clear_all_val(true);
-                k++;
-                continue;
-            }
-            if (ignore_st) {
-                if (key == "^" && code[k + 1] == "#") {
-                    ignore_st = false;
-                    k++;
-                    continue;
-                }
-                add_dev(key)
-                continue;
-            }
             if (this.next_chars == "" && key in this.akSharANi) {
                 this.varna[2] = "";
                 this.vitaraNa(key, mode, sa, elm, lang);
@@ -547,7 +516,7 @@ class लिपिलेखिकापरिवर्तक {
                     this.from_click = false;
             } else {
                 let dyn = elm.html();
-                let caret = new VanillaCaret(elm[0]);
+                let caret = new $lf.CaretPos(elm[0]);
                 let current_cursor_pos = caret.getPos() + 1;
                 if (this.from_click)
                     current_cursor_pos = this.sahayika.abhisthAnam;
@@ -713,9 +682,14 @@ class लिपिलेखिकापरिवर्तक {
             return val;
         var l = लिपि;
         var convert = (ln, t) => this.prakriyA({
-            lang: ln,
-            text: t
-        });
+                lang: ln,
+                text: t,
+                "html": html
+            }),
+            ignr = [];
+        if (html)
+            for (let x of l.reg_index(val, new RegExp("(?<=<).+?(?=>)", "g")))
+                ignr.push([x[0] - 1, x[1].length + 2]);
         if (from == "Normal")
             return convert(to, val);
         var get_antar_kram = (ln, type = 0) => {
@@ -802,10 +776,18 @@ class लिपिलेखिकापरिवर्तक {
             if (!no_more && l.in(["\ud805", "\ud804"], x) &&
                 l.in(["Modi", "Sharada", "Brahmi", "Siddham", "Granth"], from))
                 // ^ also adding support for the above languages through a simple fix
-                return 1;
+                return -2;
             let done = false,
                 sthiti = -1,
                 continued = false;
+            if (html)
+                if (ignr.length > 0)
+                    if (i == ignr[0][0]) {
+                        let ln = ignr[0][1];
+                        ignr.splice(0, 1);
+                        res += val.substring(i, i + ln);
+                        return ln;
+                    }
             if (next != "") {
                 if (!last && l.in(next, x)) {
                     chr += x;
@@ -878,8 +860,11 @@ class लिपिलेखिकापरिवर्तक {
         if (from == "Tamil-Extended")
             val = tamil_ex(val, "from");
         for (let i = 0; i < val.length; i++) {
-            if (1 == loop(val[i], i))
+            let t = loop(val[i], i)
+            if (t == -2)
                 loop(val[i] + val[i + 1], ++i);
+            else if (t >= 2)
+                i += t - 1; // ignoring html elements
         }
         loop(" ", val.length, true);
         if (to == "Tamil-Extended")
@@ -904,36 +889,17 @@ class लिपिलेखिकापरिवर्तक {
         this.added_fonts.push(lang);
     };
 };
-jQuery.fn.lipi_lekhika_add = (attri = false) => {
-    let k = LipiLekhikA;
-    let m = k.k;
-    if (m.elms.indexOf(this) != -1)
-        return;
-    else
-        m.elms.push(this);
-    if (!attri) {
-        this.on("input", function () {
-            k.mukhya($(this), event);
-        });
-        this.on("keydown", function () {
-            m.clear(event);
-        });
-    } else {
-        this.attr("oninput", "LipiLekhikA.mukhya($(this), event);");
-        this.attr("onkeydown", "लिपि.clear(event);");
-    }
-};
-jQuery.lipi_lekhika = (time = 60) => {
+var lipi_lekhika = function (time = 60) {
     let k = LipiLekhikA;
     let m = k.k;
     if (k.init)
         return;
 
     function mn() {
-        let elm = $(".Lipi-LekhikA");
+        let elm = $l(".Lipi-LekhikA");
         let lek = ["lipi-lekhika", "lekhan-sahayika"];
-        for (let x of elm) {
-            let e = $(x);
+        for (let x of elm.elm) {
+            let e = $l(x);
             if (m.elms.indexOf(x) != -1)
                 continue;
             else
@@ -944,17 +910,17 @@ jQuery.lipi_lekhika = (time = 60) => {
                 if (e.attr(v) == undefined)
                     e.attr(v, "on");
             }
-            elm.attr({
+            e.attr({
                 autocapitalize: "none",
                 autocomplete: "off",
                 autocorrect: "off"
             });
-            x.oninput = function () {
-                k.mukhya($(x), event);
-            };
-            x.onkeydown = function () {
-                m.clear(event);
-            };
+            e.on("input", function (ev) {
+                k.mukhya($l(x), ev);
+            });
+            e.on("keydown", function (ev) {
+                m.clear(ev);
+            });
             if (e.attr("lipi-lang") != undefined)
                 m.load_lang(e.attr("lipi-lang"))
         };
@@ -965,10 +931,10 @@ jQuery.lipi_lekhika = (time = 60) => {
         k.init = true;
     return k;
 };
-jQuery.load_lekhika_lang = (lang, call = null) => {
+var load_lekhika_lang = (lang, call = null) => {
     LipiLekhikA.k.load_lang(lang, call);
 };
-jQuery.lekhika_convert = (text, from, to) => {
+var lekhika_convert = (text, from, to) => {
     return LipiLekhikA.parivartak(text, from, to);
 };
 class लिपिलेखिकालेखनसहायिका {
@@ -986,46 +952,45 @@ class लिपिलेखिकालेखनसहायिका {
         // this.set_lang("English");
         this.abhisthAnam = 0;
         let id = "లిಪಿலேഖിକା";
-        this.elm = jQuery(`<div id="${id}"></div>`).appendTo("body");
-        setTimeout(() => {
-            if (true) { // making and adding html
-                let row1 = "",
-                    row2 = "",
-                    r = [`<svg style="enable-background:new 0 0 26 26;" height="18px" width="18px" class="निच्चैरुच्चैः" viewBox="96 160 320 192"><polygon points="396.6,`,
-                        `160 416,180.7 256,352 96,180.7 115.3,160 256,310.5`, `352 416,331.3 256,160 96,331.3 115.3,352 256,201.5`, `"/></svg>`
-                    ],
-                    img = ["", ""];
-                img[0] = `${r[0] + r[1] + r[3]}`;
-                img[1] = `${r[0] + r[2] + r[3]}`;
-                row1 += `<td><span>${img[0]}</span><span>${img[1]}</span></td>`;
-                row2 += `<td><a rel="noopener" href="https://rebrand.ly/lekhika" target="_blank"></a></td>`;
+        this.elm = $l("body").appendHTML(`<div id="${id}" style="display:none;"></div>`);
+        if (true) { // making and adding html
+            let row1 = "",
+                row2 = "",
+                r = [`<svg style="enable-background:new 0 0 26 26;" height="18px" width="18px" viewBox="96 160 320 192"><polygon points="396.6,`,
+                    `160 416,180.7 256,352 96,180.7 115.3,160 256,310.5`, `352 416,331.3 256,160 96,331.3 115.3,352 256,201.5`, `"/></svg>`
+                ],
+                img = ["", ""];
+            img[0] = `${r[0] + r[1] + r[3]}`;
+            img[1] = `${r[0] + r[2] + r[3]}`;
+            row1 += `<td><span>${img[0]}</span><span>${img[1]}</span></td>`;
+            row2 += `<td><a rel="noopener" href="https://rebrand.ly/lekhika" target="_blank"></a></td>`;
+            row1 += `<td></td>`;
+            row2 += `<td></td>`;
+            for (let x = 0; x <= 60; x++) {
                 row1 += `<td></td>`;
                 row2 += `<td></td>`;
-                for (let x = 0; x <= 60; x++) {
-                    row1 += `<td></td>`;
-                    row2 += `<td></td>`;
-                };
-                let table = `<table><tbody><tr>${row2}</tr><tr>${row1}</tr></tbody></table><div></div>`;
-                this.elm.append(table);
-            }
+            };
+            let table = `<table><tbody><tr>${row2}</tr><tr>${row1}</tr></tbody></table><div></div>`;
+            this.elm.append(table);
+        }
+        setTimeout(() => {
             if (true) { // adding css
                 let css = [];
 
-                function to_css(pre, dct) {
+                function add_css(pre, dct) {
                     let v = pre + " {\n";
                     for (let x in dct)
                         v += `${x}:${dct[x]};\n`
                     css.push(v + "}");
                     return pre;
                 }
-                to_css(`#${id}`, {
+                add_css(`#${id}`, {
                     "position": "absolute",
                     "background-color": "white",
                     "padding": "2.5px",
                     "border": "2px solid black",
                     "border-radius": "4.5px",
                     "font-weight": "bold",
-                    "display": "none",
                     "z-index": "1000000",
                     "user-select": "none",
                     "cursor": "default",
@@ -1036,106 +1001,100 @@ class लिपिलेखिकालेखनसहायिका {
                     "font-family": `"Nirmala UI","Calibri"`,
                     "transition-duration": "500ms"
                 });
-                to_css(`#${id} table`, {
+                add_css(`#${id} table`, {
                     "display": "block",
                     "max-width": "210px",
+                    "overflow-x": "scroll"
                 });
-                to_css(`#${id} table::-webkit-scrollbar`, {
-                    height: "5px"
-                })
-                to_css(`#${id} table::-webkit-scrollbar-track`, {
-                    background: "#f1f1f1",
-                    "border-radius": "10px"
-                })
-                to_css(`#${id} table::-webkit-scrollbar-thumb`, {
-                    background: "#888",
-                    "border-radius": "10px",
-                    height: "2px"
-                })
-                to_css(`#${id} table::-webkit-scrollbar-thumb:hover`, {
-                    background: "#555"
-                })
+                if (!this.k.is_mobile) {
+                    add_css(`#${id} table::-webkit-scrollbar`, {
+                        height: "4.5px"
+                    })
+                    add_css(`#${id} table::-webkit-scrollbar-track`, {
+                        "background-color": "#e9e9e9",
+                        "border-radius": "10px"
+                    })
+                    add_css(`#${id} table::-webkit-scrollbar-thumb`, {
+                        "background-color": "#5353ff",
+                        "border-radius": "10px"
+                    })
+                    add_css(`#${id} table::-webkit-scrollbar-thumb:hover`, {
+                        "background-color": "blue"
+                    })
+                }
                 let e = `#${id} table tbody tr`; // defined for reusing
-                to_css(`${e}:nth-child(2) td:nth-child(1) span`, {
-                    "cursor": "pointer",
-                    "display": "none",
-                    "position": "absolute",
-                    "top": "37px",
-                    "left": "5px"
+                add_css(`${e}:nth-child(2) td:nth-child(1) span`, {
+                    cursor: "pointer",
+                    display: "none",
+                    position: "absolute",
+                    top: "37px",
+                    left: "5px"
                 }); // adding css for up down pointers
-                to_css(`${e} td`, {
+                add_css(`${e} td`, {
                     "font-size": "18px",
                     "text-align": "center",
-                    "cursor": "grab"
+                    cursor: "grab"
                 });
-                to_css(`${e}:nth-child(1) td`, {
-                    "color": "black"
+                add_css(`${e}:nth-child(1) td`, {
+                    color: "black"
                 });
-                to_css(`${e}:nth-child(2) td`, {
-                    "color": "green"
+                add_css(`${e}:nth-child(2) td`, {
+                    color: "green"
                 });
-                let t = to_css(`${e} td:not(:nth-child(1)):not(:nth-child(2))`, {
-                    "display": "none"
+                let t = add_css(`${e} td:not(:nth-child(1)):not(:nth-child(2))`, {
+                    display: "none"
                 });
-                to_css(`${t}:hover`, {
-                    "color": "blue"
+                add_css(`${t}:hover`, {
+                    color: "blue"
                 }); // adding hover effect
-                to_css(`${e} td:nth-child(2)`, {
+                add_css(`${e} td:nth-child(2)`, {
                     "text-align": "center",
                     "padding-left": "22.5px",
                     "padding-right": "5.6px",
-                    "cursor": "default"
+                    cursor: "default"
                 });
-                to_css(`${e}:nth-child(1) td:nth-child(2)`, {
-                    "color": "brown",
+                add_css(`${e}:nth-child(1) td:nth-child(2)`, {
+                    color: "brown",
                     "font-size": "19.5px"
                 });
-                to_css(`${e}:nth-child(2) td:nth-child(2)`, {
-                    "color": "red",
+                add_css(`${e}:nth-child(2) td:nth-child(2)`, {
+                    color: "red",
                     "font-size": "15px"
                 });
-                to_css(`${e}:nth-child(1) td:nth-child(1) a`, {
-                    "display": "inline-block",
-                    "height": "20px",
-                    "width": "20px",
-                    "position": "absolute",
-                    "left": "4px",
-                    "top": "10px",
+                add_css(`${e}:nth-child(1) td:nth-child(1) a`, {
+                    display: "inline-block",
+                    height: "20px",
+                    width: "20px",
+                    position: "absolute",
+                    left: "4px",
+                    top: "10px",
                     "background-image": `url(${this.k.sanchit}/icon.png)`,
                     "background-size": "20px 20px"
                 })
-                to_css(`#${id} table+div`, {
+                add_css(`#${id} table+div`, {
                     "font-size": "10.5px",
-                    "color": "purple",
+                    color: "purple",
                     "max-width": "fit-content",
                     "min-width": "200px",
-                    "display": "none"
+                    display: "none"
                 })
                 this.elm.append(`<style>${css.join("\n")}</style>`);
             }
             if (true) { // storing elements and adding handlers
                 this.bhaNDAra_index = ["sahayika", "pashchAta", "akShara", "key1", "key2"];
+                let e = `#${id} table tbody tr`; // defined for reusing
                 this.bhaNDAra = {
-                    "sahayika": this.elm.children()[1],
-                    "key1": 0,
-                    "key2": 0,
-                    "pashchAta": 0,
-                    "akShara": 0,
-                    "tbody": [0, 0],
-                    "table": $(`#${id} table`)
+                    "sahayika": $l(`#${id} table+div`)[0],
+                    "key1": $l(`${e}:nth-child(1) td:nth-child(2)`)[0],
+                    "key2": $l(`${e}:nth-child(2) td:nth-child(2)`)[0],
+                    "pashchAta": $l(`${e}:nth-child(1) td`),
+                    "akShara": $l(`${e}:nth-child(2) td`),
+                    "table": $l(`#${id} table`),
+                    "tbody": [$l(`${e}:nth-child(1)`)[0], $l(`${e}:nth-child(2)`)[0]]
                 };
-                let tbody = $(this.elm.children()[0]).children()[0];
-                tbody = $(tbody).children();
                 this.adhar = 0;
-                this.bhaNDAra.tbody = [tbody[0], tbody[1]];
-                let tr1 = $(tbody[0]).children();
-                let tr2 = $(tbody[1]).children();
-                this.bhaNDAra.pashchAta = tr1;
-                this.bhaNDAra.akShara = tr2;
-                this.bhaNDAra.key1 = tr1[1];
-                this.bhaNDAra.key2 = tr2[1];
-                let img = $(tr2[0]).children(); //1st down 2nd up
-                this.ins_button = [$(img[1]), $(img[0]), 0, 0];
+                let img = $l(`${e}:nth-child(2) td:nth-child(1)`).children()
+                this.ins_button = [$l(img[1]), $l(img[0])];
                 this.ins_sthiti = 1;
                 this.ins_button[this.ins_sthiti].show();
                 this.ins_button[0].on("click", () => this.change_ins(0));
@@ -1143,30 +1102,25 @@ class लिपिलेखिकालेखनसहायिका {
                 if (this.ins_sthiti == 1)
                     this.bhaNDAra.sahayika.style.display = "none";
                 this.objs = {
-                    "down": $(img[0]),
-                    "up": $(img[1]),
-                    "icon": $($(tr1[0]).children()[0])
+                    "down": $l(img[0]),
+                    "up": $l(img[1]),
+                    "icon": $l(`${e}:nth-child(1) td:nth-child(1) a`)
                 };
-                let y = $(".निच्चैरुच्चैः");
-                this.ins_button[2] = y[0];
-                this.ins_button[3] = y[1];
             }
-            $("body").on("click", (event) => {
+            $l("body").on("click", (event) => {
                 let obj = LipiLekhikA;
-                let o = this;
+                let o = obj.sahayika;
                 let bh = o.bhaNDAra;
                 if (o.elm.css("display") == "none")
                     return;
                 let trgt = event.target;
-                let p = $(trgt).parents();
-                let sah = p.index(o.elm[0]) != -1; // seeing if the click is inside lekhan sahayika
-                p = $(trgt).parent()[0];
-                if (this.k.in(bh.tbody, p) && !this.k.in([bh.key1, bh.key2], event)) {
+                let p = $l(trgt).parents();
+                let sah = p.indexOf(o.elm[0]) != -1; // seeing if the click is inside lekhan sahayika
+                p = $l(trgt).parent();
+                if (this.k.in(bh.tbody, p) && !this.k.in([bh.key1, bh.key2], trgt)) {
                     // above -> checking if a varna has been clicked
                     sah = true;
                     let el = o.adhar;
-                    if (trgt.value == undefined)
-                        return;
                     for (let x of trgt.value) {
                         if (this.k.in(["input", "textarea"], el[0].tagName.toLowerCase())) {
                             obj.from_click = true;
@@ -1184,16 +1138,8 @@ class लिपिलेखिकालेखनसहायिका {
                 if (!sah)
                     obj.clear_all_val(true);
             });
-        }, 500) // setting this to load later on
+        }, 1);
     };
-    check_width() {
-        let w = parseInt(this.k.substring(this.elm.css("width"), 0, -2)),
-            elm = this.bhaNDAra.table;
-        if (w >= 210)
-            elm.css("overflow-x", "scroll");
-        else
-            elm.css("overflow-x", "");
-    }
     hide_other() {
         let elm = LipiLekhikA.sahayika;
         if (elm.c == 1)
@@ -1208,7 +1154,7 @@ class लिपिलेखिकालेखनसहायिका {
         elm.ins_button[Math.abs(i - 1)].show();
         let el = elm.bhaNDAra.sahayika;
         elm.set_labels(1, t == 0 ? elm.ins_msg : "");
-        el.style.display = t == 1 ? "none" : "block";
+        el.style.display = t == 1 ? "" : "block";
     };
     show(v) {
         if (v["elm"].attr("lekhan-sahayika") != "on")
@@ -1229,7 +1175,6 @@ class लिपिलेखिकालेखनसहायिका {
                     elm.hide_elm(2, x);
                     elm.idAnIma--;
                 };
-                elm.check_width();
             }
             LipiLekhikA.capital = [0, "", -1, -1, 0, 0, false];
         };
@@ -1253,10 +1198,9 @@ class लिपिलेखिकालेखनसहायिका {
         let top = cordinate.top,
             hieght = cordinate.height,
             left = cordinate.left;
-        if (l.in(["input", "textarea"], v.elm[0].tagName.toLowerCase())) {
-            this.abhisthAnam = v.elm.selectionStart + 1;
-        } else {
-            let caret = new VanillaCaret(v.elm[0]);
+        // abhisthanam is to store the current position in contenteditable as it is lost on click
+        if (!l.in(["input", "textarea"], v.elm[0].tagName.toLowerCase())) {
+            let caret = new $lf.CaretPos(v.elm[0]);
             this.abhisthAnam = caret.getPos() + 2;
         }
         this.elm[0].style.top = `${top + hieght}px`;
@@ -1351,7 +1295,6 @@ class लिपिलेखिकालेखनसहायिका {
                 this.hide_elm(2, x);
             };
         }
-        this.check_width();
         this.idAnIma = len;
         this.c++;
         if (!matra)
@@ -1401,14 +1344,14 @@ class लिपिलेखिकालेखनसहायिका {
                 this.set_labels(1, this.ins_msg);
         };
         if (!(l in this.display)) {
-            $.get({
-                url: `${this.k.sanchit}/sahayika/${l}.json`,
-                dataType: "json",
-                success: (result) => {
-                    this.display[l] = result;
-                    gh();
-                }
-            });
+            $lf.get(
+                `${this.k.sanchit}/sahayika/${l}.json`, {
+                    dataType: "json",
+                    success: (result) => {
+                        this.display[l] = result;
+                        gh();
+                    }
+                });
         } else
             gh();
     };
