@@ -131,7 +131,6 @@ class लिपिलेखिकासहायक {
         return res;
     }
 }
-let लिपि = new लिपिलेखिकासहायक();
 class लिपिलेखिकापरिवर्तक {
     constructor() {
         this.k = लिपि;
@@ -1116,7 +1115,7 @@ class लिपिलेखिकालेखनसहायिका {
                 let trgt = event.target;
                 let p = $l(trgt).parents();
                 let sah = p.indexOf(o.elm[0]) != -1; // seeing if the click is inside lekhan sahayika
-                p = $l(trgt).parent();
+                p = $l(trgt).parent()[0];
                 if (this.k.in(bh.tbody, p) && !this.k.in([bh.key1, bh.key2], trgt)) {
                     // above -> checking if a varna has been clicked
                     sah = true;
@@ -1356,5 +1355,6 @@ class लिपिलेखिकालेखनसहायिका {
             gh();
     };
 };
+let लिपि = new लिपिलेखिकासहायक();
 let LipiLekhikA = new लिपिलेखिकापरिवर्तक();
 लिपि.k = LipiLekhikA;

@@ -132,7 +132,6 @@ class लिपिलेखिकासहायक {
         return res;
     }
 }
-let लिपि = new लिपिलेखिकासहायक();
 class लिपिलेखिकापरिवर्तक {
     constructor() {
         this.k = लिपि;
@@ -1117,7 +1116,7 @@ class लिपिलेखिकालेखनसहायिका {
                 let trgt = event.target;
                 let p = $l(trgt).parents();
                 let sah = p.indexOf(o.elm[0]) != -1; // seeing if the click is inside lekhan sahayika
-                p = $l(trgt).parent();
+                p = $l(trgt).parent()[0];
                 if (this.k.in(bh.tbody, p) && !this.k.in([bh.key1, bh.key2], trgt)) {
                     // above -> checking if a varna has been clicked
                     sah = true;
@@ -1357,8 +1356,6 @@ class लिपिलेखिकालेखनसहायिका {
             gh();
     };
 };
-let LipiLekhikA = new लिपिलेखिकापरिवर्तक();
-लिपि.k = LipiLekhikA;
 class लिपिquery {
     constructor(sel) {
         this.sel = sel;
@@ -1612,7 +1609,7 @@ class लिपिquery {
     parent() {
         if (this.length == 0)
             return this;
-        return this[0].parentElement;
+        return $l(this[0].parentElement);
     }
     parents() {
         if (this.length == 0)
@@ -1624,6 +1621,9 @@ class लिपिquery {
             a = a.parentNode;
         }
         return els;
+    }
+    index(v) {
+        return this.elm.indexOf(v);
     }
     offset(options) {
         if (this.length == 0)
@@ -1703,23 +1703,40 @@ class लिपिutil {
         return template.firstChild;
     }
     ajax(url, op = {}) {
-        let xhr = op.xhr || new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
+        if ("xhr" in op)
+            xhr = op.xhr();
         let _async = "async" in op ? op.async : true;
-        xhr.open(op.type || "GET", url, _async);
-        xhr.send(null);
+        let typ = "type" in op ? op.type : "GET";
+        xhr.open(typ, url, _async);
+        let data = "data" in op ? op.data : null;
 
-        function hdr(k) {
-            return xhr.getResponseHeader(k).split(";")[0];
+        function hdr(k, sl = false) {
+            let vl = xhr.getResponseHeader(k);
+            if (vl != null && vl != undefined)
+                if (sl)
+                    return vl.split(";")[0];
+                else
+                    return vl;
+            else
+                return undefined;
         }
         if ("dataType" in op)
             xhr.responseType = op["dataType"];
+        if ("json" in op) {
+            data = JSON.stringify(op.json);
+            xhr.setRequestHeader("content-type", "application/json;charset=utf-8");
+        }
+        if ("contentType" in op)
+            xhr.setRequestHeader("content-type", op.contentType);
         if ("headers" in op)
             for (let x in op.headers)
                 xhr.setRequestHeader(x, op.headers[x]);
+        xhr.send(data);
         let scs = function () {
-            if (xhr.status == 200) {
+            if (parseInt(xhr.status / 100) == 2) {
                 let v = xhr.response;
-                if (hdr("content-type") == "application/json" && xhr.responseType != "json")
+                if (hdr("content-type", true) == "application/json" && xhr.responseType != "json")
                     v = JSON.parse(xhr.response);
                 if ("success" in op)
                     op.success(v, xhr);
@@ -1768,6 +1785,30 @@ class लिपिutil {
         let r = s[s.length + l];
         return r;
     }
+    time() {
+        let a = new Date();
+        return a.getTime() / 1000;
+    }
+    dict_rev(d) {
+        let res = {};
+        for (let x in d) {
+            res[d[x]] = x;
+        }
+        return res;
+    }
+    substring(val, from, to = null) {
+        if (to == null)
+            to = val.length;
+        if (to > 0)
+            return val.substring(from, to)
+        else if (to < 0)
+            return val.substring(from, val.length + to)
+    };
+    format(val, l) {
+        for (let x = 0; x < l.length; x++)
+            val = this.replace_all(val, `{${x}}`, l[x]);
+        return val;
+    }
 }
 if ($l != undefined)
     $l = undefined;
@@ -1779,6 +1820,9 @@ var $l = function (sel) {
 if ($lf != undefined)
     $lf = undefined;
 var $lf = new लिपिutil();
+let लिपि = new लिपिलेखिकासहायक();
+let LipiLekhikA = new लिपिलेखिकापरिवर्तक();
+लिपि.k = LipiLekhikA;
 if (true) {
     // https://github.com/abhas9/vanilla-caret-js
     (function (factory) {

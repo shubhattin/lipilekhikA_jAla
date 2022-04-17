@@ -483,8 +483,7 @@ class अनुप्रयोगः {
                     n = app.k.akSharAH[$l("#lang2").val()].sa;
                     $l("#second").attr("lipi-mode", n);
                     app.kr("inter-anuvadak");
-                    for (let u of ["#lang1", "#lang2"])
-                        $l(u).resize();
+                    $l("#lang1", "#lang2").resize();
                     $l("#second").val(app.app.parivartak($l("#first").val(), $l("#lang1").val(), $l("#lang2").val()));
                     app.kr("inter-set");
                 })
