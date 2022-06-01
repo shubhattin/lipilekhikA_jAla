@@ -21,11 +21,13 @@ class अनुप्रयोगः {
             Malayalam: ["മലയാളം", "അജയ്", "അ", "ml"],
             Kannada: ["ಕನ್ನಡ", "ಅಜಯ್", "ಅ", "kn"],
             Oriya: ["ଓଡ଼ିଆ", "ଅଜଯ୍", "ଅ", "or"],
-            Assamese: ["অসমীয়া", "অজয্", "অ", 0],
-            Konkani: ["कोंकणी", "अजय्", "अ", 0],
-            Sanskrit: ["संस्कृतम्", "अजय्", "अ", 0],
+            Assamese: ["অসমীয়া", "অজয্", "অ", "as"],
+            Konkani: ["कोंकणी", "अजय्", "अ", "gom"],
+            Sanskrit: ["संस्कृतम्", "अजय्", "अ", "sa"],
             Punjabi: ["ਪੰਜਾਬੀ", "ਅਜਯ੍", "ਅ", "pa"],
             Nepali: ["नेपाली", "अजय्", "अ", "ne"],
+            Kashmiri: ["कश्मीरी", "अजय्", "अ", 0],
+            Sindhi: ["सिन्धी", "अजय्", "अ", 0],
             Urdu: ["اُردُو", "اجَے ", "ب", "ur"],
             Romanized: ["Romanized", "ajay ", "ā", "en"],
             Sinhala: ["සිංහල", "අජය්", "අ", "si"],
@@ -85,7 +87,7 @@ class अनुप्रयोगः {
                 app.store_values("sahayika", {
                     false: "off",
                     true: "on"
-                } [this.checked]);
+                }[this.checked]);
             });
             $l("#script_set").on("change", function () {
                 app.store_values("script", this.value)
@@ -101,7 +103,7 @@ class अनुप्रयोगः {
                 "background-color": cl[z]
             });
             $l("#menu_body").css("transition", `left ${time}ms`);
-            yuj("#menu_body", `<style>${cl_st(1,0,1)+cl_st(0,1,2)}</style>`);
+            yuj("#menu_body", `<style>${cl_st(1, 0, 1) + cl_st(0, 1, 2)}</style>`);
             $l("#menu_btn").on("click", () => {
                 $l("#menu_container").show();
                 anm(1, time - 15, 0);
@@ -184,7 +186,7 @@ class अनुप्रयोगः {
             $l("#sah_val").check({
                 "off": false,
                 "on": true
-            } [app.get_values("sahayika")]);
+            }[app.get_values("sahayika")]);
             $l("#sa_04").on("click", () => $l("#main").attr("lipi-mode", 0));
             $l("#sa_14").on("click", () => $l("#main").attr("lipi-mode", 1));
             $l("#main").attr("lekhan-sahayika", app.get_values("sahayika"));
@@ -284,12 +286,12 @@ class अनुप्रयोगः {
                 load_lekhika_lang($l("#lang1").val(), () => {
                     if (app.auto)
                         $l("#first").val(app.app.parivartak($l("#second").val(), $l("#lang2").val(), $l("#lang1").val()))
-                    let n = app.k.akSharAH[$l("#lang1").val()].sa;
+                    let n = app.k.akSharAH[app.k.normalize($l("#lang1").val())].sa;
                     $l("#first").attr("lipi-mode", n);
                 });
                 app.kr("add-direction", $l("#first"), $l("#lang1").val());
                 app.kr("convert-msg");
-                $l("#first").attr("lipi-lang", $l("#lang1").val() != "Devanagari" ? $l("#lang1").val() : "Sanskrit");
+                $l("#first").attr("lipi-lang", app.k.normalize($l("#lang1").val()));
                 app.kr("inter-anuvadak");
                 app.kr("inter-set");
                 app.kr("p-holder", "#lang1");
@@ -298,7 +300,7 @@ class अनुप्रयोगः {
                 $l("#first").attr("lipi-lekhika", {
                     true: "on",
                     false: "off"
-                } [this.checked]);
+                }[this.checked]);
             });
             $l("#cp2").on("click", () => app.copy_text("#first"));
             $l("#first").on("input", function () {
@@ -310,12 +312,12 @@ class अनुप्रयोगः {
                 load_lekhika_lang($l("#lang2").val(), () => {
                     if (app.auto)
                         $l("#second").val(app.app.parivartak($l("#first").val(), $l("#lang1").val(), $l("#lang2").val()));
-                    let n = app.k.akSharAH[$l("#lang2").val()].sa;
+                    let n = app.k.akSharAH[app.k.normalize($l("#lang2").val())].sa;
                     $l("#second").attr("lipi-mode", n);
                 });
                 app.kr("add-direction", $l("#second"), $l("#lang2").val());
                 app.kr("convert-msg");
-                $l("#second").attr("lipi-lang", $l("#lang2").val() != "Devanagari" ? $l("#lang2").val() : "Sanskrit");
+                $l("#second").attr("lipi-lang", app.k.normalize($l("#lang2").val()));
                 app.kr("inter-anuvadak");
                 app.kr("inter-set");
                 app.kr("p-holder", "#lang2");
@@ -325,7 +327,7 @@ class अनुप्रयोगः {
                 $l("#second").attr("lipi-lekhika", {
                     true: "on",
                     false: "off"
-                } [this.checked]);
+                }[this.checked]);
             });
             $l("#second").on("input", function () {
                 app.kr("edited");
@@ -438,8 +440,8 @@ class अनुप्रयोगः {
             let img = new Image();
             img.onload = function () {
                 elm.css({
-                    width: `${this.width*0.78}px`,
-                    height: `${this.height*0.78}px`
+                    width: `${this.width * 0.78}px`,
+                    height: `${this.height * 0.78}px`
                 });
                 elm.attr({
                     src: app.app.usage_table_link(val),
@@ -476,8 +478,8 @@ class अनुप्रयोगः {
                     if (!("to" in s1))
                         $l("#lang2").val("Romanized");
                     $l("#first").val($l("#main").val());
-                    $l("#second").attr("lipi-lang", $l("#lang2").val() != "Devanagari" ? $l("#lang2").val() : "Sanskrit");
-                    $l("#first").attr("lipi-lang", $l("#lang1").val() != "Devanagari" ? $l("#lang1").val() : "Sanskrit");
+                    $l("#second").attr("lipi-lang", app.k.normalize($l("#lang2").val()));
+                    $l("#first").attr("lipi-lang", app.k.normalize($l("#lang1").val()));
                     let n = app.k.akSharAH[$l("#lang1").val()].sa;
                     $l("#first").attr("lipi-mode", n);
                     n = app.k.akSharAH[$l("#lang2").val()].sa;
@@ -553,12 +555,10 @@ class अनुप्रयोगः {
         else
             this.first_load = false;
         this.kr("p-holder");
-        if (s.mode == 1) {
-            let hj = (y, x) => y.removeAttribute(x)
+        if (s.mode == 1)
             for (let x of $l("a").elm)
                 for (let g of ["href", "target", "rel"])
-                    hj(x, g);
-        }
+                    x.removeAttribute(g);
     };
     store_values(name, val, defal = false) {
         if (defal) {
@@ -648,7 +648,7 @@ setTimeout(async () => {
         if ("main_lang" in s)
             s["from"] = s["main_lang"];
         if ("from" in s) {
-            s["main_lang"] = s["from"] == "Devanagari" ? "Sanskrit" : s["from"];
+            s["main_lang"] = app.k.normalize(s["from"]);
             s["from"] = s["from"];
         }
         s1 = JSON.parse(JSON.stringify(s));
@@ -671,9 +671,7 @@ setTimeout(async () => {
     }
     let v = s["app_lang"];
     app.lang_texts[v] = await $lf.get(app.pratyaya_sanchit + `/display/${s["app_lang"]}.json`);
-    $l("body").append(await $lf.get(app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.asp", {
-        dataType: "text"
-    }));
+    $l("body").append(await $lf.get(app.k.substring(app.pratyaya_sanchit, 0, -3) + "app.asp"));
     let e = $l("#store_html").children();
     for (let x of e)
         app.anya_html[x.getAttribute("nm")] = x.innerHTML;
@@ -681,9 +679,7 @@ setTimeout(async () => {
     app.init_html();
     $l("#main_val").check(true);
     setTimeout(async () => { // waiting for main process to complete
-        let el = $lf.make(await $lf.get(app.k.substring(app.k.image_loca, 0, -5) + "/img.asp", {
-            dataType: "text"
-        }));
+        let el = $lf.make(await $lf.get(app.k.substring(app.k.image_loca, 0, -5) + "/img.asp"));
         for (let x of el.children) {
             let elm = $l(`[chv=${x.getAttribute("nm")}]`).html(x.innerHTML);
             elm.addClass("imgs");
@@ -778,7 +774,7 @@ function on_loaded() {
     $l("#sah_set_val").check($l("#sah_val").check({
         "on": true,
         "off": false
-    } [app.get_values("sahayika")]));
+    }[app.get_values("sahayika")]));
 
     if (true) {
         $l("#app_lang").val(s["app_lang"]);
@@ -797,8 +793,8 @@ function on_loaded() {
             $l("#parivartak").hide();
             $l("#back_btn").show();
         }
-        $l("#second").attr("lipi-lang", $l("#lang2").val() != "Devanagari" ? $l("#lang2").val() : "Sanskrit");
-        $l("#first").attr("lipi-lang", $l("#lang1").val() != "Devanagari" ? $l("#lang1").val() : "Sanskrit");
+        $l("#second").attr("lipi-lang", app.k.normalize($l("#lang2").val()));
+        $l("#first").attr("lipi-lang", app.k.normalize($l("#lang1").val()));
     }
     if (true) {
         let akl = $l("#main_lang").val();

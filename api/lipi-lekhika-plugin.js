@@ -10,6 +10,77 @@ class लिपिलेखिकासहायक {
         this.image_loca = this.substring(this.sanchit, 0, -12) + "img/lang";
         this.alph = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"];
         this.lang_in = (x) => x in this.akSharAH;
+        this.langs = [
+            'Normal', 'Assamese',
+            'Bengali', 'Brahmi',
+            'Granth', 'Gujarati',
+            'Hindi', 'Kannada',
+            'Konkani', 'Malayalam',
+            'Marathi', 'Modi',
+            'Nepali', 'Oriya',
+            'Punjabi', 'Purna-Devanagari',
+            'Romanized', 'Sanskrit',
+            'Sharada', 'Siddham',
+            'Sinhala', 'Tamil-Extended',
+            'Tamil', 'Telugu',
+            'Urdu', 'Kashmiri',
+            'Sindhi'
+        ];
+        this.alts = {
+            "en": 0,
+            "English": 0,
+            "as": 1,
+            "bn": 2,
+            "Bangla": 2,
+            "ben": 2,
+            "br": 3,
+            "gr": 4,
+            "gu": 5,
+            "guj": 5,
+            "hi": 6,
+            "hin": 6,
+            "kn": 7,
+            "kan": 7,
+            "ko": 8,
+            "kok": 8,
+            "ml": 9,
+            "mal": 9,
+            "mr": 10,
+            "mar": 10,
+            "mo": 11,
+            "mod": 11,
+            "ne": 12,
+            "nep": 12,
+            "Odia": 13,
+            "or": 13,
+            "pa": 14,
+            "pan": 14,
+            "pn": 14,
+            "Gurumukhi": 14,
+            "guru": 14,
+            "pu-de": 15,
+            "pu-dev": 15,
+            "pur-dev": 15,
+            "ro": 16,
+            "rom": 16,
+            "sa": 17,
+            "san": 17,
+            "dev": 17,
+            "Devanagari": 17,
+            "de": 17,
+            "sh": 18,
+            "shr": 18,
+            "sid": 19,
+            "si": 20,
+            "sin": 20,
+            "ta-ex": 21,
+            "tam-ex": 21,
+            "ta": 22,
+            "tam": 22,
+            "te": 23,
+            "tel": 23,
+            "ur": 24
+        };
         this.elms = [];
         this.pUrNasarve = this.alph[0] + this.alph[1] + "01234567890'$.#?";
         this.init = false;
@@ -22,8 +93,22 @@ class लिपिलेखिकासहायक {
         };
         this.is_mobile = mobile_check();
     }
-    load_lang(lang, callback = null, block = false) {
-        lang = lang == "Devanagari" ? "Sanskrit" : lang;
+    normalize(ln) {
+        // function to normalize the names of scripts
+        let a = ln.split("-");
+        for (let x = 0; x < a.length; x++)
+            a[x] = a[x].charAt(0).toUpperCase() + a[x].substring(1);
+        let ln1 = a.join("-");
+        if (this.in(this.langs, ln1))
+            return ln1;
+        else if (ln in this.alts)
+            return this.langs[this.alts[ln]];
+        else
+            return ln;
+    }
+    load_lang(lang, callback = null, block = false, norm = true) {
+        if (norm)
+            lang = this.normalize(lang);
         if (!(lang in this.akSharAH)) {
             return $lf.get(this.sanchit + `/${lang}.json`, {
                 'async': !block,
@@ -38,8 +123,8 @@ class लिपिलेखिकासहायक {
         } else if (callback != null)
             callback();
         return new Promise(r => r("loaded"));
-    } in (val, in_what) {
-        return val.indexOf(in_what) != -1;
+    } in (in_what, what) {
+        return in_what.indexOf(what) != -1;
     }
     reg_index(str, pattern) {
         let ind = [],
@@ -152,9 +237,7 @@ class लिपिलेखिकापरिवर्तक {
         this.last_of_3_status_for_mAtrA = false;
         this.special_ved_s = false;
         this.usage_table_link = (lang) => {
-            let y = lang;
-            y = लिपि.in(["Devanagari", "Marathi", "Konkani", "Sanskrit", "Nepali"], y) ? "Hindi" : y;
-            return `${लिपि.image_loca}/${y}.png`;
+            return `${लिपि.image_loca}/${this.k.normalize(lang)}.png`;
         };
         this.pUrva_lekhit = [
             ["", -1],
@@ -186,6 +269,9 @@ class लिपिलेखिकापरिवर्तक {
             if (!elf)
                 this.clear_all_val(true);
             let lng = elmt.attr("lipi-lang") == undefined ? this.script : elmt.attr("lipi-lang");
+            lng = this.k.normalize(lng);
+            if (!this.k.in(this.k.langs, lng))
+                return "error";
             this.prakriyA({
                 text: e,
                 typing: 1,
@@ -673,11 +759,11 @@ class लिपिलेखिकापरिवर्तक {
             this.hide();
         }
     };
-    parivartak(val, from, to, html = false) {
-        if (from == "Devanagari")
-            from = "Sanskrit";
-        if (to == "Devanagari")
-            to = "Sanskrit";
+    parivartak(val, from, to, html = false, norm = true) {
+        if (norm) {
+            from = this.k.normalize(from);
+            to = this.k.normalize(to);
+        }
         if (from == to)
             return val;
         var l = लिपि;
@@ -921,8 +1007,11 @@ var lipi_lekhika = function (time = 60) {
             e.on("keydown", function (ev) {
                 m.clear(ev);
             });
-            if (e.attr("lipi-lang") != undefined)
-                m.load_lang(e.attr("lipi-lang"))
+            if (e.attr("lipi-lang") != undefined) {
+                let lng = m.normalize(e.attr("lipi-lang"));
+                if (m.in(m.langs, lng))
+                    m.load_lang(lng);
+            }
         };
     }
     mn();
@@ -932,7 +1021,7 @@ var lipi_lekhika = function (time = 60) {
     return k;
 };
 var load_lekhika_lang = (lang, call = null) => {
-    LipiLekhikA.k.load_lang(lang, call);
+    return LipiLekhikA.k.load_lang(lang, call);
 };
 var lekhika_convert = (text, from, to) => {
     return LipiLekhikA.parivartak(text, from, to);
@@ -1125,6 +1214,9 @@ class लिपिलेखिकालेखनसहायिका {
                         if (this.k.in(["input", "textarea"], el[0].tagName.toLowerCase())) {
                             obj.from_click = true;
                             let lng = el.attr("lipi-lang") == undefined ? this.k.k.script : el.attr("lipi-lang");
+                            lng = this.k.normalize(lng);
+                            if (!this.k.in(this.k.langs, lng))
+                                return "error";
                             obj.prakriyA({
                                 text: x,
                                 typing: 1,
@@ -1246,8 +1338,6 @@ class लिपिलेखिकालेखनसहायिका {
             let k12 = this.pUrvavarNa[0][0] + b[key][1];
             if (l.last(this.pUrvavarNa[0]) == 3 && key != "a")
                 k12 = l.substring(k12, 0, -2) + l.last(k12) + l.last(k12, -2);
-            else if (l.last(this.pUrvavarNa[0]) == 3 && key == "a")
-                k12 = l.last(k12, 0, -1) + l.last(k12);
             this.set_labels(4, this.pUrvavarNa[1] + key);
             this.set_labels(5, k12);
         } else {
@@ -1516,8 +1606,13 @@ class लिपिquery {
                 for (let x of this.elm)
                     Object.assign(x.style, arg[0]);
                 return this;
-            } else
-                return getComputedStyle(this[0])[arg[0]];
+            } else {
+                let vl = getComputedStyle(this[0]);
+                if (vl != undefined && vl != null)
+                    return vl[arg[0]]
+                else
+                    return "";
+            }
         else if (arg.length == 2) {
             for (let x of this.elm)
                 x.style[arg[0]] = arg[1];
@@ -1543,35 +1638,35 @@ class लिपिquery {
         }
     }
     show() {
-        let arg = arguments;
         let lst = {
             div: "block",
             span: "inline"
         }
         for (let x of this.elm) {
             let e = $l(x);
-            e.removeCss("display");
             if (e.css("display") == "none") {
-                let nm = x.tagName.toLowerCase();
-                if (nm in lst) {
-                    e.css("display", lst[nm]);
-                } else {
-                    let el = $l("body").appendHTML(`<${nm}></${nm}>`);
-                    e.css("display", el.css("display"));
-                    el.remove();
+                e.removeCss("display");
+                if (e.css("display") == "none") {
+                    let nm = x.tagName.toLowerCase();
+                    if (nm in lst) {
+                        e.css("display", lst[nm]);
+                    } else {
+                        let el = $l("body").appendHTML(`<${nm}></${nm}>`);
+                        e.css("display", el.css("display"));
+                        el.remove();
+                    }
                 }
             }
         }
         return this;
     }
     hide() {
-        let arg = arguments;
         for (let x of this.elm)
-            x.style.display = "none";
+            if ($l(x).css("display") != "none")
+                x.style.display = "none";
         return this;
     }
     children() {
-        let arg = arguments;
         let ch = [];
         for (let x of this.elm) {
             for (let y of x.children)
@@ -1580,9 +1675,9 @@ class लिपिquery {
         return ch;
     }
     remove() {
-        let arg = arguments;
         for (let x of this.elm)
             x.remove();
+        return this;
     }
     find() {
         let arg = arguments;
@@ -1655,7 +1750,6 @@ class लिपिquery {
         return this[0].scrollLeft;
     }
     scrollTop() {
-        let arg = arguments;
         if (this.length == 0)
             return 0;
         return this[0].scrollTop;
@@ -1734,25 +1828,25 @@ class लिपिutil {
                 xhr.setRequestHeader(x, op.headers[x]);
         xhr.send(data);
         let scs = function () {
+            let type = hdr("content-type", true);
+            let v = xhr.response;
             if (parseInt(xhr.status / 100) == 2) {
-                let v = xhr.response;
-                if (hdr("content-type", true) == "application/json" && xhr.responseType != "json")
-                    v = JSON.parse(xhr.response);
+                if (type == "application/json" && xhr.responseType != "json")
+                    v = JSON.parse(v);
                 if ("success" in op)
-                    op.success(v, xhr);
-                return v;
-            } else {
-                if ("error" in op)
-                    op.error(xhr);
-                return null;
-            }
+                    op.success(v, xhr, xhr.status, type);
+            } else if ("error" in op)
+                op.error(v, xhr, xhr.status, type);
+            return v;
         }
-        if (_async)
-            return new Promise(rs => {
+        if (_async) {
+            let pr = new Promise(rs => {
                 xhr.onerror = () => rs("Network Error");
                 xhr.onload = () => rs(scs());
             });
-        else
+            pr.xhr = xhr;
+            return pr;
+        } else
             return scs();
     }
     get(url, op = {}) {
@@ -1763,11 +1857,15 @@ class लिपिutil {
         op.type = "POST";
         return this.ajax(url, op);
     }
-    getScript(url) {
+    getScript(url, call = null) {
         let e = document.createElement("script");
         e.src = url;
         $l("body")[0].appendChild(e)
-        e.remove();
+        e.onload = () => {
+            e.remove();
+            if (call != null)
+                call();
+        };
     }
     isPlainObject(o) {
         return typeof (o) == 'object' && o.constructor == Object;
@@ -1808,6 +1906,69 @@ class लिपिutil {
         for (let x = 0; x < l.length; x++)
             val = this.replace_all(val, `{${x}}`, l[x]);
         return val;
+    }
+    json_to_address(v) {
+        if (v == null | v == undefined)
+            return []
+        let r = [];
+
+        function prcs(x, n, pr) {
+            let tp = typeof (n[x])
+            let v1 = `${pr}/${x}`
+            if (Array.isArray(x))
+                lst(n[x], v1)
+            else if (tp == "object")
+                jsn(n[x], v1)
+            else
+                r.push(`${pr}/${x}`)
+        }
+
+        function jsn(n, pr = "") {
+            for (let x in n)
+                prcs(x, n, pr)
+        }
+
+        function lst(n, pr = "") {
+            for (let x = 0; x < n.length; x++)
+                prcs(x, n, pr)
+        }
+        if (typeof (v) == "object")
+            v = jsn(v)
+        else if (Array.isArray(v))
+            v = lst(v)
+        return r
+    }
+    val_from_adress(lc, vl) {
+        let n = vl;
+        if (lc == "/")
+            return n
+        lc = lc.substring(1).split("/")
+        for (let x of lc) {
+            let t = x;
+            if (Array.isArray(n))
+                t = parseInt(t)
+            n = n[t]
+        }
+        return n;
+    }
+    set_val_from_adress(lc, vl, val = null, make = false) {
+        let n = vl;
+        lc = lc.substring(1).split("/")
+        let ln = lc.length;
+        for (let i = 0; i < ln; i++) {
+            let x = lc[i]
+            let t = x;
+            if (Array.isArray(n))
+                t = parseInt(t)
+            if (i == ln - 1)
+                n[t] = val
+            else {
+                if (!(t in n) && make)
+                    n[t] = {}
+                n = n[t]
+            }
+        }
+        return vl;
     }
 }
 if ($l != undefined)

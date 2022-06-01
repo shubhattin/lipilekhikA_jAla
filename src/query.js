@@ -158,8 +158,13 @@ class लिपिquery {
                 for (let x of this.elm)
                     Object.assign(x.style, arg[0]);
                 return this;
-            } else
-                return getComputedStyle(this[0])[arg[0]];
+            } else {
+                let vl = getComputedStyle(this[0]);
+                if (vl != undefined && vl != null)
+                    return vl[arg[0]]
+                else
+                    return "";
+            }
         else if (arg.length == 2) {
             for (let x of this.elm)
                 x.style[arg[0]] = arg[1];
@@ -185,35 +190,35 @@ class लिपिquery {
         }
     }
     show() {
-        let arg = arguments;
         let lst = {
             div: "block",
             span: "inline"
         }
         for (let x of this.elm) {
             let e = $l(x);
-            e.removeCss("display");
             if (e.css("display") == "none") {
-                let nm = x.tagName.toLowerCase();
-                if (nm in lst) {
-                    e.css("display", lst[nm]);
-                } else {
-                    let el = $l("body").appendHTML(`<${nm}></${nm}>`);
-                    e.css("display", el.css("display"));
-                    el.remove();
+                e.removeCss("display");
+                if (e.css("display") == "none") {
+                    let nm = x.tagName.toLowerCase();
+                    if (nm in lst) {
+                        e.css("display", lst[nm]);
+                    } else {
+                        let el = $l("body").appendHTML(`<${nm}></${nm}>`);
+                        e.css("display", el.css("display"));
+                        el.remove();
+                    }
                 }
             }
         }
         return this;
     }
     hide() {
-        let arg = arguments;
         for (let x of this.elm)
-            x.style.display = "none";
+            if ($l(x).css("display") != "none")
+                x.style.display = "none";
         return this;
     }
     children() {
-        let arg = arguments;
         let ch = [];
         for (let x of this.elm) {
             for (let y of x.children)
@@ -222,9 +227,9 @@ class लिपिquery {
         return ch;
     }
     remove() {
-        let arg = arguments;
         for (let x of this.elm)
             x.remove();
+        return this;
     }
     find() {
         let arg = arguments;
@@ -297,7 +302,6 @@ class लिपिquery {
         return this[0].scrollLeft;
     }
     scrollTop() {
-        let arg = arguments;
         if (this.length == 0)
             return 0;
         return this[0].scrollTop;
@@ -376,25 +380,25 @@ class लिपिutil {
                 xhr.setRequestHeader(x, op.headers[x]);
         xhr.send(data);
         let scs = function () {
+            let type = hdr("content-type", true);
+            let v = xhr.response;
             if (parseInt(xhr.status / 100) == 2) {
-                let v = xhr.response;
-                if (hdr("content-type", true) == "application/json" && xhr.responseType != "json")
-                    v = JSON.parse(xhr.response);
+                if (type == "application/json" && xhr.responseType != "json")
+                    v = JSON.parse(v);
                 if ("success" in op)
-                    op.success(v, xhr);
-                return v;
-            } else {
-                if ("error" in op)
-                    op.error(xhr);
-                return null;
-            }
+                    op.success(v, xhr, xhr.status, type);
+            } else if ("error" in op)
+                op.error(v, xhr, xhr.status, type);
+            return v;
         }
-        if (_async)
-            return new Promise(rs => {
+        if (_async) {
+            let pr = new Promise(rs => {
                 xhr.onerror = () => rs("Network Error");
                 xhr.onload = () => rs(scs());
             });
-        else
+            pr.xhr = xhr;
+            return pr;
+        } else
             return scs();
     }
     get(url, op = {}) {
@@ -405,11 +409,15 @@ class लिपिutil {
         op.type = "POST";
         return this.ajax(url, op);
     }
-    getScript(url) {
+    getScript(url, call = null) {
         let e = document.createElement("script");
         e.src = url;
         $l("body")[0].appendChild(e)
-        e.remove();
+        e.onload = () => {
+            e.remove();
+            if (call != null)
+                call();
+        };
     }
     isPlainObject(o) {
         return typeof (o) == 'object' && o.constructor == Object;
@@ -450,6 +458,69 @@ class लिपिutil {
         for (let x = 0; x < l.length; x++)
             val = this.replace_all(val, `{${x}}`, l[x]);
         return val;
+    }
+    json_to_address(v) {
+        if (v == null | v == undefined)
+            return []
+        let r = [];
+
+        function prcs(x, n, pr) {
+            let tp = typeof (n[x])
+            let v1 = `${pr}/${x}`
+            if (Array.isArray(x))
+                lst(n[x], v1)
+            else if (tp == "object")
+                jsn(n[x], v1)
+            else
+                r.push(`${pr}/${x}`)
+        }
+
+        function jsn(n, pr = "") {
+            for (let x in n)
+                prcs(x, n, pr)
+        }
+
+        function lst(n, pr = "") {
+            for (let x = 0; x < n.length; x++)
+                prcs(x, n, pr)
+        }
+        if (typeof (v) == "object")
+            v = jsn(v)
+        else if (Array.isArray(v))
+            v = lst(v)
+        return r
+    }
+    val_from_adress(lc, vl) {
+        let n = vl;
+        if (lc == "/")
+            return n
+        lc = lc.substring(1).split("/")
+        for (let x of lc) {
+            let t = x;
+            if (Array.isArray(n))
+                t = parseInt(t)
+            n = n[t]
+        }
+        return n;
+    }
+    set_val_from_adress(lc, vl, val = null, make = false) {
+        let n = vl;
+        lc = lc.substring(1).split("/")
+        let ln = lc.length;
+        for (let i = 0; i < ln; i++) {
+            let x = lc[i]
+            let t = x;
+            if (Array.isArray(n))
+                t = parseInt(t)
+            if (i == ln - 1)
+                n[t] = val
+            else {
+                if (!(t in n) && make)
+                    n[t] = {}
+                n = n[t]
+            }
+        }
+        return vl;
     }
 }
 if ($l != undefined)
